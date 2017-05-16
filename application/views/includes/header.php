@@ -5,7 +5,7 @@
         <meta name="referrer" content="no-referrer">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="icon" href="img/favicon.png" sizes="24X24" type="image/png">
+        <link rel="icon" href="<?php echo base_url(); ?>includes/img/favicon.png" sizes="24X24" type="image/png">
         <title>Online Property Show 2017 | Realgujarat</title>
         <!-- Bootstrap -->
         <link href="<?php echo base_url(); ?>includes/css/bootstrap.min.css" rel="stylesheet">
@@ -99,10 +99,10 @@
                             <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs">
                                 <!-- link -->
                                 <ul class="list-inline subnav cl-effect-1">
-                                    <li><a href="<?php echo base_url(); ?>index/aboutus">About Us</a></li>                                    
-                                    <li><a href="<?php echo base_url(); ?>index/property">Property</a></li>                                    
-                                    <li><a href="<?php echo base_url(); ?>index/virtualview">360 &deg;</a></li>
-                                    <li><a href="<?php echo base_url(); ?>index/contactus">Contact Us</a></li>
+                                    <li><a href="<?php echo base_url(); ?>aboutus">About Us</a></li>                                    
+                                    <li><a href="<?php echo base_url(); ?>properties">Property</a></li>                                    
+                                    <li><a href="<?php echo base_url(); ?>virtualview">360 &deg;</a></li>
+                                    <li><a href="<?php echo base_url(); ?>contactus">Contact Us</a></li>
                                     <?php if ($this->flexi_auth->is_logged_in() && empty(!$userinfo)) { ?>
                                     <li><a href="<?php echo base_url(); ?>index/logout">Logout</a></li>
                                     <?php } ?>

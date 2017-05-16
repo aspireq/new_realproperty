@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 // ade base url for flexi auth (www.yourdomaine.ext/subfolder)
-$config['base_url'] = 'http://localhost/realproperty/';
+$config['base_url'] = 'http://localhost/new_realproperty/';
 
 /*
 |--------------------------------------------------------------------------

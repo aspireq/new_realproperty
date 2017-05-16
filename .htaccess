@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /realproperty/
+RewriteBase /new_realproperty/
 
 # Prevent CI index.php
 RewriteCond %{REQUEST_FILENAME} !-f
