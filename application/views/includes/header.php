@@ -20,8 +20,9 @@
         <link href="<?php echo base_url(); ?>includes/css/radio.css" rel="stylesheet">
         <link href="<?php echo base_url(); ?>includes/css/datetimepicker.css" rel="stylesheet">
         <link href="http://vjs.zencdn.net/5.16.0/video-js.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="<?php echo base_url(); ?>includes/js/modernizr.custom.js"></script>
-        
+
         <!-- If you'd like to support IE8 -->
         <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
@@ -51,127 +52,130 @@
         </script>
     </head>
     <body>
-       <header>
-         <div class="container-fluid">
-            <div class="row">
-               <div class="col-md-6 col-sm-12 col-xs-12 hidden-xs">
-                  <a href="index.php">
-                  <img src="<?php echo base_url();?>includes/img/show.png" alt="" width="160" class="img-responsive img-center logo" />
-                  </a>
-               </div>
-               <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                  <nav class="navbar navbar-default">
-                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                          <span class="sr-only">Toggle navigation</span>
-                          <span class="icon-bar"></span>
-                          <span class="icon-bar"></span>
-                          <span class="icon-bar"></span>
-                        </button>
-                        <a class="img-responsive" href="#"><img src="<?php echo base_url();?>includes/img/show.png" alt="" width="160" /></a>
-                     </div>
+        <header>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12 hidden-xs">
+                        <a href="index.php">
+                            <img src="<?php echo base_url(); ?>includes/img/show.png" alt="" width="160" class="img-responsive img-center logo" />
+                        </a>
+                    </div>
+                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+                        <nav class="navbar navbar-default">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="img-responsive" href="#"><img src="<?php echo base_url(); ?>includes/img/show.png" alt="" width="160" /></a>
+                            </div>
 
-                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                          <li><a href="aboutus.php"><i class="fa fa-angle-double-right"></i>&nbsp;About Us</a></li>
-                           <!-- <li><a href="show.php">Shows</a></li> -->
-                           <li><a href="property.php"><i class="fa fa-angle-double-right"></i>&nbsp; Property</a></li>
-                           <li><a href="360.php"><i class="fa fa-angle-double-right"></i>&nbsp;360 &deg;</a></li>
-                           <li><a href="contactus.php"><i class="fa fa-angle-double-right"></i>&nbsp;Contact Us</a></li>
-                        </ul>
-                     </div><!-- /.navbar-collapse -->
-                  </nav>
-               </div>
-               <div class="col-md-6 col-sm-12 col-xs-12 headerbanner">
-                  <div id="carousel-example" class="carousel slide" data-ride="carousel">
-                  <!-- Wrapper for slides -->
-    
-                  <div class="carousel-inner">
-                      <div class="item active">
-                          <div class="carousel-content">
-                              <div class="col-md-10 col-md-offset-1 col-xs-12">
-                                 <div class="col-md-3 col-sm-3 hidden-xs">
-                                    <img src="<?php echo base_url();?>includes/img/logoad/1.png" alt="" class="img-responsive">
-                                 </div>
-                                 <div class="col-md-6 col-sm-6 col-xs-8">
-                                    <h3>Great Offer By Tata</h3>
-                                    <p>3,4,5 BHK Appartments, Flat Discounts</p>
-                                 </div>
-                                 <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
-                                 </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="item">
-                          <div class="carousel-content">
-                              <div class="col-md-10 col-md-offset-1">
-                                 <div class="col-md-3 col-sm-3 hidden-xs">
-                                    <img src="<?php echo base_url();?>includes/img/logoad/2.png" alt="" class="img-responsive">
-                                 </div>
-                                 <div class="col-md-6 col-sm-6 col-xs-8">
-                                    <h3>Great Offer By Lorem ipsum</h3>
-                                    <p>3,4,5 BHK Appartments, Flat Discounts</p>
-                                 </div>
-                                 <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
-                                 </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="item">
-                          <div class="carousel-content">
-                              <div class="col-md-10 col-md-offset-1">
-                                 <div class="col-md-3 col-sm-3 hidden-xs">
-                                    <img src="<?php echo base_url();?>includes/img/logoad/3.png" alt="" class="img-responsive">
-                                 </div>
-                                 <div class="col-md-6 col-sm-6 col-xs-8">
-                                    <h3>XYZ Builder pvt. ltd.</h3>
-                                    <p>3,4,5 BHK Appartments, Flat Discounts</p>
-                                 </div>
-                                 <div class="col-md-3 col-sm-3 col-xs-4">
-                                    <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
-                                 </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-       
-                  <!-- Controls -->
-                  <!-- <a class="left carousel-control" href="#carousel-example" data-slide="prev">
-                     
-                  </a>
-                  <a class="right carousel-control" href="#carousel-example" data-slide="next">
-                     
-                  </a> -->
-                  </div>
-               </div>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="aboutus.php"><i class="fa fa-angle-double-right"></i>&nbsp;About Us</a></li>
+                                    <!-- <li><a href="show.php">Shows</a></li> -->
+                                    <li><a href="property.php"><i class="fa fa-angle-double-right"></i>&nbsp; Property</a></li>
+                                    <li><a href="360.php"><i class="fa fa-angle-double-right"></i>&nbsp;360 &deg;</a></li>
+                                    <li><a href="contactus.php"><i class="fa fa-angle-double-right"></i>&nbsp;Contact Us</a></li>
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </nav>
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12 headerbanner">
+                        <div id="carousel-example" class="carousel slide" data-ride="carousel">
+                            <!-- Wrapper for slides -->
+
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <div class="carousel-content">
+                                        <div class="col-md-10 col-md-offset-1 col-xs-12">
+                                            <div class="col-md-3 col-sm-3 hidden-xs">
+                                                <img src="<?php echo base_url(); ?>includes/img/logoad/1.png" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-8">
+                                                <h3>Great Offer By Tata</h3>
+                                                <p>3,4,5 BHK Appartments, Flat Discounts</p>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-4">
+                                                <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="carousel-content">
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <div class="col-md-3 col-sm-3 hidden-xs">
+                                                <img src="<?php echo base_url(); ?>includes/img/logoad/2.png" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-8">
+                                                <h3>Great Offer By Lorem ipsum</h3>
+                                                <p>3,4,5 BHK Appartments, Flat Discounts</p>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-4">
+                                                <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="carousel-content">
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <div class="col-md-3 col-sm-3 hidden-xs">
+                                                <img src="<?php echo base_url(); ?>includes/img/logoad/3.png" alt="" class="img-responsive">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-8">
+                                                <h3>XYZ Builder pvt. ltd.</h3>
+                                                <p>3,4,5 BHK Appartments, Flat Discounts</p>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-4">
+                                                <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <!-- <a class="left carousel-control" href="#carousel-example" data-slide="prev">
+                               
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example" data-slide="next">
+                               
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12 blue-bg">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs">
+                                <!-- link -->
+                                <ul class="list-inline subnav cl-effect-1">
+                                    <li><a href="<?php echo base_url(); ?>aboutus">About Us</a></li>                           
+                                    <li><a href="<?php echo base_url(); ?>properties">Property</a></li>
+                                    <li><a href="<?php echo base_url(); ?>virtualview">360 &deg;</a></li>
+                                    <li><a href="<?php echo base_url(); ?>contactus">Contact Us</a></li>
+                                    <?php if ($this->flexi_auth->is_logged_in() && empty(!$userinfo)) { ?>
+                                        <li><a href="<?php echo base_url(); ?>index/logout">Logout</a></li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <nav class="mainnav">
+                                <ul class="clearfix">
+                                    <li><a href="<?php echo base_url(); ?>exhibitors"><i class="fa fa-user-circle-o"></i><span>Exibitors</span></a></li>
+                                    <li><a href="<?php echo base_url(); ?>visitors"><i class="fa fa-users"></i><span>Visitors</span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-               <div class="col-md-6 col-sm-12 col-xs-12 blue-bg">
-                  <div class="row">
-                     <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs">
-                        <!-- link -->
-                        <ul class="list-inline subnav cl-effect-1">
-                           <li><a href="<?php echo base_url();?>aboutus">About Us</a></li>                           
-                           <li><a href="<?php echo base_url();?>properties">Property</a></li>
-                           <li><a href="<?php echo base_url();?>virtualview">360 &deg;</a></li>
-                           <li><a href="<?php echo base_url();?>contactus">Contact Us</a></li>
-                        </ul>
-                     </div>
-                  </div>
-                  
-               </div>
-               <div class="col-md-6 col-sm-12 col-xs-12">
-                 <div class="row">
-                     <nav class="mainnav">
-                        <ul class="clearfix">
-                           <li><a href="<?php echo base_url();?>exhibitors"><i class="fa fa-user-circle-o"></i><span>Exibitors</span></a></li>
-                           <li><a href="<?php echo base_url();?>visitors"><i class="fa fa-users"></i><span>Visitors</span></a></li>
-                        </ul>
-                     </nav>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </header>
+        </header>

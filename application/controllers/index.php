@@ -62,13 +62,17 @@ class Index extends CI_Controller {
     }
 
     function property() {
-        echo "123!";die();
+        $this->data['properties'] = $this->Common_model->get_properties();        
+//        echo "<pre>";
+//        print_r($this->data['properties']);
+//        die();
         $this->data = $this->include_files();
         $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
         $this->load->view('property', $this->data);
     }
 
-    function properydetaiils() {
+    function propertydetails($property_id = null) {
+        echo $property_id;die();
         $this->data['header'] = $this->load->view('properties/header', NULL, TRUE);
         $this->data['footer'] = $this->load->view('properties/footer', NULL, TRUE);
         $this->load->view('properydetaiils', $this->data);

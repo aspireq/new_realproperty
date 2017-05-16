@@ -35,7 +35,7 @@ class Common_model extends CI_Model {
         $query = $this->db->insert($table, $data);
         return $query;
     }
-    
+
     function insert_record($table, $data) {
         $this->db->insert($table, $data);
         return $this->db->insert_id();
@@ -44,6 +44,20 @@ class Common_model extends CI_Model {
     function delete_where($tbl, $where) {
         $query = $this->db->delete($tbl, $where);
         return $query;
+    }
+
+    function get_properties() {
+        $this->db->select();
+        $this->db->from('properties');
+        $this->db->where('status', 1);
+        $qry = $this->db->get();
+        $final_data = array();
+        foreach ($qry->result() as $key => $row) {
+            $final_data[$key] = $row;
+            $result_arr = $this->db->query('select image as image from property_images where property_id = "' . $row->id . '"')->row();            
+            $final_data[$key]->image = $result_arr->image;            
+        }
+        return $final_data;
     }
 
 }
