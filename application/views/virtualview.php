@@ -35,11 +35,11 @@
                               <h2>Iscon Platinum</h2>
                               <p class="info">
                                  <span class="infobox">
-                                 <a data-toggle="modal" data-target="#comingsoon">
+                                 <a data-toggle="modal" data-target="#virtualtour">
                                     <img src="<?php echo base_url(); ?>includes/img/virtualreality.png" class="img-responsive" />
                                     <br><span>Virtual Reality</span>
                                  </a>
-                                 <a data-toggle="modal" data-target="#virtualtour">
+                                 <a data-toggle="modal" data-target="#comingsoon">
                                     <img src="<?php echo base_url(); ?>includes/img/360p.png" class="img-responsive"/>
                                     <br><span>360&deg; Tour</span>
                                  </a>
@@ -50,17 +50,17 @@
                      </div>
                      <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="hovereffect">
-                           <img class="img-responsive" src="img/property2.jpg" alt="">
+                           <img class="img-responsive" src="<?php echo base_url(); ?>includes/img/property2.jpg" alt="">
                            <div class="pro-overlay">
                               <h2>Sky Lights, Bopal</h2>
                               <p class="info">
                                  <span class="infobox">
-                                 <a data-toggle="modal" data-target="#comingsoon">
-                                    <img src="<?php echo base_url();?>includes/img/virtualreality.png" class="img-responsive" />
+                                 <a data-toggle="modal" data-target="#virtualtour">
+                                    <img src="<?php echo base_url(); ?>includes/img/virtualreality.png" class="img-responsive" />
                                     <br><span>Virtual Reality</span>
                                  </a>
-                                 <a data-toggle="modal" data-target="#virtualtour">
-                                    <img src="<?php echo base_url();?>includes/img/360p.png" class="img-responsive"/>
+                                 <a data-toggle="modal" data-target="#comingsoon">
+                                    <img src="<?php echo base_url(); ?>includes/img/360p.png" class="img-responsive"/>
                                     <br><span>360&deg; Tour</span>
                                  </a>
                                  </span>
@@ -75,12 +75,12 @@
                               <h2>Sky Park</h2>
                               <p class="info">
                                  <span class="infobox">
-                                 <a data-toggle="modal" data-target="#comingsoon">
-                                    <img src="<?php echo base_url();?>includes/img/virtualreality.png" class="img-responsive" />
+                                 <a data-toggle="modal" data-target="#virtualtour">
+                                    <img src="<?php echo base_url(); ?>includes/img/virtualreality.png" class="img-responsive" />
                                     <br><span>Virtual Reality</span>
                                  </a>
-                                 <a data-toggle="modal" data-target="#virtualtour">
-                                    <img src="<?php echo base_url();?>includes/img/360p.png" class="img-responsive"/>
+                                 <a data-toggle="modal" data-target="#comingsoon">
+                                    <img src="<?php echo base_url(); ?>includes/img/360p.png" class="img-responsive"/>
                                     <br><span>360&deg; Tour</span>
                                  </a>
                                  </span>
