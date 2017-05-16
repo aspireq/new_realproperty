@@ -119,11 +119,12 @@ h1 {
     background: #212121
 }
 .blue-bg {
-    background: #214063
+    background:#265C94
 }
-.img-center {
+.img-center, .center-block {
     margin: 0 auto;
     display: block;
+    float: none !important
 }
 .m-title {
     font-family: 'Roboto Slab', serif;
