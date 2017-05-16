@@ -857,5 +857,6 @@ $this->session->set_userdata('property_data', $newdata);
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <?php echo $footer; ?>

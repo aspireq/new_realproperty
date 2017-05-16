@@ -123,7 +123,7 @@ class Index extends CI_Controller {
     function logout() {
         $this->flexi_auth->logout(TRUE);
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        $this->login();
+        redirect(base_url().'login');
     }
 
 }

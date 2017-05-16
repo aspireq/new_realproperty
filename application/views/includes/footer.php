@@ -81,7 +81,7 @@
         <i class="fa fa-2x fa-arrow-circle-up"></i>
     </span>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script src="<?php echo base_url(); ?>includes/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>includes/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>includes/js/plugins.js"></script>
