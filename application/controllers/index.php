@@ -20,8 +20,8 @@ class Index extends CI_Controller {
         $this->load->vars('current_url', $this->uri->uri_to_assoc(1));
         // Define a global variable to store data that is then used by the end view page.
         $this->data = null;
-        
-        if($this->flexi_auth->is_logged_in()) {
+
+        if ($this->flexi_auth->is_logged_in()) {
             $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();
         }
     }
@@ -62,7 +62,7 @@ class Index extends CI_Controller {
     }
 
     function property() {
-        $this->data['properties'] = $this->Common_model->get_properties();        
+        $this->data['properties'] = $this->Common_model->get_properties();
 //        echo "<pre>";
 //        print_r($this->data['properties']);
 //        die();
@@ -72,7 +72,12 @@ class Index extends CI_Controller {
     }
 
     function propertydetails($property_id = null) {
-        echo $property_id;die();
+        $this->data['propertyinfo'] = $this->Common_model->select_where_row('properties', array('id' => $property_id));
+        $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $property_id));
+//        echo "<pre>";
+//        print_r($this->data['propertyinfo']);
+//        print_r($this->data['property_images']);
+//        die();
         $this->data['header'] = $this->load->view('properties/header', NULL, TRUE);
         $this->data['footer'] = $this->load->view('properties/footer', NULL, TRUE);
         $this->load->view('properydetaiils', $this->data);
@@ -123,7 +128,7 @@ class Index extends CI_Controller {
     function logout() {
         $this->flexi_auth->logout(TRUE);
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        redirect(base_url().'login');
+        redirect(base_url() . 'login');
     }
 
 }
