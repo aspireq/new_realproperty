@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+body{
+    font-family: 'Roboto', sans-serif;
+}
+strong{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+} 
+.block {
+    display: block;
+}
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+* {
+    border-radius: 0
+}
+.btn-info {
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, .5) 20%, rgba(255, 255, 255, .1) 80%);
+    background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, .5) 20%, rgba(255, 255, 255, .1) 80%);
+    background-image: linear-gradient(rgba(255, 255, 255, .5) 20%, rgba(255, 255, 255, .1) 80%);
+    border: 1px solid #10acc9;
+    background-color: #21c4d9;
+    color: #000
+}
+.btn-info:hover {
+    color: #000;
+}
+.modal-header {
+    background-color: #f39e0c;
+    color: #fff;
+}
+.modal-footer {
+    text-align: center;
+    padding: 0 0 15px 0
+}
+.modal-footer a {
+    color: #372F45;
+    font-weight: bold
+}
+.btn-link {
+    color: #09637d;
+    font-weight: bold;
+}
+.card {
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #ddd;
+}
+.card:hover {
+    /*transition: all .3s ease-in-out 0s;
+    -webkit-transition: all .3s ease-in-out 0s;
+    -moz-transition: all .3s ease-in-out 0s;
+    -o-transition: all .3s ease-in-out 0s;
+    transition: all .3s ease-in-out 0s;
+    -webkit-transform: scale(1.04);
+    -moz-transform: scale(1.04);
+    -o-transform: scale(1.04);
+    -ms-transform: scale(1.04);
+    transform: scale(1.04);*/
+     
+}
+.property .card{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    border:none
+}
+.property .card:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.overlay {
+    background: url(../img/pattern.png) repeat rgba(0, 0, 0, .8);
+    padding: 60px 0;
+    color: #fff
+}
+.with-bg {
+    background-image: url(../img/homepage.jpg);
+}
+ul {
+    padding-left: 0;
+    margin: 0
+}
+h1 {
+    font-size: 55px
+}
+.border-right {
+    border-right: 1px solid #B80000;
+    border-bottom: none
+}
+.border-dashed {
+    border-right: 1px dashed #aa8d54;
+}
+.parallax {
+    background-attachment: fixed;
+}
+.grey {
+    background: #dadada
+}
+.blue {
+    color: #012435
+}
+.red {
+    color: #fc1e23
+}
+.black {
+    color: #000
+}
+.yellow {
+    color: #f39e0c;
+    text-shadow: 1px 2px 2px #ddd;
+}
+.black-bg {
+    background: #212121
+}
+.blue-bg {
+    background: #214063
+}
+.img-center {
+    margin: 0 auto;
+    display: block;
+}
+.m-title {
+    font-family: 'Roboto Slab', serif;
+}
+sup {
+    color: #fc1e23;
+}
+.side-card {
+    background: #f6f6f6;
+    border-radius: 20px;
+    box-shadow: 5px 5px 2px 2px rgba(0, 0, 0, .2);
+}
+/*scroll*/
+
+.scroll-top-wrapper {
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    text-align: center;
+    z-index: 99999999;
+    color: #eeeeee;
+    width: 50px;
+    height: 48px;
+    line-height: 48px;
+    right: 30px;
+    bottom: 30px;
+    padding-top: 2px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    background-color: #32434C;
+    border-bottom: 4px solid #1D272C;
+}
+.scroll-top-wrapper:hover {
+    background-color: #888888;
+}
+.scroll-top-wrapper.show {
+    visibility: visible;
+    cursor: pointer;
+    opacity: 1.0;
+}
+.scroll-top-wrapper i.fa {
+    line-height: inherit;
+}
+.p-b-20 {
+    padding-bottom: 20px
+}
+.affix {
+    top: 0;
+    width: 100%;
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+nav {
+    -webkit-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+.navbar {
+    z-index: 9999;
+}
+.carousel-indicators .active {
+    width: 12px;
+    height: 12px;
+    margin: 0;
+    background-color: #B80000;
+    border: none
+}
+.carousel-indicators li {
+    border: 1px solid #7D0000;
+}
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 15%;
+}
+.list{
+    padding-left:0;
+    list-style-type: none;
+}
+.m-15{
+    margin-top: 15px
+}
