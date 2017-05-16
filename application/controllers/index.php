@@ -62,6 +62,7 @@ class Index extends CI_Controller {
     }
 
     function property() {
+        echo "123!";die();
         $this->data = $this->include_files();
         $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
         $this->load->view('property', $this->data);

@@ -54,5 +54,7 @@ $route['properties'] = 'index/property';
 $route['virtualview'] = 'index/virtualview';
 $route['aboutus'] = 'index/aboutus';
 $route['contactus'] = 'index/contactus';
+$route['visitors'] = 'index/visitors';
+$route['exhibitors'] = 'index/exhibitors';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
