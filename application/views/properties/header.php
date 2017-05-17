@@ -28,7 +28,7 @@
       <div class="container">
         <div class="row">
           <div class="navbar-header col-md-3 col-sm-6 col-xs-12">
-            <a href="../index.php">
+            <a href="<?php echo base_url();?>">
               <img src="<?php echo base_url();?>includes/properties_detail/images/logo.png" alt="Real Gujarat" Title="RealGujarat" class="img-responsive logo" />
             </a>
           </div>

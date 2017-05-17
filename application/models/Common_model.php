@@ -58,6 +58,10 @@ class Common_model extends CI_Model {
             if (!empty($result_arr)) {
                 $final_data[$key]->image = $result_arr->image;
             }
+            if ($row->plot_area != null && $row->plot_area != "" && $row->plot_area != 0) {
+                $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();                
+                $final_data[$key]->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
+            }
         }
         return $final_data;
     }

@@ -162,6 +162,7 @@ class Auth extends CI_Controller {
                     $property_id = $this->Common_model->insert_record('properties', $property_data);
                     $update_images = $this->Common_model->select_update('property_images', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                     $update_videos = $this->Common_model->select_update('property_videos', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
+                    $update_nearbny = $this->Common_model->select_update('property_nearby', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                 }
                 if ($property_id) {
                     $this->session->set_flashdata('message', "Property added successfully");
@@ -205,6 +206,32 @@ class Auth extends CI_Controller {
         }
     }
 
+    function properties_nearby() {
+        $properties_info = $this->session->userdata('property_data');
+        if (!empty($_FILES['file']['name'])) {
+            $this->load->library('upload');
+            $config['upload_path'] = 'includes/property_nearby';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['overwrite'] = FALSE;
+            $config['encrypt_name'] = TRUE;
+            $config['max_filename'] = 25;
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('file')) {
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('message', $error);
+                $response = strip_tags($error);
+                header('HTTP/1.1 500 Internal Server Error');
+                header('Content-type: application/json');
+                exit(json_encode($response));
+            } else {
+                $file_info = $this->upload->data();
+                $file_name = $file_info['file_name'];
+                $add_image = $this->Common_model->insert('property_nearby', array('image' => $file_name, 'property_unique_no' => $properties_info['property_unique_no']));
+                die(json_encode(array('filename' => $file_name)));
+            }
+        }
+    }
+
     function delete_property_image() {
         print_r($this->input->post());
         die();
@@ -233,15 +260,6 @@ class Auth extends CI_Controller {
         }
     }
 
-    function activate_account($user_id, $token = FALSE) {
-        // The 3rd activate_user() parameter verifies whether to check '$token' matches the stored database value.
-        // This should always be set to TRUE for users verifying their account via email.
-        // Only set this variable to FALSE in an admin environment to allow activation of accounts without requiring the activation token.
-        $this->flexi_auth->activate_user($user_id, $token, TRUE);
-        // Save any public status or error messages (Whilst suppressing any admin messages) to CI's flash session data.
-        $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        redirect('auth');
-    }
 
     function list_properties() {
 

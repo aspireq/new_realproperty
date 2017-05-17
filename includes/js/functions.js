@@ -165,6 +165,8 @@ $(document).ready(function () {
         var property_location = $('#us3-address').val();
         var property_address = $("#property_address").val();
         var property_neardesc = $("#property_neardesc").val();
+        var area_name = $("#area_name").val();
+        var city_name = $("#city_name").val();
         if (project_name == "") {
             call_error("project_name", "Please enter project name.");
             submit_false = 1;
@@ -185,6 +187,18 @@ $(document).ready(function () {
         }
         if (property_neardesc == "") {
             call_error("property_neardesc", "Please enter property address.");
+            submit_false = 1;
+        } else {
+            submit_false = (submit_false == 1) ? 1 : 0;
+        }
+        if (area_name == "") {
+            call_error("area_name", "Please enter area_name.");
+            submit_false = 1;
+        } else {
+            submit_false = (submit_false == 1) ? 1 : 0;
+        }
+        if (city_name == "") {
+            call_error("city_name", "Please enter city_name.");
             submit_false = 1;
         } else {
             submit_false = (submit_false == 1) ? 1 : 0;
