@@ -56,7 +56,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12 hidden-xs">
-                        <a href="index.php">
+                        <a href="<?php echo base_url();?>">
                             <img src="<?php echo base_url(); ?>includes/img/show.png" alt="" width="160" class="img-responsive img-center logo" />
                         </a>
                     </div>

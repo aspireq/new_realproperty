@@ -19,7 +19,7 @@
                                         <h3><?php echo $property->project_name; ?></h3>
                                         <a href="" rel="tooltip" title="Add to Favorites"><span class="fa fa-heart-o fa-2x"></span></a>
                                         <a href="" rel="tooltip" title="View"><span class="fa fa-search fa-2x"></span></a>
-                                    </div>                                    
+                                    </div>
                                     <img src="<?php echo base_url(); ?>includes/properties_images/<?php echo (isset($property->image) && $property->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $property->image))) ? $property->image : 'no_image.jpg'; ?>" class="img-responsive">
                                     <div class="propertyType house"><?php echo $property->property_type_name; ?></div>
                                 </div>
