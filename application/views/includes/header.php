@@ -158,7 +158,7 @@
                                     <li><a href="<?php echo base_url(); ?>properties">Property</a></li>
                                     <li><a href="<?php echo base_url(); ?>virtualview">360 &deg;</a></li>
                                     <li><a href="<?php echo base_url(); ?>contactus">Contact Us</a></li>
-                                    <?php if ($this->flexi_auth->is_logged_in() && empty(!$userinfo)) { ?>
+                                    <?php if ($this->flexi_auth->is_logged_in() && !empty($userinfo)) { ?>
                                         <li><a href="<?php echo base_url(); ?>index/logout">Logout</a></li>
                                     <?php } ?>
                                 </ul>

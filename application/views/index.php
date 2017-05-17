@@ -70,40 +70,51 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="filter row">
-                        <form class="form-inline col-md-12 col-sm-12 col-xs-12">
+                        <form class="form-inline col-md-12 col-sm-12 col-xs-12" method="post">
                             <div class="form-group col-md-3 col-sm-3 col-xs-12">
-                                <select class="form-control">
+                                <select class="form-control" name="property_type" id="property_type">
                                     <option selected="" disabled="">Property type</option>
                                     <option>All</option>
                                     <option disabled="">-------------------</option>
-                                    <option>Residential Apartment</option>
-                                    <option>Independent House</option>
-                                    <option>Residential Land</option>
-                                    <option>Commercial Shop</option>
-                                    <option>Commercial Office</option>
+                                    <option value="Residential Apartment">Residential Apartment</option>
+                                    <option value="Independent House">Independent House</option>
+                                    <option value="Residential Land">Residential Land</option>
+                                    <option value="Commercial Shop">Commercial Shop</option>
+                                    <option value="Commercial Office">Commercial Office</option>
+                                    <option value="Farm House">Farm House</option>
+                                    <option value="Serviced Apartment">Serviced Apartment</option>
+                                    <option value="Commercial Shops">Commercial Shops</option>
+                                    <option value="Commercial Showroom">Commercial Showroom</option>
+                                    <option value="Industrial Land">Industrial Land</option>
+                                    <option value="Ware House">Ware House</option>
+                                    <option value="Hotel / Resorts">Hotel / Resorts</option>
+                                    <option value="Guest House / Banquet-halls">Guest House / Banquet-halls</option>
+                                    <option value="Space in Mall">Space in Mall</option>
+                                    <option value="Cold Storage">Cold Storage</option>
+                                    <option value="Time Share">Time Share</option>                                    
                                 </select>
                             </div> 
                             <div class="form-group col-md-3 col-sm-3 col-xs-12">
-                                <select class="form-control">
+                                <select class="form-control" name="location" id="location">
                                     <option selected="" disabled="">Location</option>
                                     <option>All</option>
                                     <option disabled="">-------------------</option>
-                                    <option>Ahmedabad</option>
-                                    <option>Gandhinagar</option>
-                                    <option>Baroda</option>
+                                    <?php foreach ($locations as $location) { ?>
+                                        <option value="<?php echo $location->city_name; ?>"><?php echo $location->city_name; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div> 
                             <div class="form-group col-md-4 col-sm-3 col-xs-12">
-                                <select class="form-control">
+                                <select class="form-control" name="property_status" id="property_status">
                                     <option selected="" disabled="">Construction Status</option>
-                                    <option>All</option>
+                                    <option value="">All</option>
                                     <option disabled="">-------------------</option>
-                                    <option>Under Construction</option>
-                                    <option>Ready to Move</option>
+                                    <option value="Under Construction">Under Construction</option>
+                                    <option value="Ready to Move">Ready to Move</option>
                                 </select>
                             </div> 
                             <div class="form-group col-md-2 col-sm-3 col-xs-12">
-                                <button class="btn btn-primary btn-block">Search</button>  
+                                <button class="btn btn-primary btn-block" type="submit" name="search_data" id="search_data">Search</button>  
                             </div>                  
                         </form>
                     </div>

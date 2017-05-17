@@ -15,6 +15,7 @@ class Auth extends CI_Controller {
         $this->auth = new stdClass;
         $this->load->library('flexi_auth');
         $this->data = null;
+        
         // Redirect users logged in via password (However, not 'Remember me' users, as they may wish to login properly).
         if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'index/logout') {
             // Preserve any flashdata messages so they are passed to the redirect page.
@@ -122,7 +123,8 @@ class Auth extends CI_Controller {
                     $property_data['open_parking_count'] = $this->input->post('open_parking_count');
                 }
                 if ($this->input->post('available_from_value') && $this->input->post('available_from_value') != "") {
-                    $property_data['availability'] = $this->input->post('available_from_value');
+                    $property_data['available_from'] = $this->input->post('available_from_value');
+                    $property_data['availability'] = $this->input->post('availability');
                 }
                 if ($this->input->post('furnishing') && $this->input->post('furnishing') != "") {
                     $property_data['furnishing'] = $this->input->post('furnishing');

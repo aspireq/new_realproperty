@@ -46,10 +46,19 @@ class Common_model extends CI_Model {
         return $query;
     }
 
-    function get_properties() {
+    function get_properties($property_type = null, $location = null, $property_status = null) {
         $this->db->select();
         $this->db->from('properties');
         $this->db->where('status', 1);
+        if ($property_type != "") {
+            $this->db->where('property_type_name', $property_type);
+        }
+        if ($location != "") {
+            $this->db->where('city_name', $location);
+        }
+        if ($property_status != "") {
+            $this->db->where('city_name', $property_status);
+        }
         $qry = $this->db->get();
         $final_data = array();
         foreach ($qry->result() as $key => $row) {
@@ -59,7 +68,7 @@ class Common_model extends CI_Model {
                 $final_data[$key]->image = $result_arr->image;
             }
             if ($row->plot_area != null && $row->plot_area != "" && $row->plot_area != 0) {
-                $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();                
+                $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();
                 $final_data[$key]->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
             }
         }
@@ -105,6 +114,11 @@ class Common_model extends CI_Model {
 //        print_r($row);
 //        die();
         return $row;
+    }
+
+    function get_locations() {
+        $result = $this->db->query('SELECT DISTINCT(`city_name`) FROM `properties` where `city_name` != ""');
+        return $result->result();
     }
 
 }

@@ -291,41 +291,35 @@
                                 <hr/>
                                 <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                                     <div class="carousel-inner">
-
                                         <div class="item active">
                                             <div class="col-xs-12 col-sm-6 col-md-2">
                                                 <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/axisbank.png" class="img-responsive center-block"></a>
                                                 <h4 class="text-center">8.7% Floating</h4>
                                             </div>
                                         </div>
-
                                         <div class="item">
                                             <div class="col-xs-12 col-sm-6 col-md-2">
                                                 <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/citibank.png" class="img-responsive center-block"></a>
                                                 <h4 class="text-center">8.7% Floating</h4>
                                             </div>
                                         </div>
-
                                         <div class="item">
                                             <div class="col-xs-12 col-sm-6 col-md-2">
                                                 <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/hdfc.png" class="img-responsive center-block"></a>
                                                 <h4 class="text-center">8.7% Floating</h4>
                                             </div>
                                         </div>
-
                                         <div class="item">
                                             <div class="col-xs-12 col-sm-6 col-md-2">
                                                 <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/iifl.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
                                             </div>
                                         </div>
-
                                         <div class="item">
                                             <div class="col-xs-12 col-sm-6 col-md-2">
                                                 <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/punjab.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div id="slider-control">
                                         <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>
                                         <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_right.png" alt="Right" class="img-responsive"></a>

@@ -1,10 +1,29 @@
-RewriteEngine on
-RewriteBase /new_realproperty/
+#RewriteEngine on
+#RewriteBase /new_realproperty/
+#
+## Prevent CI index.php
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule .* index.php/$0 [PT,L] 
+#
+## Prevent user access to the CI system folder.
+#RewriteCond %{REQUEST_URI} ^system.*
+#RewriteRule ^(.*)$ /index.php?/$1 [L] 
+#
+## Prevent user access to the CI application folder
+#RewriteCond %{REQUEST_URI} ^application.*
+#RewriteRule ^(.*)$ /index.php?/$1 [L]
 
-# Prevent CI index.php
+
+<IfModule mod_rewrite.c>
+#Options +FollowSymLinks
+RewriteEngine on
+RewriteBase /demo/realproperty/
+</IfModule>
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule .* index.php/$0 [PT,L] 
+RewriteRule .* index.php/$1 [PT,L]
 
 # Prevent user access to the CI system folder.
 RewriteCond %{REQUEST_URI} ^system.*
