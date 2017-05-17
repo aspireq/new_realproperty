@@ -18,7 +18,7 @@
                     <?php if ($propertyinfo->price_per_sqft != "") { ?>
                         <h4 class="grey"><i class="fa fa-inr"></i>&nbsp;<?php echo $propertyinfo->price_per_sqft; ?> per sqft.</h4>  
                     <?php } ?>
-                    <h4 class="grey"><i class="fa fa-map-marker"></i>&nbsp;<?php echo $propertyinfo->property_location; ?>  </h4>
+                    <h4 class="grey"><i class="fa fa-map-marker"></i>&nbsp;<?php echo $propertyinfo->city_name; ?>  </h4>
                 </div>
             </div>
         </div>
@@ -80,7 +80,8 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="home">
-                                        <p><?php echo $propertyinfo->property_description; ?></p>
+                                        <p><?php echo $propertyinfo->project_name; ?> project of [builder name] offers a perfect balance lifestyle, business and leisure. The lush ambience, ultra-modern design and higher recreational value makes [builder name] one of the most desirable edifices in <?php echo $propertyinfo->area_name; ?> and <?php echo $propertyinfo->city_name; ?>. Moreover, its affordability rightly fits into the budget of locals looking for contemporary spaces to fulfill their <?php echo $propertyinfo->property_type; ?> needs and investors looking for real estate profits.</p>
+                                        <p><?php echo $propertyinfo->project_name; ?> is also the ideal destination for space-onlookers wanting to be a part of this amazing city.Considering to buy 2 or 3 BHK house or a workplace that symbolizes tranquility and prosperity?</p>
                                         <ul class="list list-half">
                                             <li><i class="fa fa-angle-right"></i>&nbsp;Avalability : <span><?php echo ($propertyinfo->availability != "") ? $propertyinfo->availability : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;Possession By : <span><?php echo ($propertyinfo->available_from != "") ? $propertyinfo->available_from : 'N/A'; ?></span></li>
@@ -89,34 +90,30 @@
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="profile">
                                         <ul class="list list-half clearfix">
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Configurations :</strong><br>&nbsp;&nbsp;5 BHK Apartment</li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Plot Area :</strong><br>&nbsp;&nbsp;<span>8,500 sqft.</span> </li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Built Up Area :</strong><br>&nbsp;&nbsp;<span>8,500 sqft.</span> </li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Carpet Area:</strong><br>&nbsp;&nbsp;<span>8,500 sqft.</span> </li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Total Floor:</strong><br>&nbsp;&nbsp;<span>5 floor</span> </li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property on floor:</strong><br>&nbsp;&nbsp;<span>5 </span> </li>
-
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Configurations :</strong><br>&nbsp;&nbsp;<?php echo ($propertyinfo->property_configuration != null && $propertyinfo->property_configuration != "0") ? $propertyinfo->property_configuration : 'N/A'; ?></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Plot Area :</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->plot_area != null && $propertyinfo->plot_area != 0) ? $propertyinfo->plot_area . ' ' . $propertyinfo->plot_area_unit_name : 'N/A'; ?></span> </li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Built Up Area :</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->build_up_area != null && $propertyinfo->build_up_area != 0) ? $propertyinfo->build_up_area . ' ' . $propertyinfo->build_up_area_unit_name : 'N/A'; ?></span> </li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Carpet Area:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->carpet_area != null && $propertyinfo->carpet_area != 0) ? $propertyinfo->carpet_area . ' ' . $propertyinfo->carpet_area_unit_name : 'N/A'; ?></span> </li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Total Floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->total_floor != null && $propertyinfo->total_floor != 0) ? $propertyinfo->total_floor . ' floor' : 'N/A'; ?></span> </li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property on floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_on_floor != null && $propertyinfo->property_on_floor != "") ? $propertyinfo->property_on_floor : 'N/A'; ?></span></li>
                                         </ul>
                                         <hr/>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                        <p><?php echo ($propertyinfo->property_description != "") ? $propertyinfo->property_description : ''; ?></p>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="messages">
                                         <div class="row m-b">
                                             <div class="col-md-12">
                                                 <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/elevator.png" />&nbsp;Project Amenities :</b></h4>
                                                 <ul class="list list-half">
-                                                    <li>
-                                                        Lift
-                                                    </li>
-                                                    <li>
-                                                        Security
-                                                    </li>
-                                                    <li>
-                                                        Visitor Parking
-                                                    </li>
-                                                    <li>
-                                                        Park
-                                                    </li>
+                                                    <?php
+                                                    if (isset($propertyinfo->project_amenities) && !empty($propertyinfo->project_amenities)) {
+                                                        foreach ($propertyinfo->project_amenities as $amenities) {
+                                                            echo '<li>' . $amenities['project_amenities'] . '</li>';
+                                                        }
+                                                    } else {
+                                                        echo '<li>N/A</li>';
+                                                    }
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -124,15 +121,15 @@
                                             <div class="col-md-12">
                                                 <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/pipes.png" />&nbsp;Flat Amenities :</b></h4>
                                                 <ul class="list list-half">
-                                                    <li>
-                                                        Gas Line
-                                                    </li>
-                                                    <li>
-                                                        Intercom
-                                                    </li>
-                                                    <li>
-                                                        Waste Disposal
-                                                    </li>
+                                                    <?php
+                                                    if (isset($propertyinfo->flat_amenities) && !empty($propertyinfo->flat_amenities)) {
+                                                        foreach ($propertyinfo->flat_amenities as $amenities) {
+                                                            echo '<li>' . $amenities['flat_amenities'] . '</li>';
+                                                        }
+                                                    } else {
+                                                        echo '<li>N/A</li>';
+                                                    }
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -160,6 +157,7 @@
                                                     <li><span class="maintext">Study Room :</span>&nbsp;<span class="subtext">Standard</span></li>
                                                     <li><span class="maintext">Servant Room :</span>&nbsp;<span class="subtext">Standard</span></li>
                                                     <li><span class="maintext">Store Room:</span>&nbsp;<span class="subtext">Standard</span></li>
+                                                    <li><span class="maintext">Other Room:</span>&nbsp;<span class="subtext">Standard</span></li>
                                                 </ul>
                                             </div>
                                         </div>
