@@ -152,7 +152,7 @@ class Auth extends CI_Controller {
                 if (!empty($flat_amenities)) {
                     $property_data['flat_amenities'] = $flat_amenities;
                 }
-                if (!empty($property_data)) {
+                if (!empty($property_data)) {                    
                     $property_id = $this->Common_model->insert_record('properties', $property_data);
                     $update_images = $this->Common_model->select_update('property_images', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                     $update_videos = $this->Common_model->select_update('property_videos', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));

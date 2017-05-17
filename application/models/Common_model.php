@@ -54,8 +54,10 @@ class Common_model extends CI_Model {
         $final_data = array();
         foreach ($qry->result() as $key => $row) {
             $final_data[$key] = $row;
-            $result_arr = $this->db->query('select image as image from property_images where property_id = "' . $row->id . '"')->row();            
-            $final_data[$key]->image = $result_arr->image;            
+            $result_arr = $this->db->query('select image as image from property_images where property_id = "' . $row->id . '"')->row();
+            if (!empty($result_arr)) {
+                $final_data[$key]->image = $result_arr->image;
+            }
         }
         return $final_data;
     }

@@ -16,11 +16,11 @@
                             <div class="card">                           
                                 <div class="view">
                                     <div class="caption">
-                                        <h3>Wiseberry</h3>
+                                        <h3><?php echo $property->project_name; ?></h3>
                                         <a href="" rel="tooltip" title="Add to Favorites"><span class="fa fa-heart-o fa-2x"></span></a>
                                         <a href="" rel="tooltip" title="View"><span class="fa fa-search fa-2x"></span></a>
                                     </div>                                    
-                                    <img src="<?php echo base_url(); ?>includes/properties_images/<?php echo ($property->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $property->image))) ? $property->image : 'no_image.jpg' ?>" class="img-responsive">
+                                    <img src="<?php echo base_url(); ?>includes/properties_images/<?php echo (isset($property->image) && $property->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $property->image))) ? $property->image : 'no_image.jpg'; ?>" class="img-responsive">
                                     <div class="propertyType house">House</div>
                                 </div>
                                 <a href="<?php echo base_url();?>index/propertydetails/<?php echo $property->id; ?>">

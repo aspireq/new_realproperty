@@ -24,7 +24,7 @@
                                     </label>
                                 </div>
                                 <div class="radio radio-danger">
-                                    <input type="radio" name="user_type" id="visitors" value="visitor">
+                                    <input type="radio" name="user_type" id="visitors" value="visitor" disabled="">
                                     <label for="visitors">
                                         Are You Visitors?
                                     </label>
