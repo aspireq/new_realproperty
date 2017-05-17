@@ -69,8 +69,8 @@
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-                Copyright &copy; 2017 property.realgujarat.com | All Rights Reserved.
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center copyright">
+                Copyright &copy; 2017 <a href="http://property.realgujarat.com/">property.realgujarat.com</a> | All Rights Reserved.
             </div>
         </div>
     </div>

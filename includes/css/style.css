@@ -1286,3 +1286,9 @@ nav-tabs { border-bottom: 2px solid #DDD; }
 #features .dropzone{
     min-height: 200px
 }
+.copyright a{
+    color: #fff
+}
+.copyright a:hover{
+    color:#48DBEF
+}
