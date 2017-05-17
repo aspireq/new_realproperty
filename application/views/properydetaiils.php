@@ -7,7 +7,7 @@
                     <ul class="list-inline breadcrum">
                         <li><a href="<?php echo base_url(); ?>">Home</a></li>
                         <li>/</li>
-                        <li><a href="<?php echo base_url(); ?>property">Property</a></li>
+                        <li><a href="<?php echo base_url(); ?>index/property">Property</a></li>
                         <li>/</li>
                         <li class="active"><a href=""><?php echo $propertyinfo->project_name ?></a></li>
                     </ul>
