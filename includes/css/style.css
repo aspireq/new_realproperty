@@ -641,7 +641,7 @@ footer {
     position: absolute;
     text-align: center;
     top: 0px;
-    width: 100px;
+    width: auto;
 }
 .propertyType{
     z-index: 2;
@@ -655,6 +655,15 @@ footer {
 }
 .info p, .stats p {
     margin-bottom: 0;
+}
+.info li span{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width:67px;
+    display: block;
+    float: left;
+    line-height: 8px;
 }
 .stats {
     display: block;
@@ -1285,4 +1294,10 @@ nav-tabs { border-bottom: 2px solid #DDD; }
 }
 #features .dropzone{
     min-height: 200px
+}
+.copyright a{
+    color: #fff
+}
+.copyright a:hover{
+    color:#48DBEF
 }
