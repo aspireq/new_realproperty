@@ -784,7 +784,7 @@ $this->session->set_userdata('property_data', $newdata);
                                             </div>
                                         </div>
                                     </div>
-                                    <h5><b>Upload Nearby Area Photos:</b></h5>
+                                    <h5><hr/><b>Upload Nearby Area Photos:</b></h5>
                                     <div id="dropzone">
                                         <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_nearby" method="post">                                            
                                             <div class="dz-default dz-message">
