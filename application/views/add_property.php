@@ -284,6 +284,18 @@ $this->session->set_userdata('property_data', $newdata);
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="area_name" class="col-sm-3 control-label">Area Name:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="area_name" name="area_name" placeholder="type here.." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city_name" class="col-sm-3 control-label">City Name:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="city_name" name="city_name" placeholder="type here.." />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="property_neardesc" class="col-sm-3 control-label">About Near By Area:<sup>*</sup></label>
                                             <div class="col-sm-9">
                                                 <textarea name="property_neardesc" id="property_neardesc" class="form-control" placeholder="Write about near by places like railway station,hospital etc."></textarea>

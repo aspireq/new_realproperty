@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Auth extends CI_Controller {
 
-    function __construct() { 
+    function __construct() {
         parent::__construct();
         // Load required CI libraries and helpers.
         $this->load->database();
@@ -64,7 +64,7 @@ class Auth extends CI_Controller {
     }
 
     function add_property() {
-      //  header('Content-Type: application/json');
+        //  header('Content-Type: application/json');
         if ($this->flexi_auth->is_logged_in()) {
             // set random number for propety 
             // later used to upload images and videos for reffrence no.          
@@ -142,6 +142,12 @@ class Auth extends CI_Controller {
                 if ($this->input->post('other_room')) {
                     $property_data['other_room'] = $this->input->post('other_room');
                 }
+                if ($this->input->post('area_name')) {
+                    $property_data['area_name'] = $this->input->post('area_name');
+                }
+                if ($this->input->post('city_name')) {
+                    $property_data['city_name'] = $this->input->post('city_name');
+                }
                 if ($this->input->post('maintenance_amount')) {
                     $property_data['maintenance_amount'] = $this->input->post('maintenance_amount');
                     $property_data['maintenance_type'] = $this->input->post('maintenance_type');
@@ -152,7 +158,7 @@ class Auth extends CI_Controller {
                 if (!empty($flat_amenities)) {
                     $property_data['flat_amenities'] = $flat_amenities;
                 }
-                if (!empty($property_data)) {                    
+                if (!empty($property_data)) {
                     $property_id = $this->Common_model->insert_record('properties', $property_data);
                     $update_images = $this->Common_model->select_update('property_images', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                     $update_videos = $this->Common_model->select_update('property_videos', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));

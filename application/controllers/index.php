@@ -72,7 +72,7 @@ class Index extends CI_Controller {
     }
 
     function propertydetails($property_id = null) {
-        $this->data['propertyinfo'] = $this->Common_model->select_where_row('properties', array('id' => $property_id));
+        $this->data['propertyinfo'] = $this->Common_model->get_property($property_id);
         $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $property_id));
 //        echo "<pre>";
 //        print_r($this->data['propertyinfo']);
