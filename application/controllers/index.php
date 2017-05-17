@@ -71,9 +71,20 @@ class Index extends CI_Controller {
         $this->load->view('property', $this->data);
     }
 
+    function activate_account($user_id, $token = FALSE) {
+        // The 3rd activate_user() parameter verifies whether to check '$token' matches the stored database value.
+        // This should always be set to TRUE for users verifying their account via email.
+        // Only set this variable to FALSE in an admin environment to allow activation of accounts without requiring the activation token.
+        $this->flexi_auth->activate_user($user_id, $token, TRUE);
+        // Save any public status or error messages (Whilst suppressing any admin messages) to CI's flash session data.
+        $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
+        redirect('auth');
+    }
+
     function propertydetails($property_id = null) {
         $this->data['propertyinfo'] = $this->Common_model->get_property($property_id);
         $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $property_id));
+        $this->data['property_nearby'] = $this->Common_model->select_where('property_nearby', array('property_id' => $property_id));
 //        echo "<pre>";
 //        print_r($this->data['propertyinfo']);
 //        print_r($this->data['property_images']);

@@ -633,10 +633,10 @@
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 	
 	// Site title shown as 'from' header on emails.
-	$config['email']['site_title'] = "flexi auth";
+	$config['email']['site_title'] = "property.realgujarat.com";
 	
 	// Reply email shown as 'from' header on emails.
-	$config['email']['reply_email'] = "info@website.com";
+	$config['email']['reply_email'] = "info@realgujarat.com";
 	
 	/**
 	 * Type of email to send, options: 'html', 'text'.

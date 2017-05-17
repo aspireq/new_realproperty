@@ -41,7 +41,6 @@
                                     <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_images/<?php echo $first_image; ?>">
                                 </a>
                             </li>
-
                             <?php
                             foreach ($property_images as $key => $image) {
                                 if ($key > 0) {
@@ -57,7 +56,6 @@
                                 }
                             }
                             ?>
-
                         </ul>
                     </div>
                     <div class="row">
@@ -137,12 +135,17 @@
                                             <div class="col-md-12">
                                                 <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/parking.png" />&nbsp;Parking Detail :</b></h4>
                                                 <ul class="list list-half">
-                                                    <li>
-                                                        Cover Parking : 5
-                                                    </li>
-                                                    <li>
-                                                        Open Parking : 1
-                                                    </li>
+                                                    <?php
+                                                    if ($propertyinfo->no_parking == 1) {
+                                                        echo '<li>No Parkings</li>';
+                                                    }
+                                                    if ($propertyinfo->covered_parking == 1) {
+                                                        echo '<li>' . 'Covered Parkings  : ' . $propertyinfo->covered_parking_count . '</li>';
+                                                    }
+                                                    if ($propertyinfo->open_parking == 1) {
+                                                        echo '<li>' . 'Open Parkings  : ' . $propertyinfo->open_parking_count . '</li>';
+                                                    }
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -150,14 +153,14 @@
                                             <div class="col-md-12">
                                                 <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/stairs.png"/>&nbsp;Floorings :</b></h4>
                                                 <ul class="list list-half">
-                                                    <li><span class="maintext">Bedrooms:</span> <span class="subtext">2</span> </li>
-                                                    <li><span class="maintext">Bathrooms:</span> <span class="subtext">1</span> </li>
-                                                    <li><span class="maintext">Balconies:</span>&nbsp;<span class="subtext">1</span> </li>
-                                                    <li><span class="maintext">Pooja Room:</span>&nbsp;<span class="subtext">Standard</span></li>
-                                                    <li><span class="maintext">Study Room :</span>&nbsp;<span class="subtext">Standard</span></li>
-                                                    <li><span class="maintext">Servant Room :</span>&nbsp;<span class="subtext">Standard</span></li>
-                                                    <li><span class="maintext">Store Room:</span>&nbsp;<span class="subtext">Standard</span></li>
-                                                    <li><span class="maintext">Other Room:</span>&nbsp;<span class="subtext">Standard</span></li>
+                                                    <li><span class="maintext">Bedrooms:</span> <span class="subtext"><?php echo ($propertyinfo->bedrooms != "" && $propertyinfo->bedrooms != null) ? $propertyinfo->bedrooms : 'N/A'; ?></span> </li>
+                                                    <li><span class="maintext">Bathrooms:</span> <span class="subtext"><?php echo ($propertyinfo->bathrooms != "" && $propertyinfo->bathrooms != null) ? $propertyinfo->bathrooms : 'N/A'; ?></span> </li>                                                    
+                                                    <li><span class="maintext">Balconies:</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->balconies != "" && $propertyinfo->balconies != null) ? $propertyinfo->balconies : 'N/A'; ?></span> </li>
+                                                    <li><span class="maintext">Pooja Room:</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->pooja_room == 1) ? 'Available' : 'N/A'; ?></span></li>
+                                                    <li><span class="maintext">Study Room :</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->servent_room == 1) ? 'Available' : 'N/A'; ?></span></li>
+                                                    <li><span class="maintext">Servant Room :</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->study_room == 1) ? 'Available' : 'N/A'; ?></span></li>
+                                                    <li><span class="maintext">Store Room:</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->store_room == 1) ? 'Available' : 'N/A'; ?></span></li>
+                                                    <li><span class="maintext">Other Room:</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->other_room == 1) ? 'Available' : 'N/A'; ?></span></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -200,12 +203,12 @@
                                         <div class="panel-heading" role="tab" id="headingOne">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Insights into Gulbai Tekra
+                                                    Insights into <?php echo $propertyinfo->area_name; ?>
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                            <div class="panel-body"><p>Nestled in between the busy Gujarat University Road and CG Road (Chimanlal Girdharlal Road), Gulbai Tekra is one of the developing locality in Ahmedabad. Gulbai Tekra is surrounded by areas Ambavadi, Ellisbridge, Gurukul, Jodhpur Village, Juhapura, Memnagar, Naranpura, Navrangpura, Paldi and Prahlad Nagar. Gujarat University is just stone's throw away distance from here. It is a well-connected district in the city with various major roadways linking it to the neighboring major cities and beyond. The major road route is Sarkhej-Gandhinagar Highway besides which many other roads are also present that ease conveyance like Vastrapur Station Road, Vejalpur Road, Prahlad Nagar Road, Corporate Road, Ramdev Nagar Road and Jodhpur Gam Road. </p></div>
+                                            <div class="panel-body"><p><?php echo $propertyinfo->property_neardesc; ?></p></div>
                                         </div>
                                     </div>
                                     <div class="panel panel-default">
@@ -231,36 +234,28 @@
                                 <hr/>
                                 <div class="demo-gallery">
                                     <ul id="nearby" class="list-unstyled row">
-                                        <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop1.jpg 375, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop1.jpg 480, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop1.jpg 800" data-src="plugin/lightbox/img/shop1.jpg" data-sub-html="<h4>Front View</h4><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-                                            <a href="">
-                                                <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop1.jpg">
-                                            </a>
-                                        </li>
-                                        <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="plugin/lightbox/img/shop2.jpg 375, plugin/lightbox/img/shop2.jpg 480, plugin/lightbox/img/shop2.jpg 800" data-src="plugin/lightbox/img/shop2.jpg" data-sub-html="<h4>2D View</h4><p>A beautiful Sunrise this morning taken En-route to Keswick not one as planned ....</p>">
-                                            <a href="">
-                                                <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop2.jpg">
-                                            </a>
-                                        </li>
-                                        <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="plugin/lightbox/img/shop3.jpg 375, plugin/lightbox/img/shop3.jpg 480, plugin/lightbox/img/shop3.jpg 800" data-src="plugin/lightbox/img/shop3.jpg" data-sub-html="<h4>Lorem ipsum</h4><p></p>">
-                                            <a href="">
-                                                <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop3.jpg">
-                                            </a>
-                                        </li>
-                                        <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop4.jpg 375, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop4.jpg 480, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop4.jpg 800" data-src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop4.jpg" data-sub-html="<h4>Bowness Bay</h4><p>....</p>">
-                                            <a href="">
-                                                <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/shop4.jpg">
-                                            </a>
-                                        </li>
-                                        <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img5.jpg 375, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img5.jpg 480, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img5.jpg 800" data-src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img5.jpg" data-sub-html="<h4>Bowness Bay</h4><p>....</p>">
-                                            <a href="" class="hidden">
-                                                <img class="img-responsive" src="plugin/lightbox/img/img5.jpg">
-                                            </a>
-                                        </li>
-                                        <li class="col-xs-6 col-sm-6 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img6.jpg 375, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img6.jpg 480, <?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img6.jpg 800" data-src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img6.jpg" data-sub-html="<h4>Bowness Bay</h4><p>....</p>">
-                                            <a href="" class="hidden">
-                                                <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_detail/plugin/lightbox/img/img6.jpg">
-                                            </a>
-                                        </li>
+
+
+                                        <?php
+                                        foreach ($property_nearby as $key => $image) {
+                                            if ($key > 0) {
+                                                if ($image->image != "" && (file_exists(FCPATH . 'includes/property_nearby/' . $image->image))) {
+                                                    ?>
+<!--                                                    <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 375, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 480, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 800" data-src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>" data-sub-html="">
+                                                        <a href="">
+                                                            <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>">
+                                                        </a>
+                                                    </li>-->
+                                                    <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?> 375, <?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?> 480, <?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?> 800" data-src="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?>" data-sub-html="">
+                                                        <a href="">
+                                                            <img class="img-responsive" src="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?>">
+                                                        </a>
+                                                    </li>
+                                                    <?php
+                                                }
+                                            }
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             </div>
