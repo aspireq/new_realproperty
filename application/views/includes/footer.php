@@ -59,8 +59,8 @@
             <?php if (!$this->flexi_auth->is_logged_in() && empty($userinfo)) { ?>
                 <div class="col-md-3 col-sm-12 col-xs-12 text-center">
                     <h3>Stay connect with us</h3>
-                    <a href="<?php echo base_url(); ?>index.php/index/register"><button class="btn btn-primary btn-main btn-foo">Register Now</button></a>
-                    <a href="<?php echo base_url(); ?>index.php/index/login"><button class="btn btn-primary btn-main btn-foo">Login</button></a>
+                    <a href="<?php echo base_url(); ?>register"><button class="btn btn-primary btn-main btn-foo">Register Now</button></a>
+                    <a href="<?php echo base_url(); ?>login"><button class="btn btn-primary btn-main btn-foo">Login</button></a>
                 </div>
             <?php } ?>
         </div>
@@ -257,7 +257,7 @@
             $('#security_depisit_info').hide();
         }
         $.ajax({
-            url: "<?php echo base_url(); ?>index.php/auth/list_properties/",
+            url: "<?php echo base_url(); ?>auth/list_properties/",
             type: "POST",
             data: {property_type: listed_propery},
             dataType: "JSON",
@@ -286,7 +286,7 @@
         var listed_propery = $('#property_type').val();
         if (listed_propery == "Rent/Lease") {
             $.ajax({
-                url: "<?php echo base_url(); ?>index.php/auth/residential_propery/",
+                url: "<?php echo base_url(); ?>auth/residential_propery/",
                 type: "POST",
                 data: {},
                 dataType: "JSON",
@@ -297,7 +297,7 @@
             });
         } else if (listed_propery == "PayingGuest") {
             $.ajax({
-                url: "<?php echo base_url(); ?>index.php/auth/rent_options/",
+                url: "<?php echo base_url(); ?>auth/rent_options/",
                 type: "POST",
                 data: {},
                 dataType: "JSON",
@@ -324,7 +324,7 @@
         var listed_propery = $('#property_type').val();
         if (listed_propery == "Sell") {
             $.ajax({
-                url: "<?php echo base_url(); ?>index.php/auth/sell_options/",
+                url: "<?php echo base_url(); ?>auth/sell_options/",
                 type: "POST",
                 data: {},
                 dataType: "JSON",
@@ -389,7 +389,7 @@
             });
         }
         $.ajax({
-            url: "<?php echo base_url(); ?>index.php/auth/delete_property_image/",
+            url: "<?php echo base_url(); ?>auth/delete_property_image/",
             type: "POST",
             data: {filename: filename},
             dataType: "JSON",

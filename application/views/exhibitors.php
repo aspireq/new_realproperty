@@ -83,7 +83,7 @@
                   
                </div>
                <div class="col-md-3 text-center">
-                  <a href="<?php echo base_url();?>index.php/auth/add_property" class="btn btn-danger btn-ad"><img src="<?php echo base_url();?>includes/img/ad.png" />&nbsp;Ad Your Property</a>
+                  <a href="<?php echo base_url();?>auth/add_property" class="btn btn-danger btn-ad"><img src="<?php echo base_url();?>includes/img/ad.png" />&nbsp;Ad Your Property</a>
                </div>
             </div>
          </div>

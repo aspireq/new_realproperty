@@ -12,28 +12,44 @@
                     </div>
                     <hr/>
                     <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
+
                         <p class="red">* For faster respond please include your support pin although it is not mandatory.</p>
                         <br/>
-                        <form class="contactform row">
+                        <form class="contactform row" method="post">
+                            <?php
+                            if ($message != "" && $message == "Email has been sent successfully") {
+                                ?>
+                                <div class="alert alert-success alert-dismissable">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <?php echo $message; ?>
+                                </div>
+                                <?php
+                            } else if ($message != "") {
+                                ?>
+                                <div class="alert alert-danger alert-dismissable">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <?php echo $message; ?>
+                                </div>
+                            <?php } ?>
                             <div class="form-group col-lg-6 col-md-6">
-                                <label for="">Name:<sup>*</sup></label>
-                                <input type="text" class="form-control" id="" placeholder="Name">
+                                <label for="name">Name:<sup>*</sup></label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required="">
                             </div>
                             <div class="form-group col-lg-6 col-md-6">
-                                <label for="">User Name:</label>
-                                <input type="text" class="form-control" id="" placeholder="User Name">
+                                <label for="contact_no">Contact No.:</label>
+                                <input type="text" class="form-control" id="contact_no" name="contact_no" placeholder="Contact No." required="" maxlength="10">
                             </div>
                             <div class="form-group col-lg-6 col-md-6">
-                                <label for="">Email:<sup>*</sup></label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                <label for="email">Email:<sup>*</sup></label>
+                                <input type="email" class="form-control" id="email" placeholder="Email" name="email" required="">
                             </div>
                             <div class="form-group col-lg-6 col-md-6">
-                                <label for="">Subject:</label>
-                                <input type="text" class="form-control" id="" placeholder="Subject">
+                                <label for="subject">Subject:</label>
+                                <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" required="">
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="exampleInputFile">Message:<sup>*</sup></label>
-                                <textarea  class="form-control" rows="3"></textarea>
+                                <label for="message">Message:<sup>*</sup></label>
+                                <textarea  class="form-control" rows="3" name="message"></textarea>
                             </div>
                             <div class="form-group col-md-12">
                                 <button type="submit" class="btn btn-main btn-primary pull-right ">Submit</button>

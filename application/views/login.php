@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 text-center registerlink">
-                            <a href="<?php echo base_url(); ?>index.php/index/register">Are You New User? Register Now</a>
+                            <a href="<?php echo base_url(); ?>register">Are You New User? Register Now</a>
                         </div>
                     </form>
                 </div>

@@ -57,7 +57,7 @@ class Index extends CI_Controller {
         $this->load->view('index', $this->data);
     }
 
-    function home() {        
+    function home() {
         $this->data['locations'] = $this->Common_model->get_locations();
         if ($this->input->post()) {
             $property_type = $this->input->post('property_type');
@@ -95,17 +95,13 @@ class Index extends CI_Controller {
         $this->flexi_auth->activate_user($user_id, $token, TRUE);
         // Save any public status or error messages (Whilst suppressing any admin messages) to CI's flash session data.
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        redirect(base_url().'index.php/index');
+        redirect(base_url());
     }
 
     function propertydetails($property_id = null) {
         $this->data['propertyinfo'] = $this->Common_model->get_property($property_id);
         $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $property_id));
         $this->data['property_nearby'] = $this->Common_model->select_where('property_nearby', array('property_id' => $property_id));
-//        echo "<pre>";
-//        print_r($this->data['propertyinfo']);
-//        print_r($this->data['property_images']);
-//        die();
         $this->data['header'] = $this->load->view('properties/header', NULL, TRUE);
         $this->data['footer'] = $this->load->view('properties/footer', NULL, TRUE);
         $this->load->view('properydetaiils', $this->data);
@@ -136,6 +132,24 @@ class Index extends CI_Controller {
     }
 
     function contactus() {
+        if ($this->input->post()) {
+            $subject = 'property.realgujarat - ' . $this->input->post('subject');
+            $message = "Contact Info   \n";
+            $message .= "Name  : " . $this->input->post('name') . "\n";            
+            $message .= "Email : " . $this->input->post('email') . "\n";
+            $message .= "Contact No. : " . $this->input->post('contact_no') . "\n";
+            $message .= "\r";
+            $message .= "Message : " . $this->input->post('message');
+
+            $headers = 'From: ' . From_Email . '' . "\r\n" .
+                    'Reply-To: ' . Reply_Email . '' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+            if (mail(Owner_Email, $subject, $message, $headers)) {
+                $this->session->set_flashdata('message', "Email has been sent successfully");
+            } else {
+                $this->session->set_flashdata('message', "Something went wrong,please try again later");
+            }
+        }
         $this->data = $this->include_files();
         $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
         $this->load->view('contactus', $this->data);
@@ -156,7 +170,7 @@ class Index extends CI_Controller {
     function logout() {
         $this->flexi_auth->logout(TRUE);
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        redirect(base_url() . 'index.php/index/login');
+        redirect(base_url() . 'login');
     }
 
 }
