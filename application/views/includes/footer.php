@@ -271,7 +271,7 @@
         });
     }
     function set_info(info_type) {
-        alert(info_type);
+        //alert(info_type);
         //$("select[name=property_type] option:last").remove();        
         $('#resengital_options').empty();
         $('#rent_options').empty();

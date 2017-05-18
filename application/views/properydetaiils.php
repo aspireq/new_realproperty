@@ -7,7 +7,7 @@
                     <ul class="list-inline breadcrum">
                         <li><a href="<?php echo base_url(); ?>">Home</a></li>
                         <li>/</li>
-                        <li><a href="<?php echo base_url(); ?>index/property">Property</a></li>
+                        <li><a href="<?php echo base_url(); ?>index.php/index/property">Property</a></li>
                         <li>/</li>
                         <li class="active"><a href=""><?php echo $propertyinfo->project_name ?></a></li>
                     </ul>
@@ -78,7 +78,7 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="home">
-                                        <p><?php echo $propertyinfo->project_name; ?> project of [builder name] offers a perfect balance lifestyle, business and leisure. The lush ambience, ultra-modern design and higher recreational value makes [builder name] one of the most desirable edifices in <?php echo $propertyinfo->area_name; ?> and <?php echo $propertyinfo->city_name; ?>. Moreover, its affordability rightly fits into the budget of locals looking for contemporary spaces to fulfill their <?php echo $propertyinfo->property_type; ?> needs and investors looking for real estate profits.</p>
+                                        <p><?php echo $propertyinfo->project_name; ?> project of <?php echo $propertyinfo->builder_name; ?> offers a perfect balance lifestyle, business and leisure. The lush ambience, ultra-modern design and higher recreational value makes <?php echo $propertyinfo->builder_name; ?> one of the most desirable edifices in <?php echo $propertyinfo->area_name; ?> and <?php echo $propertyinfo->city_name; ?>. Moreover, its affordability rightly fits into the budget of locals looking for contemporary spaces to fulfill their <?php echo $propertyinfo->property_type; ?> needs and investors looking for real estate profits.</p>
                                         <p><?php echo $propertyinfo->project_name; ?> is also the ideal destination for space-onlookers wanting to be a part of this amazing city.Considering to buy 2 or 3 BHK house or a workplace that symbolizes tranquility and prosperity?</p>
                                         <ul class="list list-half">
                                             <li><i class="fa fa-angle-right"></i>&nbsp;Avalability : <span><?php echo ($propertyinfo->availability != "") ? $propertyinfo->availability : 'N/A'; ?></span></li>
@@ -234,8 +234,6 @@
                                 <hr/>
                                 <div class="demo-gallery">
                                     <ul id="nearby" class="list-unstyled row">
-
-
                                         <?php
                                         foreach ($property_nearby as $key => $image) {
                                             if ($key > 0) {

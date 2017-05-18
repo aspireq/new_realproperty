@@ -56,8 +56,8 @@ class Common_model extends CI_Model {
         if ($location != "") {
             $this->db->where('city_name', $location);
         }
-        if ($property_status != "") {
-            $this->db->where('city_name', $property_status);
+        if ($property_status != "") {            
+            $this->db->where('availability', $property_status);
         }
         $qry = $this->db->get();
         $final_data = array();
@@ -90,6 +90,10 @@ class Common_model extends CI_Model {
             $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();
             $row->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
         }
+        if ($row->added_by != null && $row->added_by != "") {
+            $builder_name = $this->db->query('select uacc_username as builder_name from user_accounts where uacc_id = "' . $row->added_by . '"')->row();            
+            $row->builder_name = $builder_name->builder_name;
+        }
         if ($row->build_up_area != null && $row->build_up_area != "" && $row->build_up_area != 0) {
             $build_up_area_name = $this->db->query('select short_name as build_up_area_unit_name from  units where id = "' . $row->build_up_area_unit . '"')->row();
             $row->build_up_area_unit_name = $build_up_area_name->build_up_area_unit_name;
@@ -110,9 +114,6 @@ class Common_model extends CI_Model {
                 $row->flat_amenities = $flat_amenities;
             }
         }
-//        echo "<pre>";
-//        print_r($row);
-//        die();
         return $row;
     }
 

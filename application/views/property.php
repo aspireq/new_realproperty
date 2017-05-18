@@ -23,7 +23,7 @@
                                     <img src="<?php echo base_url(); ?>includes/properties_images/<?php echo (isset($property->image) && $property->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $property->image))) ? $property->image : 'no_image.jpg'; ?>" class="img-responsive">
                                     <div class="propertyType house"><?php echo $property->property_type_name; ?></div>
                                 </div>
-                                <a href="<?php echo base_url(); ?>index/propertydetails/<?php echo $property->id; ?>">
+                                <a href="<?php echo base_url(); ?>index.php/index/propertydetails/<?php echo $property->id; ?>">
                                     <div class="info">
                                         <h5 style="text-overflow: ellipsis"><?php echo $property->project_name; ?></h5>
                                         <ul class="list-inline">

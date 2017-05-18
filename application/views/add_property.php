@@ -759,7 +759,7 @@ $this->session->set_userdata('property_data', $newdata);
                                 <div role="tabpanel" class="tab-pane" id="view">
                                     <h5><b>Upload Video:</b></h5>
                                     <div id="dropzone">
-                                        <div id="demo-upload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_videos">                                            
+                                        <div id="demo-upload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>index.php/auth/properties_videos">                                            
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                             </div>
@@ -778,7 +778,7 @@ $this->session->set_userdata('property_data', $newdata);
                                 <div role="tabpanel" class="tab-pane " id="features">
                                     <h5><b>Upload Project Photos:</b></h5>
                                     <div id="dropzone">
-                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_images" method="post">                                            
+                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>index.php/auth/properties_images" method="post">                                            
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                             </div>
@@ -786,7 +786,7 @@ $this->session->set_userdata('property_data', $newdata);
                                     </div>
                                     <h5><hr/><b>Upload Nearby Area Photos:</b></h5>
                                     <div id="dropzone">
-                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_nearby" method="post">                                            
+                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>index.php/auth/properties_nearby" method="post">                                            
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                             </div>

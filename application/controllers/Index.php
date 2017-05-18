@@ -95,7 +95,7 @@ class Index extends CI_Controller {
         $this->flexi_auth->activate_user($user_id, $token, TRUE);
         // Save any public status or error messages (Whilst suppressing any admin messages) to CI's flash session data.
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        redirect('auth');
+        redirect(base_url().'index.php/index');
     }
 
     function propertydetails($property_id = null) {

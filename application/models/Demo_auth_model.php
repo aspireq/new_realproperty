@@ -60,14 +60,17 @@ class Demo_auth_model extends CI_Model {
             $remember_user = ($this->input->post('remember_me') == 1);
 
             // Verify login data.
-            $this->flexi_auth->login($this->input->post('login_identity'), $this->input->post('login_password'), $remember_user);
+            $result = $this->flexi_auth->login($this->input->post('login_identity'), $this->input->post('login_password'), $remember_user);
 
             // Save any public status or error messages (Whilst suppressing any admin messages) to CI's flash session data.
             $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
 
             // Reload page, if login was successful, sessions will have been created that will then further redirect verified users.
-            
-            redirect(base_url().'index.php/index/exhibitors');
+            if($result) {
+                redirect(base_url().'index.php/index/exhibitors');
+            }else {
+                redirect(base_url().'index.php/index/login');
+            }
         } else {
             // Set validation errors.
             $this->data['message'] = validation_errors('<p class="error_msg">', '</p>');
@@ -164,7 +167,7 @@ class Demo_auth_model extends CI_Model {
 				//}
 				
 				// Redirect user to login page
-				redirect('auth');
+				redirect(base_url().'index.php/auth/login');
 			}
 		}
 

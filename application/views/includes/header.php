@@ -56,7 +56,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12 hidden-xs">
-                        <a href="<?php echo base_url();?>">
+                        <a href="<?php echo base_url(); ?>">
                             <img src="<?php echo base_url(); ?>includes/img/show.png" alt="" width="160" class="img-responsive img-center logo" />
                         </a>
                     </div>
@@ -131,7 +131,7 @@
                                                 <p>3,4,5 BHK Appartments, Flat Discounts</p>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-4">
-                                                <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
+                                                <a href="<?php echo base_url(); ?>index.php/index/property" class="btn btn-primary">Explore Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -157,9 +157,9 @@
                                     <li><a href="<?php echo base_url(); ?>index.php/index/aboutus">About Us</a></li>                           
                                     <li><a href="<?php echo base_url(); ?>index.php/index/property">Property</a></li>
                                     <li><a href="<?php echo base_url(); ?>index.php/index/virtualview">360 &deg;</a></li>
-                                    <li><a href="<?php echo base_url(); ?>index.php/index/contactus">Contact Us</a></li>
-                                    <li><a href="<?php echo base_url(); ?>index.php/auth/profile">Profile</a></li>                                    
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/contactus">Contact Us</a></li>                                    
                                     <?php if ($this->flexi_auth->is_logged_in() && !empty($userinfo)) { ?>
+                                        <li><a href="<?php echo base_url(); ?>index.php/auth/profile">Profile</a></li>
                                         <li><a href="<?php echo base_url(); ?>index.php/index/logout">Logout</a></li>
                                     <?php } ?>
                                 </ul>
