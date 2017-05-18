@@ -71,7 +71,6 @@ class Auth extends CI_Controller {
     }
 
     function add_property() {
-        //  header('Content-Type: application/json');
         if ($this->flexi_auth->is_logged_in()) {
             // set random number for propety 
             // later used to upload images and videos for reffrence no.          

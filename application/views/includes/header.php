@@ -154,13 +154,13 @@
                             <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs">
                                 <!-- link -->
                                 <ul class="list-inline subnav cl-effect-1">
-                                    <li><a href="<?php echo base_url(); ?>aboutus">About Us</a></li>                           
-                                    <li><a href="<?php echo base_url(); ?>properties">Property</a></li>
-                                    <li><a href="<?php echo base_url(); ?>virtualview">360 &deg;</a></li>
-                                    <li><a href="<?php echo base_url(); ?>contactus">Contact Us</a></li>
-                                    <li><a href="<?php echo base_url(); ?>auth/profile">Profile</a></li>                                    
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/aboutus">About Us</a></li>                           
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/property">Property</a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/virtualview">360 &deg;</a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/contactus">Contact Us</a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/auth/profile">Profile</a></li>                                    
                                     <?php if ($this->flexi_auth->is_logged_in() && !empty($userinfo)) { ?>
-                                        <li><a href="<?php echo base_url(); ?>index/logout">Logout</a></li>
+                                        <li><a href="<?php echo base_url(); ?>index.php/index/logout">Logout</a></li>
                                     <?php } ?>
                                 </ul>
                             </div>
@@ -171,8 +171,8 @@
                         <div class="row">
                             <nav class="mainnav">
                                 <ul class="clearfix">
-                                    <li><a href="<?php echo base_url(); ?>exhibitors"><i class="fa fa-user-circle-o"></i><span>Exibitors</span></a></li>
-                                    <li><a href="<?php echo base_url(); ?>visitors"><i class="fa fa-users"></i><span>Visitors</span></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/exhibitors"><i class="fa fa-user-circle-o"></i><span>Exibitors</span></a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/index/visitors"><i class="fa fa-users"></i><span>Visitors</span></a></li>
                                 </ul>
                             </nav>
                         </div>

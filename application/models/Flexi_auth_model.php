@@ -83,10 +83,8 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 		if ($is_password)
 		{
 			require_once(APPPATH.'libraries/phpass/PasswordHash.php');				
-			$phpass = new PasswordHash();
+			$phpass = new PasswordHash(8, FALSE);
 			
-                        $phpass->PasswordHashNew(8, FALSE);
-                        
 			return $phpass->HashPassword($database_salt . $token . $static_salt);
 		}
 		else
@@ -2334,6 +2332,7 @@ class Flexi_auth_model extends Flexi_auth_lite_model
 			'value'  => '',
 			'expire' => ''
 		);
+
 		set_cookie($ci_session);	
 	}
 }

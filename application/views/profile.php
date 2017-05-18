@@ -19,8 +19,8 @@
                             ?>
                             <div class="form-group">
                                 <div class="icon-addon addon-lg">
-                                    <input type="text" placeholder="" class="form-control" id="login_identity" name="login_identity" data-error="please enter valid email address or username" required>
-                                    <label for="login_identity" class="fa fa-search control-label" title="email/username"></label>
+                                    <label for="uacc_username" class="control-label">Username</label>
+                                    <input type="text" placeholder="" class="form-control" id="uacc_username" name="uacc_username" readonly="" value="<?php echo $userinfo['uacc_username']; ?>">                                    
                                 </div>
                                 <div class="help-block with-errors"></div>
                             </div>
@@ -28,17 +28,25 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="icon-addon addon-lg">
-                                    <input type="password" data-minlength="6" class="form-control" id="login_password" name="login_password" placeholder="Password" required>
-                                    <label for="login_password" class="fa fa-lock control-label" rel="tooltip" title="password"></label>
+                                    <label for="uacc_email" class="control-label" title="email/username">Email</label>
+                                    <input type="text" class="form-control" id="uacc_email" name="uacc_email" readonly="" value="<?php echo $userinfo['uacc_email']; ?>">                                    
+                                </div>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="icon-addon addon-lg">
+                                    <label for="descrption" class="control-label">Description</label>                                    
+                                    <textarea name="descrption" class="form-control"></textarea>                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember_me" id="remember_me" value="1">Remember Me</a>
-                                    </label>
+                                <div class="icon-addon addon-lg">
+                                    <label for="establishment_year" class="control-label" title="establishment_year">Establishment Year</label>
+                                    <input type="text" class="form-control" id="establishment_year" name="establishment_year">
                                 </div>
                             </div>
                         </div>

@@ -57,8 +57,7 @@ class Index extends CI_Controller {
         $this->load->view('index', $this->data);
     }
 
-    function home() {
-        
+    function home() {        
         $this->data['locations'] = $this->Common_model->get_locations();
         if ($this->input->post()) {
             $property_type = $this->input->post('property_type');
@@ -157,7 +156,7 @@ class Index extends CI_Controller {
     function logout() {
         $this->flexi_auth->logout(TRUE);
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
-        redirect(base_url() . 'login');
+        redirect(base_url() . 'index.php/index/login');
     }
 
 }

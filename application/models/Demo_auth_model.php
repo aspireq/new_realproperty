@@ -67,7 +67,7 @@ class Demo_auth_model extends CI_Model {
 
             // Reload page, if login was successful, sessions will have been created that will then further redirect verified users.
             
-            redirect(base_url().'exhibitors');
+            redirect(base_url().'index.php/index/exhibitors');
         } else {
             // Set validation errors.
             $this->data['message'] = validation_errors('<p class="error_msg">', '</p>');

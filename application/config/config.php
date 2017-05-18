@@ -19,8 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // ade base url for flexi auth (www.yourdomaine.ext/subfolder)
 $config['base_url'] = 'http://localhost/new_realproperty/';
-//$config['base_url'] = 'http://property.realgujarat.com/';
-
+//$config['base_url'] = 'http://localhost/new_realproperty/';
 
 /*
 |--------------------------------------------------------------------------
