@@ -33,21 +33,41 @@ class Index extends CI_Controller {
     }
 
     public function index() {
-        $this->load->library('flexi_auth');
-        $parent_user_id = 0;
-
-        $this->data['current_user'] = $this->flexi_auth->get_user_by_identity_row_array();
-        $parent_user_id = $this->flexi_auth->get_user_id();
-        if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'auth/logout') {
-            $this->data['parent_user_id'] = $this->flexi_auth->get_user_id();
-            $this->data['groupId'] = $this->flexi_auth->get_user_group_id();
+//        $this->load->library('flexi_auth');
+//        $parent_user_id = 0;
+//
+//        $this->data['current_user'] = $this->flexi_auth->get_user_by_identity_row_array();
+//        $parent_user_id = $this->flexi_auth->get_user_id();
+//        if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'auth/logout') {
+//            $this->data['parent_user_id'] = $this->flexi_auth->get_user_id();
+//            $this->data['groupId'] = $this->flexi_auth->get_user_group_id();
+//        }
+//        $this->load->view('includes/include_file', $this->data);
+//        $this->load->view('index', $this->data);
+        $this->data['locations'] = $this->Common_model->get_locations();
+        if ($this->input->post()) {
+            $property_type = $this->input->post('property_type');
+            $location = $this->input->post('location');
+            $property_status = $this->input->post('property_status');
+            $this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
+        } else {
+            $this->data['properties'] = $this->Common_model->get_properties();
         }
-        $this->load->view('includes/include_file', $this->data);
+        $this->data = $this->include_files();
         $this->load->view('index', $this->data);
     }
 
     function home() {
-        $this->data['properties'] = $this->Common_model->get_properties();        
+        
+        $this->data['locations'] = $this->Common_model->get_locations();
+        if ($this->input->post()) {
+            $property_type = $this->input->post('property_type');
+            $location = $this->input->post('location');
+            $property_status = $this->input->post('property_status');
+            $this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
+        } else {
+            $this->data['properties'] = $this->Common_model->get_properties();
+        }
         $this->data = $this->include_files();
         $this->load->view('index', $this->data);
     }

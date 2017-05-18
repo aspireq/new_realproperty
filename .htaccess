@@ -16,19 +16,16 @@ RewriteRule ^(.*)$ /index.php?/$1 [L]
 
 
 #<IfModule mod_rewrite.c>
-##Options +FollowSymLinks
 #RewriteEngine on
-#RewriteBase /demo/realproperty/
+#RewriteBase /property
 #</IfModule>
 #
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
 #RewriteRule .* index.php/$1 [PT,L]
 #
-## Prevent user access to the CI system folder.
 #RewriteCond %{REQUEST_URI} ^system.*
 #RewriteRule ^(.*)$ /index.php?/$1 [L] 
 #
-## Prevent user access to the CI application folder
 #RewriteCond %{REQUEST_URI} ^application.*
 #RewriteRule ^(.*)$ /index.php?/$1 [L]

@@ -87,12 +87,13 @@ $db['default'] = array(
 );
 
 
+
 //$db['default'] = array(
 //	'dsn'	=> '',
 //	'hostname' => 'localhost',
-//	'username' => 'aspireq_aspireq',
-//	'password' => 'mehul@aspireq',
-//	'database' => 'aspireq_property',
+//	'username' => 'wwwreal_rgujarat',
+//	'password' => 'realgujarat12',
+//	'database' => 'wwwreal_property',
 //	'dbdriver' => 'mysqli',
 //	'dbprefix' => '',
 //	'pconnect' => FALSE,
