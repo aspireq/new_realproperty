@@ -15,7 +15,7 @@ class Auth extends CI_Controller {
         $this->auth = new stdClass;
         $this->load->library('flexi_auth');
         $this->data = null;
-        
+
         // Redirect users logged in via password (However, not 'Remember me' users, as they may wish to login properly).
         if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'index/logout') {
             // Preserve any flashdata messages so they are passed to the redirect page.
@@ -62,6 +62,12 @@ class Auth extends CI_Controller {
     function home() {
         $this->data = $this->include_files();
         $this->load->view('index', $this->data);
+    }
+
+    function profile() {
+        $this->data = $this->include_files();
+        $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
+        $this->load->view('profile', $this->data);
     }
 
     function add_property() {
@@ -261,7 +267,6 @@ class Auth extends CI_Controller {
             }
         }
     }
-
 
     function list_properties() {
 
