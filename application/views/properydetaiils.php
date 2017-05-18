@@ -164,7 +164,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="row m-b">
+<!--                                        <div class="row m-b">
                                             <div class="col-md-12">
                                                 <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/bed.png" />&nbsp;Furnishing:</b></h4>
                                                 <ul class="list list-half">
@@ -187,7 +187,7 @@
                                                     <li><span class="maintext">Dinning Table:</span>&nbsp;<span class="subtext">Not Available</span></li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -239,11 +239,6 @@
                                             if ($key > 0) {
                                                 if ($image->image != "" && (file_exists(FCPATH . 'includes/property_nearby/' . $image->image))) {
                                                     ?>
-<!--                                                    <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 375, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 480, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 800" data-src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>" data-sub-html="">
-                                                        <a href="">
-                                                            <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>">
-                                                        </a>
-                                                    </li>-->
                                                     <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?> 375, <?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?> 480, <?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?> 800" data-src="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?>" data-sub-html="">
                                                         <a href="">
                                                             <img class="img-responsive" src="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?>">
@@ -271,12 +266,12 @@
                                         </a>
                                     </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading">Lorem ipsum company</h4>
+                                        <h4 class="media-heading"><?php echo ($propertyinfo->company_name != null) ? $propertyinfo->company_name : 'N/A'; ?></h4>
                                         <ul class="list list-inline list-half clearfix">
-                                            <li><span class="maintext">Established in</span><br><span class="subtext">1996</span></li>
-                                            <li><span class="maintext">Total Projects</span><br><span class="subtext">12</span></li>
+                                            <li><span class="maintext">Established in</span><br><span class="subtext"><?php echo ($propertyinfo->establishment_year != null) ? $propertyinfo->establishment_year : 'N/A'; ?></span></li>
+                                            <li><span class="maintext">Total Projects</span><br><span class="subtext"><?php echo ($propertyinfo->total_projects != null) ? $propertyinfo->total_projects : 'N/A'; ?></span></li>
                                         </ul>
-                                        <span class="more">Lorem ipsum has been dedicated to the mission of providing the people of Gujarat with quality-built, affordably priced new homes. Together with their experienced staff they encourage you to personalize your home in a way that will fit your present needs and future plans. They strive to make the home building process fun.. Choosing your home from their catalog of plans is just the beginning. They strive to reduce their costs in order to maintain reasonable prices. Customers' needs must be serviced promptly, before, during and after their purchase. After creating more than 10 Projects in Gujarat they come to know the customers need and provide them the luxurious apartments of their need with latest technologies integrated in it, which make Saikrupa Buildcon a leader in the field of building Luxurious Apartments. </span>
+                                        <span class="more"><?php echo ($propertyinfo->builder_description != null) ? $propertyinfo->builder_description : 'N/A'; ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +282,10 @@
                             <div class="card p-15">
                                 <h3 class="detail-title"><img src="<?php echo base_url(); ?>includes/properties_detail/images/bank.png" width="40" /> Bank Offers</h3>
                                 <hr/>
-                                <div class="carousel carousel-showmanymoveone slide" id="itemslider">
+                                <h4 class="media-heading">
+                                    <?php echo $propertyinfo->bank_name.' @ '.$propertyinfo->bank_interest .'%'; ?>
+                                </h4>
+<!--                                <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                                     <div class="carousel-inner">
                                         <div class="item active">
                                             <div class="col-xs-12 col-sm-6 col-md-2">
@@ -322,7 +320,7 @@
                                         <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>
                                         <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_right.png" alt="Right" class="img-responsive"></a>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

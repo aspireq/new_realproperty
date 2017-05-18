@@ -24,7 +24,8 @@ class Auth extends CI_Controller {
             }
             // Redirect logged in admins (For security, admin users should always sign in via Password rather than 'Remember me'.
             if ($this->flexi_auth->is_admin()) {
-                $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();
+                $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();                
+                $this->user_id = $this->data['userinfo']['uacc_id'];
             } else {
                 redirect('index/logout');
             }
@@ -65,9 +66,23 @@ class Auth extends CI_Controller {
     }
 
     function profile() {
-        $this->data = $this->include_files();
-        $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
-        $this->load->view('profile', $this->data);
+        if ($this->flexi_auth->is_logged_in()) {
+            if ($this->input->post()) {
+                $user_data = array(
+                    "establishment_year" => $this->input->post('establishment_year'),
+                    "total_projects" => $this->input->post('total_projects'),
+                    "description" => $this->input->post('description'),
+                    "company_name" => $this->input->post('company_name')
+                );
+                $result = $this->Common_model->select_update('user_accounts', $user_data, array('uacc_id' => $this->user_id));
+                redirect('index.php/auth/profile');
+            }
+            $this->data = $this->include_files();
+            $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
+            $this->load->view('profile', $this->data);
+        } else {
+            redirect(base_url());
+        }
     }
 
     function add_property() {
@@ -77,7 +92,7 @@ class Auth extends CI_Controller {
             $this->data['unitsinfo'] = $this->Common_model->select_all('units');
             $this->data['project_amenities'] = $this->Common_model->select_all('project_amenities');
             $this->data['flat_amenities'] = $this->Common_model->select_all('flat_amenities');
-            if ($this->input->post()) {
+            if ($this->input->post()) {                
                 $project_amenities = implode(',', $this->input->post('project_amenities'));
                 $flat_amenities = implode(',', $this->input->post('flat_amenities'));
                 $properties_info = $this->session->userdata('property_data');
@@ -99,7 +114,10 @@ class Auth extends CI_Controller {
                 $property_data['property_description'] = $this->input->post('final_description');
                 $property_data['availability'] = $this->input->post('availability');
                 $property_data['property_configuration'] = $this->input->post('propery_configuration');
-
+                
+                $property_data['bank_name'] = $this->input->post('bank_name');
+                $property_data['bank_interest'] = $this->input->post('bank_interest');
+                
                 if ($this->input->post('plot_area')) {
                     $property_data['plot_area'] = $this->input->post('plot_area');
                     $property_data['plot_area_unit'] = $this->input->post('plot_area_unit');
