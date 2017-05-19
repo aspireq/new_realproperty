@@ -839,11 +839,14 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="simpleradio">
                                         <?php foreach ($flat_amenities as $key => $flat_amenity) { ?>  
                                             <div class="simpleradio-danger">
-                                                <input type="checkbox" name="flat_amenities[]" id="<?php echo $flat_amenity->id . 'flat'; ?>" value="<?php echo $flat_amenity->id; ?>"/>
+                                                <input class="flat_amenities_check" type="checkbox" name="flat_amenities[]" id="<?php echo $flat_amenity->id . 'flat'; ?>" value="<?php echo $flat_amenity->id; ?>"/>
                                                 <label for="<?php echo $flat_amenity->id . 'flat'; ?>"><?php echo $flat_amenity->name; ?></label>
                                             </div>
                                         <?php } ?>
                                     </div>
+<!--                                    <div class="form-group" id="flat_amenities_error">
+                                        <label for='' generated='true' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label has-error' style='color:red;'>Please select flat amenities.</label>
+                                    </div>-->
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <hr/>
                                     </div>

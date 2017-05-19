@@ -146,6 +146,10 @@
 <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
 <script src="<?php echo base_url(); ?>includes/js/locationpicker.jquery.js"></script>
 <script>
+    function add_exclusive_ad() {
+        $('#post_ad')[0].reset();
+        $('#add_exclusive_ads').modal('show');
+    }
     $('#us3').locationpicker({
         location: {
             latitude: 22.9962,

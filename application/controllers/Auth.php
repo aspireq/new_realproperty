@@ -14,7 +14,7 @@ class Auth extends CI_Controller {
         $this->load->helper('form');
         $this->auth = new stdClass;
         $this->load->library('flexi_auth');
-        $this->data = null;        
+        $this->data = null;
         // Redirect users logged in via password (However, not 'Remember me' users, as they may wish to login properly).
         if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'index/logout') {
             // Preserve any flashdata messages so they are passed to the redirect page.
@@ -22,8 +22,8 @@ class Auth extends CI_Controller {
                 $this->session->keep_flashdata('message');
             }
             // Redirect logged in admins (For security, admin users should always sign in via Password rather than 'Remember me'.
-            if ($this->flexi_auth->is_admin()) {
-                $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();                
+            if ($this->flexi_auth->is_logged_in()) {
+                $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();
                 $this->user_id = $this->data['userinfo']['uacc_id'];
             } else {
                 redirect('index/logout');
@@ -80,7 +80,18 @@ class Auth extends CI_Controller {
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->load->view('profile', $this->data);
         } else {
-            redirect(base_url());
+            $this->session->set_flashdata('message', "Please login to post your property.");
+            redirect(base_url() . 'login');
+        }
+    }
+
+    function exclusive_ads() {        
+        if ($this->flexi_auth->is_logged_in() && $this->data['userinfo']['uacc_group_fk'] == 3) {
+            $this->data = $this->include_files();
+            $this->load->view('exclusive_ads', $this->data);
+        } else {
+            $this->session->set_flashdata('message', "Please login as admin to access this area.");
+            redirect(base_url() . 'login');
         }
     }
 
@@ -91,7 +102,7 @@ class Auth extends CI_Controller {
             $this->data['unitsinfo'] = $this->Common_model->select_all('units');
             $this->data['project_amenities'] = $this->Common_model->select_all('project_amenities');
             $this->data['flat_amenities'] = $this->Common_model->select_all('flat_amenities');
-            if ($this->input->post()) {                
+            if ($this->input->post()) {
                 $project_amenities = implode(',', $this->input->post('project_amenities'));
                 $flat_amenities = implode(',', $this->input->post('flat_amenities'));
                 $properties_info = $this->session->userdata('property_data');
@@ -113,10 +124,10 @@ class Auth extends CI_Controller {
                 $property_data['property_description'] = $this->input->post('final_description');
                 $property_data['availability'] = $this->input->post('availability');
                 $property_data['property_configuration'] = $this->input->post('propery_configuration');
-                
+
                 $property_data['bank_name'] = $this->input->post('bank_name');
                 $property_data['bank_interest'] = $this->input->post('bank_interest');
-                
+
                 if ($this->input->post('plot_area')) {
                     $property_data['plot_area'] = $this->input->post('plot_area');
                     $property_data['plot_area_unit'] = $this->input->post('plot_area_unit');
@@ -200,7 +211,8 @@ class Auth extends CI_Controller {
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->load->view('add_property', $this->data);
         } else {
-            redirect(base_url());
+            $this->session->set_flashdata('message', "Please login to post your property.");
+            redirect(base_url() . 'login');
         }
     }
 
