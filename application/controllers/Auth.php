@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 class Auth extends CI_Controller {
 
     function __construct() {
-        parent::__construct();
+        parent::__construct(); 
         // Load required CI libraries and helpers.
         $this->load->database();
         $this->load->library('session');
