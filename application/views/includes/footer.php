@@ -150,6 +150,49 @@
         $('#post_ad')[0].reset();
         $('#add_exclusive_ads').modal('show');
     }
+    function delete_ad(id) {
+        var r = confirm("Are you sure you want to delete this ad");
+        if (r == true) {
+            $('#record_id').val(id);
+            $('#record_change_type').val('Delete');
+            $('#table_name').val('advertizement');
+            $('#page_url').val('advertizement');
+            $('#image_folder').val('exclusive_ad');
+            $("#op_ad").submit();
+        }
+    }
+    function change_status(id) {
+        var r = confirm("Are you sure you want to update status");
+        if (r == true) {
+            $('#record_id').val(id);
+            $('#record_change_type').val('Status');
+            $('#table_name').val('advertizement');
+            $('#page_url').val('advertizement');
+            $("#op_ad").submit();
+        }
+    }
+    function edit_ad(id) {
+        $.ajax({
+            url: "<?php echo base_url(); ?>auth/get_record/",
+            type: "POST",
+            data: {table_name: 'advertizement', id: id},
+            dataType: "JSON",
+            success: function (response)
+            {
+                $('#post_ad')[0].reset();
+                $('#edit_id').val(id);
+                $('#name').val(response.name);
+                $('#old_image').val(response.image);
+                if (response.ad_type == 1) {
+                    $("#property").prop("checked", true);
+                } else if (response.ad_type == 2) {
+                    //$("#exclusive_ad").prop("checked", true);
+                    $('#exclusive_ad_type').attr("checked", "checked");
+                }
+                $('#add_exclusive_ads').modal('show');
+            }
+        });
+    }
     $('#us3').locationpicker({
         location: {
             latitude: 22.9962,
@@ -350,7 +393,7 @@
         thumbnailHeight: "100",
         init: function () {
             thisDropzone = this;
-            this.on("addedfile", function (file) {                
+            this.on("addedfile", function (file) {
             });
 //            this.on("removedfile", function (file) {
 //                $("img[alt='" + file.name + "']").parent().parent().remove();
@@ -367,7 +410,7 @@
         error: function (response) {
             alert(response.xhr.responseText);
         },
-        removedfile: function (file) {            
+        removedfile: function (file) {
             alert(file);
             alert(file.name);
             //upload_banners();

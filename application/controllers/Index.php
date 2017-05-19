@@ -33,17 +33,8 @@ class Index extends CI_Controller {
     }
 
     public function index() {
-//        $this->load->library('flexi_auth');
-//        $parent_user_id = 0;
-//
-//        $this->data['current_user'] = $this->flexi_auth->get_user_by_identity_row_array();
-//        $parent_user_id = $this->flexi_auth->get_user_id();
-//        if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'auth/logout') {
-//            $this->data['parent_user_id'] = $this->flexi_auth->get_user_id();
-//            $this->data['groupId'] = $this->flexi_auth->get_user_group_id();
-//        }
-//        $this->load->view('includes/include_file', $this->data);
-//        $this->load->view('index', $this->data);
+        $this->data['exlusive_ads'] = $this->Common_model->select_where('advertizement', array('ad_type' => 2,'status' => 1));
+        $this->data['property_ads'] = $this->Common_model->select_where('advertizement', array('ad_type' => 1,'status' => 1));
         $this->data['locations'] = $this->Common_model->get_locations();
         if ($this->input->post()) {
             $property_type = $this->input->post('property_type');
@@ -57,19 +48,19 @@ class Index extends CI_Controller {
         $this->load->view('index', $this->data);
     }
 
-    function home() {
-        $this->data['locations'] = $this->Common_model->get_locations();
-        if ($this->input->post()) {
-            $property_type = $this->input->post('property_type');
-            $location = $this->input->post('location');
-            $property_status = $this->input->post('property_status');
-            $this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
-        } else {
-            $this->data['properties'] = $this->Common_model->get_properties();
-        }
-        $this->data = $this->include_files();
-        $this->load->view('index', $this->data);
-    }
+//    function home() {
+//        $this->data['locations'] = $this->Common_model->get_locations();
+//        if ($this->input->post()) {
+//            $property_type = $this->input->post('property_type');
+//            $location = $this->input->post('location');
+//            $property_status = $this->input->post('property_status');
+//            $this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
+//        } else {
+//            $this->data['properties'] = $this->Common_model->get_properties();
+//        }
+//        $this->data = $this->include_files();
+//        $this->load->view('index', $this->data);
+//    }
 
     function login() {
         if ($this->input->post()) {
@@ -135,7 +126,7 @@ class Index extends CI_Controller {
         if ($this->input->post()) {
             $subject = 'property.realgujarat - ' . $this->input->post('subject');
             $message = "Contact Info   \n";
-            $message .= "Name  : " . $this->input->post('name') . "\n";            
+            $message .= "Name  : " . $this->input->post('name') . "\n";
             $message .= "Email : " . $this->input->post('email') . "\n";
             $message .= "Contact No. : " . $this->input->post('contact_no') . "\n";
             $message .= "\r";

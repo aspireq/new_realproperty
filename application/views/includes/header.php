@@ -158,7 +158,7 @@
                                     <li><a href="<?php echo base_url(); ?>virtualview">360 &deg;</a></li>
                                     <li><a href="<?php echo base_url(); ?>contactus">Contact Us</a></li>
                                     <?php if ($this->flexi_auth->is_logged_in() && !empty($userinfo) && $userinfo['uacc_group_fk'] == 3) { ?>                                        
-                                        <li><a href="<?php echo base_url(); ?>exclusive_ads">Excluse Ads</a></li>
+                                        <li><a href="<?php echo base_url(); ?>advertizement">Advertizement</a></li>
                                     <?php } ?>
                                     <?php if ($this->flexi_auth->is_logged_in() && !empty($userinfo)) { ?>
                                         <li><a href="<?php echo base_url(); ?>auth/profile">Profile</a></li>

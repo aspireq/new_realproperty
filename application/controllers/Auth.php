@@ -74,7 +74,7 @@ class Auth extends CI_Controller {
                     "company_name" => $this->input->post('company_name')
                 );
                 $result = $this->Common_model->select_update('user_accounts', $user_data, array('uacc_id' => $this->user_id));
-                redirect('index.php/auth/profile');
+                redirect('auth/profile');
             }
             $this->data = $this->include_files();
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
@@ -85,10 +85,85 @@ class Auth extends CI_Controller {
         }
     }
 
-    function exclusive_ads() {        
+    function advertizement() {
         if ($this->flexi_auth->is_logged_in() && $this->data['userinfo']['uacc_group_fk'] == 3) {
+            $this->load->library('pagination');
+            $config = array();
+            $config["base_url"] = base_url() . "auth/advertizement";
+            $config["per_page"] = 5;
+            $config['use_page_numbers'] = FALSE;
+
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '&nbsp;<li class="active"><a>';
+            $config['cur_tag_close'] = '</a></li>';
+            $config['first_link'] = 'First';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['last_link'] = 'Last';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['next_link'] = 'Next';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['prev_link'] = 'Previous';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+
+            $total_row = $this->Common_model->excluse_ad_data('', '');
+            $config["total_rows"] = $total_row['counts'];
+            $config['num_links'] = $total_row['counts'];
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $this->data["results"] = $this->Common_model->excluse_ad_data($config["per_page"], $page);
+            $this->pagination->initialize($config);
+            $str_links = $this->pagination->create_links();
+            $this->data["links"] = explode('&nbsp;', $str_links);
+
+            if ($this->input->post()) {
+                $ad_data = $this->data['ad_data'] = array(
+                    "ad_type" => $this->input->post('ad_type'),
+                    "name" => $this->input->post('name'));
+                if (!empty($_FILES['image']['name'])) {
+                    $this->load->library('upload');
+                    $config['upload_path'] = 'includes/exclusive_ad';
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $config['max_filename'] = 25;
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('image')) {
+                        $error = $this->upload->display_errors();
+                        $this->session->set_flashdata('message', $error);
+                    } else {
+                        $file_info = $this->upload->data();
+                        $ad_data['image'] = $file_info['file_name'];
+                    }
+                }
+                if ($this->input->post('edit_id')) {
+                    if (isset($ad_data['image'])) {
+                        if (file_exists(FCPATH . 'includes/exclusive_ad/' . $this->input->post('old_image'))) {
+                            unlink(FCPATH . 'includes/exclusive_ad/' . $this->input->post('old_image'));
+                        }
+                        $ad_data['image'] = $file_info['file_name'];
+                    } else {
+                        $ad_data['image'] = $this->input->post('old_image');
+                    }
+                    $result = $this->Common_model->select_update('advertizement', $ad_data, array('id' => $this->input->post('edit_id')));
+                } else {
+                    $result = $this->Common_model->insert('advertizement', $ad_data);
+                }
+                if (!empty($result)) {
+                    $this->session->set_flashdata('message', "Exclusvie Ad Added Successfully");
+                } else {
+                    $this->session->set_flashdata('message', "Something went wrong,Please try again later");
+                }
+                redirect('auth/advertizement');
+            }
+            $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->data = $this->include_files();
-            $this->load->view('exclusive_ads', $this->data);
+            $this->load->view('advertizement', $this->data);
         } else {
             $this->session->set_flashdata('message', "Please login as admin to access this area.");
             redirect(base_url() . 'login');
@@ -542,6 +617,38 @@ class Auth extends CI_Controller {
         $this->flexi_auth->logout(FALSE);
         $this->session->set_flashdata('message', $this->flexi_auth->get_messages());
         redirect('auth');
+    }
+
+    function get_record() {
+        $data = $this->Common_model->select_where_row($this->input->post('table_name'), array('id' => $this->input->post('id')));
+        die(json_encode($data));
+    }
+
+    function record_change() {
+        $type = $this->input->post('record_change_type');
+        $record_id = $this->input->post('record_id');
+        $table_name = $this->input->post('table_name');
+        $page_url = $this->input->post('page_url');
+        $image_folder = $this->input->post('image_folder');
+        $data = $this->Common_model->select_where_row($table_name, array('id' => $record_id));
+        if ($type === 'Delete') {
+            if ($image_folder != "") {
+                if ($data->image != "" && file_exists(FCPATH . 'includes/' . $image_folder . '/' . $data->image)) {
+                    unlink(FCPATH . 'includes/' . $image_folder . '/' . $data->image);
+                }
+            }
+            $this->Common_model->delete_where($table_name, array('id' => $record_id));
+            $this->session->set_flashdata('message', "Record deleted successfully !");
+        } else if ($type === 'Status') {
+            if ($data->status == 1) {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            $this->Common_model->select_update($table_name, array('status' => $status), array('id' => $record_id));
+            $this->session->set_flashdata('message', "Status updated successfully !");
+        }
+        redirect($page_url);
     }
 
 }

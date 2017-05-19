@@ -43,27 +43,11 @@
         <div class="col-md-2 col-sm-2 col-xs-12 logoad">
             <h4 class="text-center">Property Gallery</h4>
             <ul class="list center-block">
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/1.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/2.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/3.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li> 
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/4.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/1.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/2.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/logoad/3.png" alt="logoad" class="img-responsive img-center" />
-                </li>
+                <?php foreach ($property_ads as $exlusive_ad) { ?>
+                    <li>
+                        <img src="<?php echo base_url(); ?>includes/exclusive_ad/<?php echo ($exlusive_ad->image != "" && (file_exists(FCPATH . 'includes/exclusive_ad/' . $exlusive_ad->image))) ? $exlusive_ad->image : 'noimage.jpg' ?>" alt="logoad" class="img-responsive img-center" />
+                    </li>
+                <?php } ?>
             </ul>
         </div>
         <div class="col-md-8 col-sm-8 col-xs-12">
@@ -173,15 +157,11 @@
         <div class="col-md-2 col-sm-2 exclusivead">
             <h4 class="text-center">Real Gujarat Exclusive</h4>
             <ul class="list center-block">
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/exclusivead/3.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/exclusivead/1.png" alt="logoad" class="img-responsive img-center" />
-                </li>
-                <li>
-                    <img src="<?php echo base_url(); ?>includes/img/exclusivead/2.png" alt="logoad" class="img-responsive img-center" />
-                </li>
+                <?php foreach ($exlusive_ads as $exlusive_ad) { ?>
+                    <li>
+                        <img src="<?php echo base_url(); ?>includes/exclusive_ad/<?php echo ($exlusive_ad->image != "" && (file_exists(FCPATH . 'includes/exclusive_ad/' . $exlusive_ad->image))) ? $exlusive_ad->image : 'noimage.jpg' ?>" alt="logoad" class="img-responsive img-center" />
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>

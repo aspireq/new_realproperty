@@ -56,7 +56,7 @@ class Common_model extends CI_Model {
         if ($location != "") {
             $this->db->where('city_name', $location);
         }
-        if ($property_status != "") {            
+        if ($property_status != "") {
             $this->db->where('availability', $property_status);
         }
         $qry = $this->db->get();
@@ -91,7 +91,7 @@ class Common_model extends CI_Model {
             $row->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
         }
         if ($row->added_by != null && $row->added_by != "") {
-            $builder_name = $this->db->query('select company_name as company_name,total_projects as total_projects,establishment_year as establishment_year,description as builder_description,uacc_username as builder_name from user_accounts where uacc_id = "' . $row->added_by . '"')->row(); 
+            $builder_name = $this->db->query('select company_name as company_name,total_projects as total_projects,establishment_year as establishment_year,description as builder_description,uacc_username as builder_name from user_accounts where uacc_id = "' . $row->added_by . '"')->row();
             $row->builder_name = $builder_name->builder_name;
             $row->builder_description = $builder_name->builder_description;
             $row->establishment_year = $builder_name->establishment_year;
@@ -124,6 +124,23 @@ class Common_model extends CI_Model {
     function get_locations() {
         $result = $this->db->query('SELECT DISTINCT(`city_name`) FROM `properties` where `city_name` != ""');
         return $result->result();
+    }
+
+    function excluse_ad_data($limit = null, $start = null) {
+        if ($limit != null || $start != null) {
+            $this->db->limit($limit, $start);
+        }        
+        $query = $this->db->get('advertizement');
+        if ($query->num_rows() > 0) {
+            $final_data = array();
+            foreach ($query->result() as $key => $row) {
+                $data[] = $row;
+                $final_data[$key] = $row;
+            }
+            $final_data['counts'] = $query->num_rows();
+            return $final_data;
+        }
+        return false;
     }
 
 }
