@@ -38,10 +38,11 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="stats green-bg">
-                                        <span>Rs.<?php echo $property->price; ?></span>
-                                    </div>
                                 </a>
+                                <div class="stats green-bg">
+                                    <span>Rs.<?php echo $property->price; ?></span>
+                                    <button class="btn btn-primary pull-right" type="button" name="edit_proeprty" id="edit_proeprty" onclick="window.location.href = '<?php echo base_url(); ?>auth/add_property/<?php echo $property->id; ?>'">Edit</button>
+                                </div>
                             </div>                        
                         </div>
                     <?php } ?>

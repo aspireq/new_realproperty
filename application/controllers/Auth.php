@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 class Auth extends CI_Controller {
 
     function __construct() {
-        parent::__construct(); 
+        parent::__construct();
         // Load required CI libraries and helpers.
         $this->load->database();
         $this->load->library('session');
@@ -170,10 +170,10 @@ class Auth extends CI_Controller {
         }
     }
 
-    function add_property() {
+    function add_property($edit_property_id = null) {
         if ($this->flexi_auth->is_logged_in()) {
             // set random number for propety 
-            // later used to upload images and videos for reffrence no.          
+            // later used to upload images and videos for reffrence no.
             $this->data['unitsinfo'] = $this->Common_model->select_all('units');
             $this->data['project_amenities'] = $this->Common_model->select_all('project_amenities');
             $this->data['flat_amenities'] = $this->Common_model->select_all('flat_amenities');
@@ -203,6 +203,10 @@ class Auth extends CI_Controller {
                 $property_data['bank_name'] = $this->input->post('bank_name');
                 $property_data['bank_interest'] = $this->input->post('bank_interest');
 
+                if ($this->input->post('property_unit_value') == '1') {
+                    $property_data['multiple_property_units'] = $this->input->post('property_unit_value');
+                    $property_data['no_of_units'] = $this->input->post('property_count_value');
+                }
                 if ($this->input->post('plot_area')) {
                     $property_data['plot_area'] = $this->input->post('plot_area');
                     $property_data['plot_area_unit'] = $this->input->post('plot_area_unit');
@@ -282,6 +286,9 @@ class Auth extends CI_Controller {
                 //unset session info
                 $this->session->unset_userdata('property_data');
             }
+            if ($edit_property_id != null) {
+                $this->data['propertyinfo'] = $this->Common_model->select_where_row('properties', array('id' => $edit_property_id));
+            }
             $this->data = $this->include_files();
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->load->view('add_property', $this->data);
@@ -312,7 +319,7 @@ class Auth extends CI_Controller {
                 $file_info = $this->upload->data();
                 $file_name = $file_info['file_name'];
                 $add_image = $this->Common_model->insert('property_images', array('image' => $file_name, 'property_unique_no' => $properties_info['property_unique_no']));
-                die(json_encode(array('filename' => $file_name)));
+                die(json_encode(array('filename' => $file_name, 'got_image' => true)));
             }
         }
     }
@@ -374,6 +381,11 @@ class Auth extends CI_Controller {
     function list_properties() {
 
         $properties_for = $this->input->post('property_type');
+        $property_type_name = "";
+        if ($this->input->post('property_type_name')) {
+            $property_type_name = $this->input->post('property_type_name');
+        }
+
         $data = '<label for="" class="col-md-12 control-label">Property Type: </label>';
         $data .= '<div class="col-md-12">';
         $data .= '<ul class="nav nav-tabs" role="tablist" id="list_t_railway">';
@@ -385,30 +397,37 @@ class Auth extends CI_Controller {
         $data .= '<div class="tab-content">';
         $data .= '<div role="tabpanel" class="tab-pane active" id="residential">';
         $data .= '<div class="simpleradio">';
+        $checked = ($property_type_name != "" && $property_type_name == "Residential Apartment") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
-        $data .= '<input type="radio" name="residentialpropery" id="residentialappratment" value="Residential Apartment" class="res_property" onclick="residential_propery()"/>';
+        $data .= '<input type="radio" name="residentialpropery" id="residentialappratment" value="Residential Apartment" class="res_property" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="residentialappratment">Residential Apartment</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Independent House / Villa") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
-        $data .= '<input type="radio" name="residentialpropery" id="independenthouse" value="Independent House / Villa" class="res_property" onclick="residential_propery()"/>';
+        $data .= '<input type="radio" name="residentialpropery" id="independenthouse" value="Independent House / Villa" class="res_property" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="independenthouse">Independent House / Villa</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Independent / Builder Floor") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
-        $data .= '<input type="radio" name="residentialpropery" id="independentfloor" value="Independent / Builder Floor" class="res_property" onclick="residential_propery()"/>';
+        $data .= '<input type="radio" name="residentialpropery" id="independentfloor" value="Independent / Builder Floor" class="res_property" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="independentfloor">Independent / Builder Floor</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Farm House") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
-        $data .= '<input type="radio" name="residentialpropery" id="farmhouse" value="Farm House" class="res_property" onclick="residential_propery()"/>';
+        $data .= '<input type="radio" name="residentialpropery" id="farmhouse" value="Farm House" class="res_property" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="farmhouse">Farm House</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Studio Apartment") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
-        $data .= '<input type="radio" name="residentialpropery" id="studioapparment" value="Studio Apartment" onclick="residential_propery()"/>';
+        $data .= '<input type="radio" name="residentialpropery" id="studioapparment" value="Studio Apartment" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="studioapparment">Studio Apartment</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Serviced Apartment") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
-        $data .= '<input type="radio" name="residentialpropery" id="servicedappart" value="Serviced Apartment" onclick="residential_propery()"/>';
+        $data .= '<input type="radio" name="residentialpropery" id="servicedappart" value="Serviced Apartment" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="servicedappart">Serviced Apartment</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Other") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
         $data .= '<input type="radio" name="residentialpropery" id="other" value="Other" onclick="residential_propery()"/>';
         $data .= '<label for="other">Other</label>';
@@ -418,49 +437,60 @@ class Auth extends CI_Controller {
 
         if ($properties_for != "PayingGuest") {
             $data .= '<div role="tabpanel" class="tab-pane" id="commercial">';
+            $checked = ($property_type_name != "" && $property_type_name == "Commercial Office/Space") ? 'checked' : '';
             $data .= '<div class="simpleradio">';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="commeroffioce" value="Commercial Office/Space" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="commeroffioce" value="Commercial Office/Space" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="commeroffioce">Commercial Office/Space</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Commercial Shops") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="commershops" value="Commercial Shops" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="commershops" value="Commercial Shops" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="commershops">Commercial Shops</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Commercial Showroom") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="commershowroom" value="Commercial Showroom" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="commershowroom" value="Commercial Showroom" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="commershowroom">Commercial Showroom</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Industrial Land") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="industialland" value="Industrial Land" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="industialland" value="Industrial Land" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="industialland">Industrial Land</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Ware House") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="warehouse" value="Ware House" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="warehouse" value="Ware House" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="warehouse">Ware House</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Hotel / Resorts") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="hotelresorts" value="Hotel / Resorts" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="hotelresorts" value="Hotel / Resorts" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="hotelresorts">Hotel / Resorts</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Guest House / Banquet-halls") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="guesthouse" value="Guest House / Banquet-halls" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="guesthouse" value="Guest House / Banquet-halls" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="guesthouse">Guest House / Banquet-halls</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Space in Mall") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="spaceinmall" value="Space in Mall" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="spaceinmall" value="Space in Mall" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="spaceinmall">Space in Mall</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Cold Storage") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="coldstorage" value="Cold Storage" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="coldstorage" value="Cold Storage" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="coldstorage">Cold Storage</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Time Share") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="timeshare" value="Time Share" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="timeshare" value="Time Share" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="timeshare">Time Share</label>';
             $data .= '</div>';
+            $checked = ($property_type_name != "" && $property_type_name == "Other") ? 'checked' : '';
             $data .= '<div class="simpleradio-danger">';
-            $data .= '<input type="radio" name="residentialpropery" id="other2" value="Other" onclick="commercial_property()"/>';
+            $data .= '<input type="radio" name="residentialpropery" id="other2" value="Other" onclick="commercial_property()" ' . "$checked" . ' />';
             $data .= '<label for="other2">Other</label>';
             $data .= '</div>';
             $data .= '</div>';

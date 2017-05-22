@@ -9,7 +9,7 @@ $this->session->set_userdata('property_data', $newdata);
     <div class="container">
         <div class="row">
             <div class="barWrapper">
-                <span class="progressText"><!-- <B>Advertise your property with us in 6 simple steps. </B> -->
+                <span class="progressText">
                 </span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="5">
@@ -45,19 +45,18 @@ $this->session->set_userdata('property_data', $newdata);
                                 <?php echo $message; ?>
                             </div>
                         <?php } ?>
-
                         <form method="post" id="add_property" role="form">
-                            <input type="hidden" name="user_type" id="user_type" value="owner">                            
+                            <input type="text" name="user_type" id="user_type" value="owner" > 
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane active" id="basicdetail">
+                                <div role="tabpanel" class="tab-pane active" id="basicdetail">                                    
                                     <div class="adform">
                                         <div class="form-group">
                                             <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Are You ?<sup>*</sup></label>
                                             <div class="input-group">
                                                 <div id="radioBtn" class="btn-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <a class="btn btn-primary btn-sm active user_type" onclick="set_usertype('owner');" data-toggle="fun" data-title="Y"><h4><img src="<?php echo base_url(); ?>includes/img/owner.png" width="30" />&nbsp;Owner</h4></a>
-                                                    <a class="btn btn-primary btn-sm notActive user_type" onclick="set_usertype('dealer');" data-toggle="fun" data-title="X"><h4><img src="<?php echo base_url(); ?>includes/img/dealer.png" width="30" />&nbsp;Dealer</h4></a>
-                                                    <a class="btn btn-primary btn-sm notActive user_type" onclick="set_usertype('worker');" data-toggle="fun" data-title="N"><h4><img src="<?php echo base_url(); ?>includes/img/worker.png" width="30" />&nbsp;Builder</h4></a>
+                                                    <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "owner") ? 'active' : 'notActive' ?>  user_type" onclick="set_usertype('owner');" data-toggle="fun" data-title="Y"><h4><img src="<?php echo base_url(); ?>includes/img/owner.png" width="30" />&nbsp;Owner</h4></a>
+                                                    <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "dealer") ? 'active' : 'notActive' ?> user_type" onclick="set_usertype('dealer');" data-toggle="fun" data-title="X"><h4><img src="<?php echo base_url(); ?>includes/img/dealer.png" width="30" />&nbsp;Dealer</h4></a>
+                                                    <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "worker") ? 'active' : 'notActive' ?> user_type" onclick="set_usertype('worker');" data-toggle="fun" data-title="N"><h4><img src="<?php echo base_url(); ?>includes/img/worker.png" width="30" />&nbsp;Builder</h4></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -65,117 +64,18 @@ $this->session->set_userdata('property_data', $newdata);
                                             <label for="property_type" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">List property for: </label>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="property_type" id="property_type" onchange="set_propery_types();">
-                                                    <option value="Sell">Sell</option>
-                                                    <option value="Rent/Lease">Rent/Lease</option>
-                                                    <option value="PayingGuest">Paying Guest</option>
+                                                    <option value="Sell" <?php echo (!empty($propertyinfo) && $propertyinfo->property_type == "Sell") ? 'selected' : ''; ?>>Sell</option>
+                                                    <option value="Rent/Lease" <?php echo (!empty($propertyinfo) && $propertyinfo->property_type == "Rent/Lease") ? 'selected' : ''; ?>>Rent/Lease</option>
+                                                    <option value="PayingGuest" <?php echo (!empty($propertyinfo) && $propertyinfo->property_type == "Paying Guest") ? 'selected' : ''; ?>>Paying Guest</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group" id="property_types">
-                                            <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Property Type: </label>                                
-                                            <!--                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                <ul class="nav nav-tabs" role="tablist">
-                                                                                    <li role="presentation" class="active"><a href="#residential" aria-controls="residential" role="tab" data-toggle="tab">Residential</a></li>
-                                                                                    <li role="presentation" id="commer_list"><a href="#commercial" aria-controls="commercial" role="tab" data-toggle="tab">Commercial</a></li>
-                                                                                </ul>
-                                                                                 Tab panes 
-                                                                                <div class="tab-content">
-                                                                                    <div role="tabpanel" class="tab-pane active" id="residential">
-                                                                                        <div class="simpleradio">
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="residentialappratment" value="Residential Apartment" checked/>
-                                                                                                <label for="residentialappratment">Residential Apartment</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="independenthouse" value="Independent House / Villa" checked/>
-                                                                                                <label for="independenthouse">Independent House / Villa</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="independentfloor" value="Independent / Builder Floor" checked/>
-                                                                                                <label for="independentfloor">Independent / Builder Floor</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="farmhouse" value="Farm House" checked/>
-                                                                                                <label for="farmhouse">Farm House</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="studioapparment" value="Studio Apartment" checked/>
-                                                                                                <label for="studioapparment">Studio Apartment</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="servicedappart" value="Serviced Apartment" checked/>
-                                                                                                <label for="servicedappart">Serviced Apartment</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="other" value="Other" checked/>
-                                                                                                <label for="other">Other</label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div role="tabpanel" class="tab-pane" id="commercial">
-                                                                                        <div class="simpleradio">
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="commeroffioce" value="Commercial Office/Space" checked/>
-                                                                                                <label for="commeroffioce">Commercial Office/Space</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="commershops" value="Commercial Shops" checked/>
-                                                                                                <label for="commershops">Commercial Shops</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="commershowroom" value="Commercial Showroom" checked/>
-                                                                                                <label for="commershowroom">Commercial Showroom</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="industialland" value="Industrial Land" checked/>
-                                                                                                <label for="industialland">Industrial Land</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="warehouse" value="Ware House" checked/>
-                                                                                                <label for="warehouse">Ware House</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="hotelresorts" value="Hotel / Resorts" checked/>
-                                                                                                <label for="hotelresorts">Hotel / Resorts</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="guesthouse" value="Guest House / Banquet-halls" checked/>
-                                                                                                <label for="guesthouse">Guest House / Banquet-halls</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="spaceinmall" value="Space in Mall" checked/>
-                                                                                                <label for="spaceinmall">Space in Mall</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="coldstorage" value="Cold Storage" checked/>
-                                                                                                <label for="coldstorage">Cold Storage</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="timeshare" value="Time Share" checked/>
-                                                                                                <label for="timeshare">Time Share</label>
-                                                                                            </div>
-                                                                                            <div class="simpleradio-danger">
-                                                                                                <input type="radio" name="residentialpropery" id="other2" value="Other" checked/>
-                                                                                                <label for="other2">Other</label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>-->
+                                            <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Property Type: </label>                                           
                                         </div>
-
                                         <div class="form-group" id="property_error">
                                             <label for='' generated='true' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label has-error' style='color:red;'>Please select the type of Property you wish to Advertise.</label>
                                         </div>
-                                        <!--                                    <div class="form-group" id="available_from">
-                                                                                <label for="available_from_value" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Available From<sup>*</sup></label>
-                                                                                <div class="col-md-4">
-                                                                                    <input type="text" name="available_from_value" id="available_from_value" class="form-control date"  placeholder="yyyy-mm-dd">
-                                                                                </div>
-                                                                            </div>-->
-                                        <!--                                    <div class="form-group" id="avail_date_error">
-                                                                                <label for='' generated='true' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label has-error' style='color:red;'>Please select the date from which property is available.</label>
-                                                                            </div>-->
                                         <div id="resengital_options">
                                         </div>
                                         <div id="rent_options">
@@ -185,70 +85,6 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group" id="property_unit_error">
                                             <label for='' generated='true' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label has-error' style='color:red;'>Please specify the number of Property Units available</label>
                                         </div>
-
-                                        <!--                                    <div class="form-group" id="property_units">
-                                                                                <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Multiple Property Units<sup>*</sup></label>
-                                                                                <div class="col-md-4">
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="property_unit_value" id="property_unit_value_yes" value="1"> Yes
-                                                                                    </label>
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="property_unit_value" id="property_unit_value_no" value="0"> No
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group" id="property_count">
-                                                                                <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">No. Of Properies<sup>*</sup></label>
-                                                                                <div class="col-md-4">
-                                                                                    <input type="text" name="property_count_value" id="property_count_value" class="form-control"  placeholder="Enter No. Of Properies">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group" id="pg_avail">
-                                                                                <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">PG Available For:<sup>*</sup></label>
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="pg_availability" id="pg_girls" value="Girls"> Girls
-                                                                                    </label>
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="pg_availability" id="pg_boys" value="Boys"> Boys
-                                                                                    </label>
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="pg_availability" id="pg_girlboys" value="Girls & Boys"> Girls &amp; Boys
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group" id="suitable">
-                                                                                <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Suitable For:<sup>*</sup></label>
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Students" id="suitable_students" name="suitable_students">Student</label>
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Working Professionals" id="suitable_working" name="suitable_working">Working Professionals</label>
-                                                                                </div>
-                                                                            </div>-->
-                                        <!--                                    <div class="form-group" id="rent_type">
-                                                                                <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Willing to rent out to:<sup>*</sup></label>
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Family" id="rent_single_family" name="rent_single_family">Family
-                                                                                    </label>
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Single Men" name="rent_single_men" id="rent_single_men">Single Men
-                                                                                    </label>
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Single Women" name="rent_single_women" id="rent_single_women">Single Women
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group" id="argument_type">
-                                                                                <label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Preferred Agreement Type:<sup>*</sup></label>
-                                                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Company lease Agreement" name="argument_lease" id="argument_lease">Company lease Agreement</label>
-                                                                                    <label class="checkbox-inline">
-                                                                                        <input type="checkbox" value="Any" name="arg_type" id="arg_type">Any</label>
-                                                                                </div>
-                                                                            </div>-->
                                         <div class="form-group row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <button type="button" class="btn btn-success pull-right" id="btn_step1" name="btn_step1">LET'S GET STARTED&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
@@ -262,43 +98,37 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group">
                                             <label for="project_name" class="col-sm-3 control-label">Project Name:<sup>*</sup></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="project_name" name="project_name" placeholder="Project Name"/>
+                                                <input type="text" class="form-control" id="project_name" name="project_name" placeholder="Project Name" value="<?php echo (!empty($propertyinfo) && $propertyinfo->project_name != "") ? $propertyinfo->project_name : ''; ?>"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="property_location" class="col-sm-3 control-label">Location:<sup>*</sup></label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="us3-address" name="property_location" />
+                                                <input type="text" class="form-control" id="us3-address" name="property_location"  value="<?php echo (!empty($propertyinfo) && $propertyinfo->property_location != "") ? $propertyinfo->property_location : ''; ?>"/>
                                             </div>
                                         </div>
-                                        <!--                                    <div class="form-group">
-                                                                                <label for="property_radius" class="col-sm-3 control-label">Radius:</label>
-                                                                                <div class="col-sm-9">
-                                                                                    <input type="text" class="form-control" id="us3-radius" name="property_radius" />
-                                                                                </div>
-                                                                            </div>-->
                                         <div class="form-group">
                                             <label for="property_address" class="col-sm-3 control-label">Address:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="property_address" name="property_address" placeholder="type here.." />
+                                                <input type="text" class="form-control" id="property_address" name="property_address" placeholder="type here.." value="<?php echo (!empty($propertyinfo) && $propertyinfo->property_address != "") ? $propertyinfo->property_address : ''; ?>" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="area_name" class="col-sm-3 control-label">Area Name:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="area_name" name="area_name" placeholder="type here.." />
+                                                <input type="text" class="form-control" id="area_name" name="area_name" placeholder="type here.." value="<?php echo (!empty($propertyinfo) && $propertyinfo->area_name != "") ? $propertyinfo->area_name : ''; ?>" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="city_name" class="col-sm-3 control-label">City Name:</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="city_name" name="city_name" placeholder="type here.." />
+                                                <input type="text" class="form-control" id="city_name" name="city_name" placeholder="type here.." value="<?php echo (!empty($propertyinfo) && $propertyinfo->city_name != "") ? $propertyinfo->city_name : ''; ?>" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="property_neardesc" class="col-sm-3 control-label">About Near By Area:<sup>*</sup></label>
                                             <div class="col-sm-9">
-                                                <textarea name="property_neardesc" id="property_neardesc" class="form-control" placeholder="Write about near by places like railway station,hospital etc."></textarea>
+                                                <textarea name="property_neardesc" id="property_neardesc" class="form-control" placeholder="Write about near by places like railway station,hospital etc."><?php echo (!empty($propertyinfo) && $propertyinfo->property_neardesc != "") ? $propertyinfo->property_neardesc : ''; ?></textarea>
                                             </div>
                                         </div>
                                         <div id="us3" style=""></div>
@@ -759,7 +589,7 @@ $this->session->set_userdata('property_data', $newdata);
                                 <div role="tabpanel" class="tab-pane" id="view">
                                     <h5><b>Upload Video:</b></h5>
                                     <div id="dropzone">
-                                        <div id="demo-upload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>index.php/auth/properties_videos">                                            
+                                        <div id="demo-upload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_videos">                                            
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                             </div>
@@ -778,15 +608,18 @@ $this->session->set_userdata('property_data', $newdata);
                                 <div role="tabpanel" class="tab-pane " id="features">
                                     <h5><b>Upload Project Photos:</b></h5>
                                     <div id="dropzone">
-                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>index.php/auth/properties_images" method="post">                                            
+                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_images" method="post">                                            
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control" name="valid_image_error" id="valid_image_error" value="0"/>
+                                        </div>                                        
                                     </div>
                                     <h5><hr/><b>Upload Nearby Area Photos:</b></h5>
                                     <div id="dropzone">
-                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>index.php/auth/properties_nearby" method="post">                                            
+                                        <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_nearby" method="post">                                            
                                             <div class="dz-default dz-message">
                                                 <span>Drop files here to upload</span>
                                             </div>
@@ -794,46 +627,18 @@ $this->session->set_userdata('property_data', $newdata);
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <hr/>
-                                    </div>
-                                    <!--                                <h5><b>Amenities:</b></h5>
-                                                                    <div class="simpleradio">
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities1" value="Water Storage"/>
-                                                                            <label for="amenities1">Water Storage</label>
-                                                                        </div>
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities2" value="Visitor Parking"/>
-                                                                            <label for="amenities2">Visitor Parking</label>
-                                                                        </div>
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities3" value="Park"/>
-                                                                            <label for="amenities3">Park</label>
-                                                                        </div>
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities4" value="Waste Disposal"/>
-                                                                            <label for="amenities4">Waste Disposal</label>
-                                                                        </div>
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities5" value="Rain Water Harvesting"/>
-                                                                            <label for="amenities5">Rain Water Harvesting</label>
-                                                                        </div>
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities6" value="Maintanance Staff"/>
-                                                                            <label for="amenities6">Maintanance Staff</label>
-                                                                        </div>
-                                                                        <div class="simpleradio-danger">
-                                                                            <input type="checkbox" name="amenities" id="amenities7" value="Swimming Pool"/>
-                                                                            <label for="amenities7">Swimming Pool</label>
-                                                                        </div>
-                                                                    </div>-->
+                                    </div>                                   
                                     <h5><b>Project Amenities:</b></h5>
                                     <div class="simpleradio">
                                         <?php foreach ($project_amenities as $key => $project_amenity) { ?>  
                                             <div class="simpleradio-danger">
-                                                <input type="checkbox" name="project_amenities[]" id="<?php echo $project_amenity->id; ?>" value="<?php echo $project_amenity->id; ?>"/>
+                                                <input class="project_amenities_check" type="checkbox" name="project_amenities[]" id="<?php echo $project_amenity->id; ?>" value="<?php echo $project_amenity->id; ?>"/>
                                                 <label for="<?php echo $project_amenity->id; ?>"><?php echo $project_amenity->name; ?></label>
                                             </div>
                                         <?php } ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" name="project_amenities_error" id="project_amenities_error"/>
                                     </div>
                                     <h5><b>Flat Amenities:</b></h5>
                                     <div class="simpleradio">
@@ -844,9 +649,9 @@ $this->session->set_userdata('property_data', $newdata);
                                             </div>
                                         <?php } ?>
                                     </div>
-<!--                                    <div class="form-group" id="flat_amenities_error">
-                                        <label for='' generated='true' class='col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label has-error' style='color:red;'>Please select flat amenities.</label>
-                                    </div>-->
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" name="flat_amenities_error" id="flat_amenities_error"/>
+                                    </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <hr/>
                                     </div>
@@ -854,6 +659,7 @@ $this->session->set_userdata('property_data', $newdata);
                                         <label for="final_description" class="control-label">Description<sup>*</sup></label>
                                         <textarea class="form-control" rows="2" name="final_description" id="final_description"></textarea>
                                     </div>
+
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">

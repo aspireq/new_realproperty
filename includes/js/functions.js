@@ -305,15 +305,24 @@ $(document).ready(function () {
         } else {
             submit_false = (submit_false == 1) ? 1 : 0;
         }
-//        if ($('.flat_amenities_check:checked').length > 0) {
-//            $('#flat_amenities_error').hide();
-//            submit_false = (submit_false == 1) ? 1 : 0;
-//        } else {
-//            $('#flat_amenities_error').show();
-//            //call_error_step6("flat_amenities", "Please select flat amenities.");
-//            submit_false = 1;
-//        }
-
+        if ($('.flat_amenities_check:checked').length > 0) {
+            submit_false = (submit_false == 1) ? 1 : 0;
+        } else {
+            call_error_step6("flat_amenities_error", "Please select flat amenities.");
+            submit_false = 1;
+        }
+        if ($('.project_amenities_check:checked').length > 0) {
+            submit_false = (submit_false == 1) ? 1 : 0;
+        } else {
+            call_error_step6("project_amenities_error", "Please select project amenities.");
+            submit_false = 1;
+        }
+        if ($('#valid_image_error').val() == 1) {
+            submit_false = (submit_false == 1) ? 1 : 0;
+        } else {
+            call_error_step6("valid_image_error", "Please upload property images.");
+            submit_false = 1;
+        }
         if (submit_false == 0) {
             $("#add_property").submit();
         }

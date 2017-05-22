@@ -99,7 +99,7 @@
                                                 <p>3,4,5 BHK Appartments, Flat Discounts</p>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-4">
-                                                <a href="detailpage/detail.php" class="btn btn-primary">Explore Now</a>
+                                                <a href="<?php echo base_url();?>properties" class="btn btn-primary">Explore Now</a>
                                             </div>
                                         </div>
                                     </div>

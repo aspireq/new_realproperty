@@ -224,6 +224,11 @@
 </script>
 <script>
     $(document).ready(function () {
+        set_usertype('<?php echo (!empty($propertyinfo) && $propertyinfo->added_as != "") ? $propertyinfo->added_as : 'owner'; ?>');
+       // var property_units_opt = '<?php echo (!empty($propertyinfo) && $propertyinfo->multiple_property_units != "") ? $propertyinfo->multiple_property_units : ''; ?>';
+      //  if (property_units_opt == 1) {
+      //      set_propery_counts();
+      //  }
         $('#property_error').hide();
         //$('#avail_date_error').hide();
         $('#property_unit_error').hide();
@@ -303,10 +308,11 @@
             $('#available_from').hide();
             $('#security_depisit_info').hide();
         }
+        var property_type_name = '<?php echo (!empty($propertyinfo) && $propertyinfo->property_type_name != "") ? $propertyinfo->property_type_name : ''; ?>';
         $.ajax({
             url: "<?php echo base_url(); ?>auth/list_properties/",
             type: "POST",
-            data: {property_type: listed_propery},
+            data: {property_type: listed_propery, property_type_name: property_type_name},
             dataType: "JSON",
             success: function (response)
             {
@@ -316,6 +322,9 @@
                 $('#sell_options').empty();
             }
         });
+//        if (property_type_name != "") {
+//            $("input[value='" + property_type_name + "']").prop('checked', true);
+//        }
     }
     function set_info(info_type) {
         //alert(info_type);
@@ -361,6 +370,7 @@
     }
     function set_propery_counts() {
         var selected_pro = $("input[name=property_unit_value]:checked").val();
+        
         if (selected_pro == 1) {
             $('#property_count').show();
         } else {
@@ -395,26 +405,25 @@
             thisDropzone = this;
             this.on("addedfile", function (file) {
             });
-//            this.on("removedfile", function (file) {
-//                $("img[alt='" + file.name + "']").parent().parent().remove();
-//                alert(file.name);
-//                //delete_property_image(file);
-//            });
         },
         success: function (file, response) {
+            $('#btn_step6').prop('disabled', false);
             files = JSON.parse(response);
             fileobj = [files['filename'], file.name];
             uploadedfiles.push(fileobj);
-            //console.log(uploadedfiles);
+            if (files['got_image'] == true) {
+                $('#valid_image_error').val('1');
+            }
         },
         error: function (response) {
+            $('#btn_step6').prop('disabled', false);
             alert(response.xhr.responseText);
         },
         removedfile: function (file) {
-            alert(file);
-            alert(file.name);
-            //upload_banners();
-            //delete_property_image(file);
+            $('#btn_step6').prop('disabled', false);
+        },
+        uploadprogress: function (file) {
+            $('#btn_step6').prop('disabled', true);
         },
     };
 //    Dropzone.on("error", function (file, errormessage, xhr) {
