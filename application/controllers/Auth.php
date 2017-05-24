@@ -15,6 +15,7 @@ class Auth extends CI_Controller {
         $this->auth = new stdClass;
         $this->load->library('flexi_auth');
         $this->data = null;
+        
         // Redirect users logged in via password (However, not 'Remember me' users, as they may wish to login properly).
         if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'index/logout') {
             // Preserve any flashdata messages so they are passed to the redirect page.
@@ -174,6 +175,9 @@ class Auth extends CI_Controller {
         if ($this->flexi_auth->is_logged_in()) {
             // set random number for propety 
             // later used to upload images and videos for reffrence no.
+            $this->data['ablums'] = $this->Common_model->get_cities();
+//            echo "<pre>";
+//            print_r($this->data['ablums']);die();
             $this->data['unitsinfo'] = $this->Common_model->select_all('units');
             $this->data['project_amenities'] = $this->Common_model->select_all('project_amenities');
             $this->data['flat_amenities'] = $this->Common_model->select_all('flat_amenities');
@@ -184,6 +188,7 @@ class Auth extends CI_Controller {
                 $property_data = array();
                 $property_data['added_by'] = 1;
                 $property_data['added_as'] = $this->input->post('user_type');
+                $property_data['property_zone'] = $this->input->post('property_zone');
                 $property_data['property_type'] = $this->input->post('property_type');
                 $property_data['property_type_name'] = $this->input->post('residentialpropery');
                 $property_data['project_name'] = $this->input->post('project_name');
@@ -199,6 +204,7 @@ class Auth extends CI_Controller {
                 $property_data['property_description'] = $this->input->post('final_description');
                 $property_data['availability'] = $this->input->post('availability');
                 $property_data['property_configuration'] = $this->input->post('propery_configuration');
+                $property_data['booking_amount'] = $this->input->post('booking_amount');
 
                 $property_data['bank_name'] = $this->input->post('bank_name');
                 $property_data['bank_interest'] = $this->input->post('bank_interest');
@@ -273,7 +279,45 @@ class Auth extends CI_Controller {
                     $property_data['flat_amenities'] = $flat_amenities;
                 }
                 if (!empty($property_data)) {
-                    $property_id = $this->Common_model->insert_record('properties', $property_data);
+                    if ($this->input->post('edit_id') != "") {
+                        $old_images_post = $this->input->post('old_property_images');
+                        if (!empty($old_images_post)) {
+                            $old_images_table = $this->db->query("select image from property_images where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
+                            $final_images = array_diff(array_column($old_images_table, 'image'), $old_images_post);
+                            foreach ($final_images as $row_image) {
+                                if (file_exists(FCPATH . 'includes/properties_images/' . $row_image)) {
+                                    unlink(FCPATH . 'includes/properties_images/' . $row_image);
+                                    $this->Common_model->delete_where('property_images', array('property_id' => $this->input->post('edit_id'), 'image' => $row_image));
+                                }
+                            }
+                        }
+                        $old_nearby_images = $this->input->post('old_nearby_images');
+                        if (!empty($old_nearby_images)) {
+                            $old_images_table = $this->db->query("select image from property_nearby where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
+                            $final_images = array_diff(array_column($old_images_table, 'image'), $old_nearby_images);
+                            foreach ($final_images as $row_image) {
+                                if (file_exists(FCPATH . 'includes/property_nearby/' . $row_image)) {
+                                    unlink(FCPATH . 'includes/property_nearby/' . $row_image);
+                                    $this->Common_model->delete_where('property_nearby', array('property_id' => $this->input->post('edit_id'), 'image' => $row_image));
+                                }
+                            }
+                        }
+                        $old_property_videos = $this->input->post('old_property_videos');
+                        if (!empty($old_property_videos)) {
+                            $old_images_table = $this->db->query("select video from property_videos where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
+                            $final_images = array_diff(array_column($old_images_table, 'video'), $old_property_videos);
+                            foreach ($final_images as $row_image) {
+                                if (file_exists(FCPATH . 'includes/properties_videos/' . $row_image)) {
+                                    unlink(FCPATH . 'includes/properties_videos/' . $row_image);
+                                    $this->Common_model->delete_where('property_videos', array('property_id' => $this->input->post('edit_id'), 'video' => $row_image));
+                                }
+                            }
+                        }
+                        $property_id = $this->Common_model->select_update('properties', $property_data, array('id' => $this->input->post('edit_id')));
+                        $property_id = $this->input->post('edit_id');
+                    } else {
+                        $property_id = $this->Common_model->insert_record('properties', $property_data);
+                    }
                     $update_images = $this->Common_model->select_update('property_images', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                     $update_videos = $this->Common_model->select_update('property_videos', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                     $update_nearbny = $this->Common_model->select_update('property_nearby', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
@@ -288,6 +332,9 @@ class Auth extends CI_Controller {
             }
             if ($edit_property_id != null) {
                 $this->data['propertyinfo'] = $this->Common_model->select_where_row('properties', array('id' => $edit_property_id));
+                $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $edit_property_id));
+                $this->data['property_nearby'] = $this->Common_model->select_where('property_nearby', array('property_id' => $edit_property_id));
+                $this->data['property_videos'] = $this->Common_model->select_where('property_videos', array('property_id' => $edit_property_id));
             }
             $this->data = $this->include_files();
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
@@ -360,7 +407,7 @@ class Auth extends CI_Controller {
         if (!empty($_FILES['file']['name'])) {
             $this->load->library('upload');
             $config['upload_path'] = 'includes/properties_videos';
-            $config['allowed_types'] = 'mp4|3gp|flv|mp3';
+            $config['allowed_types'] = 'mp4|3gp|flv';
             $config['overwrite'] = FALSE;
             $config['encrypt_name'] = TRUE;
             $config['max_filename'] = 25;
@@ -368,8 +415,10 @@ class Auth extends CI_Controller {
             if (!$this->upload->do_upload('file')) {
                 $error = $this->upload->display_errors();
                 $this->session->set_flashdata('message', $error);
-                echo $error;
-                die();
+                $response = strip_tags($error);
+                header('HTTP/1.1 500 Internal Server Error');
+                header('Content-type: application/json');
+                exit(json_encode($response));
             } else {
                 $file_info = $this->upload->data();
                 $file_name = $file_info['file_name'];
@@ -556,21 +605,30 @@ class Auth extends CI_Controller {
     }
 
     function sell_options() {
+
+        $multiple_property_units = $this->input->post('multiple_property_units');
+        $no_of_units = $this->input->post('no_of_units');
+        if ($no_of_units == "") {
+            $no_of_units = "";
+        }
+
+        $checked = ($multiple_property_units != "" && $multiple_property_units == "1") ? 'checked' : '';
         $data = '<div class="form-group" id="property_units">';
         $data .= '<label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Multiple Property Units<sup>*</sup></label>';
         $data .= '<div class="col-md-4">';
         $data .= '<label class="radio-inline">';
-        $data .= '<input type="radio" name="property_unit_value" id="property_unit_value_yes" value="1" onclick="set_propery_counts()"> Yes';
+        $data .= '<input type="radio" name="property_unit_value" id="property_unit_value_yes" value="1" onclick="set_propery_counts()" ' . "$checked" . ' > Yes';
         $data .= '</label>';
+        $checked = ($multiple_property_units == "") ? 'checked' : '';
         $data .= '<label class="radio-inline">';
-        $data .= '<input type="radio" name="property_unit_value" id="property_unit_value_no" value="0" onclick="set_propery_counts()" checked > No';
+        $data .= '<input type="radio" name="property_unit_value" id="property_unit_value_no" value="0" onclick="set_propery_counts()" ' . "$checked" . '> No';
         $data .= '</label>';
         $data .= '</div>';
         $data .= '</div>';
         $data .= '<div class="form-group" id="property_count">';
         $data .= '<label for="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">No. Of Properies<sup>*</sup></label>';
         $data .= '<div class="col-md-4">';
-        $data .= '<input type="text" name="property_count_value" id="property_count_value" class="form-control"  placeholder="Enter No. Of Properies">';
+        $data .= '<input type="text" name="property_count_value" id="property_count_value" class="form-control"  placeholder="Enter No. Of Properies" value="' . $no_of_units . '">';
         $data .= '</div>';
         $data .= '</div>';
         die(json_encode($data));
@@ -679,6 +737,12 @@ class Auth extends CI_Controller {
             $this->session->set_flashdata('message', "Status updated successfully !");
         }
         redirect($page_url);
+    }
+
+    function property_images() {
+        $property_id = 1;
+        $data = (array) $this->Common_model->select_where('property_images', array('property_id' => $property_id));
+        die(json_encode($data));
     }
 
 }

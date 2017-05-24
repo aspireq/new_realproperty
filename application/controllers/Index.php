@@ -33,34 +33,37 @@ class Index extends CI_Controller {
     }
 
     public function index() {
-        $this->data['exlusive_ads'] = $this->Common_model->select_where('advertizement', array('ad_type' => 2,'status' => 1));
-        $this->data['property_ads'] = $this->Common_model->select_where('advertizement', array('ad_type' => 1,'status' => 1));
+        $this->data['exlusive_ads'] = $this->Common_model->select_where('advertizement', array('ad_type' => 2, 'status' => 1));
+        $this->data['property_ads'] = $this->Common_model->select_where('advertizement', array('ad_type' => 1, 'status' => 1));
         $this->data['locations'] = $this->Common_model->get_locations();
         if ($this->input->post()) {
             $property_type = $this->input->post('property_type');
             $location = $this->input->post('location');
             $property_status = $this->input->post('property_status');
-            $this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
+            //$this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
+            $final_data = array();
+            $zones = $this->Common_model->select_all('city_area');
+            foreach ($zones as $key => $zone) {
+                $properties = $this->Common_model->get_properties($zone->id, $property_type, $location, $property_status);
+                if (!empty($properties)) {
+                    $final_data[$key] = $properties;
+                }
+            }
+            $this->data['properties'] = $final_data;
         } else {
-            $this->data['properties'] = $this->Common_model->get_properties();
+            $final_data = array();
+            $zones = $this->Common_model->select_all('city_area');
+            foreach ($zones as $key => $zone) {
+                $properties = $this->Common_model->get_properties($zone->id);
+                if (!empty($properties)) {
+                    $final_data[$key] = $properties;
+                }
+            }
+            $this->data['properties'] = $final_data;
         }
         $this->data = $this->include_files();
         $this->load->view('index', $this->data);
     }
-
-//    function home() {
-//        $this->data['locations'] = $this->Common_model->get_locations();
-//        if ($this->input->post()) {
-//            $property_type = $this->input->post('property_type');
-//            $location = $this->input->post('location');
-//            $property_status = $this->input->post('property_status');
-//            $this->data['properties'] = $this->Common_model->get_properties($property_type, $location, $property_status);
-//        } else {
-//            $this->data['properties'] = $this->Common_model->get_properties();
-//        }
-//        $this->data = $this->include_files();
-//        $this->load->view('index', $this->data);
-//    }
 
     function login() {
         if ($this->input->post()) {
@@ -93,6 +96,25 @@ class Index extends CI_Controller {
         $this->data['propertyinfo'] = $this->Common_model->get_property($property_id);
         $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $property_id));
         $this->data['property_nearby'] = $this->Common_model->select_where('property_nearby', array('property_id' => $property_id));
+        if ($this->input->post()) {
+            $property_email = $this->Common_model->select_where_row('user_accounts', array('uacc_id' => $this->data['propertyinfo']->added_by));
+            $subject = 'property.realgujarat - ' . 'Property Inquiry';
+            $message = "Contact Info   \n";
+            $message .= "Name  : " . $this->input->post('name') . "\n";
+            $message .= "Email : " . $this->input->post('emailid') . "\n";
+            $message .= "Contact No. : " . $this->input->post('phoneno') . "\n";
+            $message .= "\r";
+            $message .= "Message : " . "Customer showed intereset in '" . $this->data['propertyinfo']->project_name . "'. Contact the client on given contact no.";
+
+            $headers = 'From: ' . From_Email . '' . "\r\n" .
+                    'Reply-To: ' . Reply_Email . '' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+            if (mail(Owner_Email, $subject, $message, $headers) && mail($property_email->uacc_email, $subject, $message, $headers)) {
+                $this->session->set_flashdata('message', "Email has been sent successfully");
+            } else {
+                $this->session->set_flashdata('message', "Something went wrong,please try again later");
+            }
+        }
         $this->data['header'] = $this->load->view('properties/header', NULL, TRUE);
         $this->data['footer'] = $this->load->view('properties/footer', NULL, TRUE);
         $this->load->view('properydetaiils', $this->data);

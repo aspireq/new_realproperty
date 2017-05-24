@@ -46,7 +46,8 @@ $this->session->set_userdata('property_data', $newdata);
                             </div>
                         <?php } ?>
                         <form method="post" id="add_property" role="form">
-                            <input type="text" name="user_type" id="user_type" value="owner" > 
+                            <input type="hidden" name='edit_id' id="edit_id" value="<?php echo (!empty($propertyinfo) && $propertyinfo->id != "") ? $propertyinfo->id : ''; ?>">
+                            <input type="hidden" name="user_type" id="user_type" value="owner" > 
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="basicdetail">                                    
                                     <div class="adform">
@@ -126,17 +127,37 @@ $this->session->set_userdata('property_data', $newdata);
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="property_zone" class="col-sm-3 control-label">Zone: </label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" name="property_zone" id="property_zone">
+                                                    <?php
+                                                    $name = "";
+                                                    foreach ($ablums as $key => $values) {
+                                                        if ($name != $values['city_name']) {
+                                                            echo '<optgroup label="' . $values['city_name'] . '">';
+                                                        }
+                                                        echo '<option value="' . $values['area_id'] . '">' . $values['name'] . '</option>';
+                                                        if ($name != $values['city_name']) {
+                                                            echo '</optgroup>';
+                                                        }
+                                                        $name = $values['city_name'];
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="property_neardesc" class="col-sm-3 control-label">About Near By Area:<sup>*</sup></label>
                                             <div class="col-sm-9">
                                                 <textarea name="property_neardesc" id="property_neardesc" class="form-control" placeholder="Write about near by places like railway station,hospital etc."><?php echo (!empty($propertyinfo) && $propertyinfo->property_neardesc != "") ? $propertyinfo->property_neardesc : ''; ?></textarea>
                                             </div>
-                                        </div>
+                                        </div>                                        
                                         <div id="us3" style=""></div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">
-                                                <button class="btn btn-default prev-step"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
+                                                <button class="btn btn-default prev-step" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
                                                 <button class="btn btn-success" type="submit" name="btn_step2" id="btn_step2">NEXT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                             </div>
                                         </div>
@@ -148,24 +169,24 @@ $this->session->set_userdata('property_data', $newdata);
                                     <h4><b>Area Detail</b></h4>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label>Configuration: </label>
+                                            <label>Configuration: </label>                                           
                                             <select class="form-control" name="propery_configuration" id="propery_configuration">
-                                                <option value="2 BHK">2 BHK</option>
-                                                <option value="3 BHK">3 BHK</option>
-                                                <option value="4 BHK">4 BHK</option>
-                                                <option value="Other">Other</option>
+                                                <option value="2 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "2 BHK") ? 'selected' : ''; ?>>2 BHK</option>
+                                                <option value="3 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "3 BHK") ? 'selected' : ''; ?>>3 BHK</option>
+                                                <option value="4 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "4 BHK") ? 'selected' : ''; ?>>4 BHK</option>
+                                                <option value="Other" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "Other") ? 'selected' : ''; ?>>Other</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label>Plot Area: </label>
                                             <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <input class="form-control" type="text" name="plot_area" id="plot_area">
+                                                <input class="form-control" type="text" name="plot_area" id="plot_area" value="<?php echo (!empty($propertyinfo) && $propertyinfo->plot_area != "0") ? $propertyinfo->plot_area : ''; ?>">
                                                 <span class="input-group-btn">
-                                                    <select class="btn btn-default" name="plot_area_unit" id="plot_area_unit ">
+                                                    <select class="btn btn-default" name="plot_area_unit" id="plot_area_unit">
                                                         <?php
                                                         foreach ($unitsinfo as $unit) {
                                                             ?>
-                                                            <option value="<?php echo $unit->id ?>"><?php echo $unit->short_name; ?></option>
+                                                            <option value="<?php echo $unit->id ?>" <?php echo (!empty($propertyinfo) && $propertyinfo->plot_area_unit == $unit->id) ? 'selected' : ''; ?>><?php echo $unit->short_name; ?></option>
                                                             <?php
                                                         }
                                                         ?>
@@ -176,13 +197,13 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group col-md-6">
                                             <label>Built Up Area: </label>
                                             <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <input class="form-control" type="text" name="builtuparea" id="builtuparea">
+                                                <input class="form-control" type="text" name="builtuparea" id="builtuparea" value="<?php echo (!empty($propertyinfo) && $propertyinfo->build_up_area != "0") ? $propertyinfo->build_up_area : ''; ?>">
                                                 <span class="input-group-btn">
                                                     <select class="btn btn-default" name="builtuparea_unit" id="builtuparea_unit">
                                                         <?php
                                                         foreach ($unitsinfo as $unit) {
                                                             ?>
-                                                            <option value="<?php echo $unit->id ?>"><?php echo $unit->short_name; ?></option>
+                                                            <option value="<?php echo $unit->id ?>" <?php echo (!empty($propertyinfo) && $propertyinfo->build_up_area_unit == $unit->id) ? 'selected' : ''; ?>><?php echo $unit->short_name; ?></option>
                                                             <?php
                                                         }
                                                         ?>
@@ -193,13 +214,13 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group col-md-6">
                                             <label>Carpet Area: </label>
                                             <div class="input-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <input class="form-control" type="text" name="carpet_area" id="carpet_area">
+                                                <input class="form-control" type="text" name="carpet_area" id="carpet_area" value="<?php echo (!empty($propertyinfo) && $propertyinfo->carpet_area != "0") ? $propertyinfo->carpet_area : ''; ?>">
                                                 <span class="input-group-btn">
                                                     <select class="btn btn-default" name="carpet_area_unit" id="carpet_area_unit">
                                                         <?php
                                                         foreach ($unitsinfo as $unit) {
                                                             ?>
-                                                            <option value="<?php echo $unit->id ?>"><?php echo $unit->short_name; ?></option>
+                                                            <option value="<?php echo $unit->id ?>" <?php echo (!empty($propertyinfo) && $propertyinfo->carpet_area_unit == $unit->id) ? 'selected' : ''; ?>><?php echo $unit->short_name; ?></option>
                                                             <?php
                                                         }
                                                         ?>
@@ -216,69 +237,69 @@ $this->session->set_userdata('property_data', $newdata);
                                             <div class="form-group col-md-6">
                                                 <label>Total Floors: </label>
                                                 <select class="form-control" name="total_floor" id="total_floor">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
-                                                    <option value="16">16</option>
-                                                    <option value="17">17</option>
-                                                    <option value="18">18</option>
-                                                    <option value="19">19</option>
-                                                    <option value="20">20</option>
-                                                    <option value="21">21</option>
-                                                    <option value="22">22</option>
-                                                    <option value="23">23</option>
-                                                    <option value="24">24</option>
-                                                    <option value="25">25</option>
-                                                    <option value="26">26</option>
-                                                    <option value="27">27</option>
-                                                    <option value="28">28</option>
-                                                    <option value="29">29</option>
-                                                    <option value="30">30</option>
-                                                    <option value="31">31</option>
-                                                    <option value="32">32</option>
-                                                    <option value="33">33</option>
-                                                    <option value="34">34</option>
-                                                    <option value="35">35</option>
-                                                    <option value="36">36</option>
-                                                    <option value="37">37</option>
-                                                    <option value="38">38</option>
-                                                    <option value="39">39</option>
-                                                    <option value="40">40</option>
-                                                    <option value="40+">40+</option>
+                                                    <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "1") ? 'selected' : ''; ?>>1</option>
+                                                    <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "2") ? 'selected' : ''; ?>>2</option>
+                                                    <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "3") ? 'selected' : ''; ?>>3</option>
+                                                    <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "4") ? 'selected' : ''; ?>>4</option>
+                                                    <option value="5" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "5") ? 'selected' : ''; ?>>5</option>
+                                                    <option value="6" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "6") ? 'selected' : ''; ?>>6</option>
+                                                    <option value="7" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "7") ? 'selected' : ''; ?>>7</option>
+                                                    <option value="8" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "8") ? 'selected' : ''; ?>>8</option>
+                                                    <option value="9" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "9") ? 'selected' : ''; ?>>9</option>
+                                                    <option value="10" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "10") ? 'selected' : ''; ?>>10</option>
+                                                    <option value="11" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "11") ? 'selected' : ''; ?>>11</option>
+                                                    <option value="12" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "12") ? 'selected' : ''; ?>>12</option>
+                                                    <option value="13" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "13") ? 'selected' : ''; ?>>13</option>
+                                                    <option value="14" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "14") ? 'selected' : ''; ?>>14</option>
+                                                    <option value="15" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "15") ? 'selected' : ''; ?>>15</option>
+                                                    <option value="16" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "16") ? 'selected' : ''; ?>>16</option>
+                                                    <option value="17" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "17") ? 'selected' : ''; ?>>17</option>
+                                                    <option value="18" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "18") ? 'selected' : ''; ?>>18</option>
+                                                    <option value="19" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "19") ? 'selected' : ''; ?>>19</option>
+                                                    <option value="20" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "20") ? 'selected' : ''; ?>>20</option>
+                                                    <option value="21" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "21") ? 'selected' : ''; ?>>21</option>
+                                                    <option value="22" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "22") ? 'selected' : ''; ?>>22</option>
+                                                    <option value="23" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "23") ? 'selected' : ''; ?>>23</option>
+                                                    <option value="24" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "24") ? 'selected' : ''; ?>>24</option>
+                                                    <option value="25" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "25") ? 'selected' : ''; ?>>25</option>
+                                                    <option value="26" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "26") ? 'selected' : ''; ?>>26</option>
+                                                    <option value="27" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "27") ? 'selected' : ''; ?>>27</option>
+                                                    <option value="28" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "28") ? 'selected' : ''; ?>>28</option>
+                                                    <option value="29" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "29") ? 'selected' : ''; ?>>29</option>
+                                                    <option value="30" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "30") ? 'selected' : ''; ?>>30</option>
+                                                    <option value="31" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "31") ? 'selected' : ''; ?>>31</option>
+                                                    <option value="32" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "32") ? 'selected' : ''; ?>>32</option>
+                                                    <option value="33" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "33") ? 'selected' : ''; ?>>33</option>
+                                                    <option value="34" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "34") ? 'selected' : ''; ?>>34</option>
+                                                    <option value="35" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "35") ? 'selected' : ''; ?>>35</option>
+                                                    <option value="36" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "36") ? 'selected' : ''; ?>>36</option>
+                                                    <option value="37" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "37") ? 'selected' : ''; ?>>37</option>
+                                                    <option value="38" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "38") ? 'selected' : ''; ?>>38</option>
+                                                    <option value="39" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "39") ? 'selected' : ''; ?>>39</option>
+                                                    <option value="40" <?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "40") ? 'selected' : ''; ?>>40</option>
+                                                    <option value="40+"<?php echo (!empty($propertyinfo) && $propertyinfo->total_floor == "40+") ? 'selected' : ''; ?>>40+</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Propery on Floor: </label>
                                                 <select class="form-control" name="property_on_floor " id="property_on_floor">
-                                                    <option value="Basement">Basement</option>
-                                                    <option value="Lower Ground">Lower Ground</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
+                                                    <option value="Basement" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "Basement") ? 'selected' : ''; ?>>Basement</option>
+                                                    <option value="Lower Ground" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "Lower Ground") ? 'selected' : ''; ?>>Lower Ground</option>
+                                                    <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "1") ? 'selected' : ''; ?>>1</option>
+                                                    <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "2") ? 'selected' : ''; ?>>2</option>
+                                                    <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "3") ? 'selected' : ''; ?>>3</option>
+                                                    <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "4") ? 'selected' : ''; ?>>4</option>
+                                                    <option value="5" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "5") ? 'selected' : ''; ?>>5</option>
+                                                    <option value="6" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "6") ? 'selected' : ''; ?>>6</option>
+                                                    <option value="7" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "7") ? 'selected' : ''; ?>>7</option>
+                                                    <option value="8" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "8") ? 'selected' : ''; ?>>8</option>
+                                                    <option value="9" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "9") ? 'selected' : ''; ?>>9</option>
+                                                    <option value="10" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "10") ? 'selected' : ''; ?>>10</option>
+                                                    <option value="11" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "11") ? 'selected' : ''; ?>>11</option>
+                                                    <option value="12" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "12") ? 'selected' : ''; ?>>12</option>
+                                                    <option value="13" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "13") ? 'selected' : ''; ?>>13</option>
+                                                    <option value="14" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "14") ? 'selected' : ''; ?>>14</option>
+                                                    <option value="15" <?php echo (!empty($propertyinfo) && $propertyinfo->property_on_floor == "15") ? 'selected' : ''; ?>>15</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -291,45 +312,45 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group col-md-4">
                                             <label>Bedrooms:</label>
                                             <select class="form-control" name="bedrooms" id="bedrooms">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
+                                                <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "1") ? 'selected' : ''; ?>>1</option>
+                                                <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "2") ? 'selected' : ''; ?>>2</option>
+                                                <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "3") ? 'selected' : ''; ?>>3</option>
+                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "4") ? 'selected' : ''; ?>>4</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Bathrooms:</label>
                                             <select class="form-control" name="bathrooms" id="bathrooms">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
+                                                <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>1</option>
+                                                <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>2</option>
+                                                <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>3</option>
+                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>4</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Balconies:</label>
                                             <select class="form-control" name="balconies" id="balconies">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
+                                                <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "1") ? 'selected' : ''; ?>>1</option>
+                                                <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "2") ? 'selected' : ''; ?>>2</option>
+                                                <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "3") ? 'selected' : ''; ?>>3</option>
+                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "4") ? 'selected' : ''; ?>>4</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="pooja_room" name="pooja_room" value="1"> Pooja Room
+                                                <input type="checkbox" id="pooja_room" name="pooja_room" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->pooja_room == "1") ? 'checked' : ''; ?>> Pooja Room
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="study_room " name="study_room" value="1"> Study Room
+                                                <input type="checkbox" id="study_room " name="study_room" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->study_room == "1") ? 'checked' : ''; ?>> Study Room
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="servent_room" name="servent_room" value="1"> Servant Room
+                                                <input type="checkbox" id="servent_room" name="servent_room" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->servent_room == "1") ? 'checked' : ''; ?>> Servant Room
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="store_room" name="store_room" value="1"> Store Room
+                                                <input type="checkbox" id="store_room" name="store_room" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->store_room == "1") ? 'checked' : ''; ?>> Store Room
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="other_room" name="other_room" value="1"> Other Room
+                                                <input type="checkbox" id="other_room" name="other_room" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->other_room == "1") ? 'checked' : ''; ?>> Other Room
                                             </label>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -340,31 +361,31 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="no_parking" name="no_parking" value="1"> None
+                                                <input type="checkbox" id="no_parking" name="no_parking" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->no_parking == "1") ? 'checked' : ''; ?>> None
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="covered_parking" name="covered_parking" value="1"> Covered
+                                                <input type="checkbox" id="covered_parking" name="covered_parking" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->covered_parking == "1") ? 'checked' : ''; ?> > Covered
                                             </label>
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" id="open_parking" name="open_parking" value="1"> Open
+                                                <input type="checkbox" id="open_parking" name="open_parking" value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->open_parking == "1") ? 'checked' : ''; ?>> Open
                                             </label>
-                                        </div>                                   
+                                        </div>      
                                         <div class="form-group col-md-4" id="parking_options_covered">
                                             <label>No of covered parking:</label>
                                             <select class="form-control" name="covered_parking_count" id="covered_parking_count">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
+                                                <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->covered_parking == '1' && $propertyinfo->covered_parking_count == "1") ? 'selected' : ''; ?>>1</option>
+                                                <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->covered_parking == '1' && $propertyinfo->covered_parking_count == "2") ? 'selected' : ''; ?>>2</option>
+                                                <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->covered_parking == '1' && $propertyinfo->covered_parking_count == "3") ? 'selected' : ''; ?>>3</option>
+                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->covered_parking == '1' && $propertyinfo->covered_parking_count == "4") ? 'selected' : ''; ?>>4</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4" id="parking_options_open">
                                             <label>No of open parking:</label>
                                             <select class="form-control" name="open_parking_count" id="open_parking_count">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
+                                                <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->open_parking_count == '1' && $propertyinfo->open_parking_count == "1") ? 'selected' : ''; ?>>1</option>
+                                                <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->open_parking_count == '1' && $propertyinfo->open_parking_count == "2") ? 'selected' : ''; ?>>2</option>
+                                                <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->open_parking_count == '1' && $propertyinfo->open_parking_count == "3") ? 'selected' : ''; ?>>3</option>
+                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->open_parking_count == '1' && $propertyinfo->open_parking_count == "4") ? 'selected' : ''; ?>>4</option>
                                             </select>
                                         </div>                                    
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -460,7 +481,7 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">
-                                                <button class="btn btn-default prev-step"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
+                                                <button class="btn btn-default prev-step" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
                                                 <button class="btn btn-success next-step" type="button" name="btn_step3" id="btn_step3">NEXT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                             </div>
                                         </div>
@@ -474,13 +495,13 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Expected Price:<sup>*</sup></label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="expected_price" id="expected_price" placeholder="">
+                                                <input type="text" class="form-control" name="expected_price" id="expected_price" value="<?php echo (!empty($propertyinfo) && $propertyinfo->price != "") ? $propertyinfo->price : ''; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Price Per Sq. Ft:<sup>*</sup></label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="squrefeet_price" id="squrefeet_price" placeholder="">
+                                                <input type="text" class="form-control" name="squrefeet_price" id="squrefeet_price" value="<?php echo (!empty($propertyinfo) && $propertyinfo->price_per_sqft != "") ? $propertyinfo->price_per_sqft : ''; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -551,35 +572,35 @@ $this->session->set_userdata('property_data', $newdata);
                                             <label class="col-md-4 control-label" for="bank_name">Enter Bank Name:</label>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="bank_name" id="bank_name"  onfocus='this.size = 10;' onblur='this.size = 1;' onchange='this.size = 1; this.blur();'>
-                                                    <option value="Allahabad Bank">Allahabad Bank</option>
-                                                    <option value="Andhra Bank">Andhra Bank</option>
-                                                    <option value="Axis Bank">Axis Bank</option>
-                                                    <option value="Bank of Baroda - Corporate Banking">Bank of Baroda - Corporate Banking</option>
-                                                    <option value="Bank of India">Bank of India</option>
-                                                    <option value="Bank of Maharashtra">Bank of Maharashtra</option>
-                                                    <option value="Canara Bank">Canara Bank</option>
-                                                    <option value="Central Bank of India">Central Bank of India</option>
-                                                    <option value="City Union Bank">City Union Bank</option>
-                                                    <option value="Dhanlaxmi Bank">Dhanlaxmi Bank</option>
-                                                    <option value="HDFC Bank">HDFC Bank</option>
-                                                    <option value="ICICI Bank">ICICI Bank</option>
-                                                    <option value="IDBI Bank">IDBI Bank</option>
-                                                    <option value="Indian Overseas Bank">Indian Overseas Bank</option>
-                                                    <option value="Kotak Bank">Kotak Bank</option>
+                                                    <option value="Allahabad Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Allahabad Bank') ? 'selected' : ''; ?>>Allahabad Bank</option>
+                                                    <option value="Andhra Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Andhra Bank') ? 'selected' : ''; ?>>Andhra Bank</option>
+                                                    <option value="Axis Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Axis Bank') ? 'selected' : ''; ?>>Axis Bank</option>
+                                                    <option value="Bank of Baroda - Corporate Banking" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Bank of Baroda - Corporate Banking') ? 'selected' : ''; ?>>Bank of Baroda - Corporate Banking</option>
+                                                    <option value="Bank of India" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Bank of India') ? 'selected' : ''; ?>>Bank of India</option>
+                                                    <option value="Bank of Maharashtra" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Bank of Maharashtra') ? 'selected' : ''; ?>>Bank of Maharashtra</option>
+                                                    <option value="Canara Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Canara Bank') ? 'selected' : ''; ?>>Canara Bank</option>
+                                                    <option value="Central Bank of India" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Central Bank of India') ? 'selected' : ''; ?>>Central Bank of India</option>
+                                                    <option value="City Union Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'City Union Bank') ? 'selected' : ''; ?>>City Union Bank</option>
+                                                    <option value="Dhanlaxmi Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Dhanlaxmi Bank') ? 'selected' : ''; ?>>Dhanlaxmi Bank</option>
+                                                    <option value="HDFC Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'HDFC Bank') ? 'selected' : ''; ?>>HDFC Bank</option>
+                                                    <option value="ICICI Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'ICICI Bank') ? 'selected' : ''; ?>>ICICI Bank</option>
+                                                    <option value="IDBI Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'IDBI Bank') ? 'selected' : ''; ?>>IDBI Bank</option>
+                                                    <option value="Indian Overseas Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Indian Overseas Bank') ? 'selected' : ''; ?>>Indian Overseas Bank</option>
+                                                    <option value="Kotak Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Kotak Bank') ? 'selected' : ''; ?>>Kotak Bank</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Enter Rate of Interest:</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" id="bank_interest" name="bank_interest" placeholder="">
+                                                <input type="text" class="form-control" id="bank_interest" name="bank_interest" value="<?php echo (!empty($propertyinfo) && $propertyinfo->bank_interest != "") ? $propertyinfo->bank_interest : ''; ?>">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">
-                                                <button class="btn btn-default"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
+                                                <button class="btn btn-default prev-step" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
                                                 <button class="btn btn-success" name="btn_step4" id="btn_step4" type="button">NEXT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                             </div>
                                         </div>
@@ -588,6 +609,17 @@ $this->session->set_userdata('property_data', $newdata);
                                 <!-- video upload -->
                                 <div role="tabpanel" class="tab-pane" id="view">
                                     <h5><b>Upload Video:</b></h5>
+                                    <div class="row oldimage">
+                                        <?php foreach ($property_videos as $image) { ?>
+                                            <div class="col-md-3">
+                                                <div class="thumbnail">
+                                                    <a class="old_property_video" href="#"><i class="fa fa-times-circle"></i></a>
+                                                    <input type="hidden" name="old_property_videos[]" id="<?php echo $image->video; ?>" value="<?php echo $image->video; ?>">
+                                                    <img src="<?php echo base_url(); ?>includes/properties_videos/default_video.jpg">
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
                                     <div id="dropzone">
                                         <div id="demo-upload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_videos">                                            
                                             <div class="dz-default dz-message">
@@ -598,7 +630,7 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">
-                                                <button class="btn btn-default prev-step"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
+                                                <button class="btn btn-default prev-step" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
                                                 <button class="btn btn-success next-step" name="btn_step5" id="btn_step5" type="button">NEXT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                             </div>
                                         </div>
@@ -607,6 +639,17 @@ $this->session->set_userdata('property_data', $newdata);
                                 <!-- feature -->
                                 <div role="tabpanel" class="tab-pane " id="features">
                                     <h5><b>Upload Project Photos:</b></h5>
+                                    <div class="row oldimage">
+                                        <?php foreach ($property_images as $image) { ?>
+                                            <div class="col-md-3">
+                                                <div class="thumbnail">
+                                                    <a class="old_property_image" href="#"><i class="fa fa-times-circle"></i></a>
+                                                    <input type="hidden" name="old_property_images[]" id="<?php echo $image->image; ?>" value="<?php echo $image->image; ?>">
+                                                    <img src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>">
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
                                     <div id="dropzone">
                                         <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_images" method="post">                                            
                                             <div class="dz-default dz-message">
@@ -614,10 +657,21 @@ $this->session->set_userdata('property_data', $newdata);
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" class="form-control" name="valid_image_error" id="valid_image_error" value="0"/>
+                                            <input type="hidden" class="form-control" name="valid_image_error" id="valid_image_error" value="<?php echo (!empty($propertyinfo)) ? '1' : '0'; ?>"/>
                                         </div>                                        
                                     </div>
                                     <h5><hr/><b>Upload Nearby Area Photos:</b></h5>
+                                    <div class="row oldimage">
+                                        <?php foreach ($property_nearby as $image) { ?>
+                                            <div class="col-md-3">
+                                                <div class="thumbnail">
+                                                    <a class="old_nearby_image" href="#"><i class="fa fa-times-circle"></i></a>
+                                                    <input type="hidden" name="old_nearby_images[]" id="<?php echo $image->image; ?>" value="<?php echo $image->image; ?>">
+                                                    <img src="<?php echo base_url(); ?>includes/property_nearby/<?php echo $image->image; ?>">
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
                                     <div id="dropzone">
                                         <div id="demoupload" class="dropzone dz-clickable" action="<?php echo base_url(); ?>auth/properties_nearby" method="post">                                            
                                             <div class="dz-default dz-message">
@@ -632,7 +686,7 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="simpleradio">
                                         <?php foreach ($project_amenities as $key => $project_amenity) { ?>  
                                             <div class="simpleradio-danger">
-                                                <input class="project_amenities_check" type="checkbox" name="project_amenities[]" id="<?php echo $project_amenity->id; ?>" value="<?php echo $project_amenity->id; ?>"/>
+                                                <input class="project_amenities_check" type="checkbox" name="project_amenities[]" id="<?php echo $project_amenity->id; ?>" value="<?php echo $project_amenity->id; ?>" <?php echo (!empty($propertyinfo) && in_array($project_amenity->id, explode(',', $propertyinfo->project_amenities))) ? 'checked' : ''; ?> />
                                                 <label for="<?php echo $project_amenity->id; ?>"><?php echo $project_amenity->name; ?></label>
                                             </div>
                                         <?php } ?>
@@ -644,7 +698,7 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="simpleradio">
                                         <?php foreach ($flat_amenities as $key => $flat_amenity) { ?>  
                                             <div class="simpleradio-danger">
-                                                <input class="flat_amenities_check" type="checkbox" name="flat_amenities[]" id="<?php echo $flat_amenity->id . 'flat'; ?>" value="<?php echo $flat_amenity->id; ?>"/>
+                                                <input class="flat_amenities_check" type="checkbox" name="flat_amenities[]" id="<?php echo $flat_amenity->id . 'flat'; ?>" value="<?php echo $flat_amenity->id; ?>" <?php echo (!empty($propertyinfo) && in_array($flat_amenity->id, explode(',', $propertyinfo->flat_amenities))) ? 'checked' : ''; ?>/>
                                                 <label for="<?php echo $flat_amenity->id . 'flat'; ?>"><?php echo $flat_amenity->name; ?></label>
                                             </div>
                                         <?php } ?>
@@ -657,13 +711,12 @@ $this->session->set_userdata('property_data', $newdata);
                                     </div>
                                     <div class="form-group">
                                         <label for="final_description" class="control-label">Description<sup>*</sup></label>
-                                        <textarea class="form-control" rows="2" name="final_description" id="final_description"></textarea>
+                                        <textarea class="form-control" rows="2" name="final_description" id="final_description"><?php echo (!empty($propertyinfo) && $propertyinfo->property_description != "") ? $propertyinfo->property_description : ''; ?></textarea>
                                     </div>
-
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">
-                                                <button class="btn btn-default"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
+                                                <button class="btn btn-default prev-step" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
                                                 <button class="btn btn-success" name="btn_step6" id="btn_step6" type="submit">SUBMIT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                             </div>
                                         </div>

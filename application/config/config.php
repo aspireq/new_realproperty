@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // ade base url for flexi auth (www.yourdomaine.ext/subfolder)
 $config['base_url'] = 'http://localhost/new_realproperty/';
-//$config['base_url'] = 'http://localhost/new_realproperty/';
+//$config['base_url'] = 'http://property.realgujarat.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -309,7 +309,7 @@ $config['cache_query_string'] = FALSE;
 |
 */
 //for flexiauth add enkryption key visit (http://jeffreybarke.net/tools/codeigniter-encryption-key-generator/)
-$config['encryption_key'] = '';
+$config['encryption_key'] = '!celgpitogosancel22chloesancel1091d428aa!';
 
 /*
 |--------------------------------------------------------------------------
@@ -351,11 +351,12 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'database';
-$config['sess_save_path'] = 'ci_sessions';
-$config['sess_expiration'] = 7200;
-$config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 300;
+//$config['sess_driver'] = 'database';
+//$config['sess_save_path'] = 'ci_sessions';
+//$config['sess_expiration'] = 7200;
+//$config['sess_match_ip'] = FALSE;
+//$config['sess_time_to_update'] = 300;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -377,6 +378,7 @@ $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
 $config['cookie_secure']	= FALSE;
 $config['cookie_httponly'] 	= FALSE;
+
 
 /*
 |--------------------------------------------------------------------------

@@ -46,10 +46,11 @@ class Common_model extends CI_Model {
         return $query;
     }
 
-    function get_properties($property_type = null, $location = null, $property_status = null) {
+    function get_properties($property_zone,$property_type = null, $location = null, $property_status = null) {
         $this->db->select();
         $this->db->from('properties');
         $this->db->where('status', 1);
+        $this->db->where('property_zone', $property_zone);
         if ($property_type != "") {
             $this->db->where('property_type_name', $property_type);
         }
@@ -71,6 +72,10 @@ class Common_model extends CI_Model {
                 $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();
                 $final_data[$key]->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
             }
+            if ($row->property_zone != null && $row->property_zone != "") {
+                $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();                
+                $final_data[$key]->zone_name = $zone->zone_name;
+            }
         }
         return $final_data;
     }
@@ -89,6 +94,10 @@ class Common_model extends CI_Model {
         if ($row->plot_area != null && $row->plot_area != "" && $row->plot_area != 0) {
             $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();
             $row->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
+        }
+        if ($row->property_zone != null && $row->property_zone != "") {
+            $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();            
+            $row->zone_name = $zone->name;
         }
         if ($row->added_by != null && $row->added_by != "") {
             $builder_name = $this->db->query('select company_name as company_name,total_projects as total_projects,establishment_year as establishment_year,description as builder_description,uacc_username as builder_name from user_accounts where uacc_id = "' . $row->added_by . '"')->row();
@@ -129,7 +138,7 @@ class Common_model extends CI_Model {
     function excluse_ad_data($limit = null, $start = null) {
         if ($limit != null || $start != null) {
             $this->db->limit($limit, $start);
-        }        
+        }
         $query = $this->db->get('advertizement');
         if ($query->num_rows() > 0) {
             $final_data = array();
@@ -141,6 +150,11 @@ class Common_model extends CI_Model {
             return $final_data;
         }
         return false;
+    }
+
+    function get_cities() {
+        $query = $this->db->query("SELECT cities.city_name, city_area.name,city_area.id as area_id FROM cities INNER JOIN city_area ON cities.id = city_area.city_id ORDER BY city_name, cities.id");
+        return $query->result_array();
     }
 
 }

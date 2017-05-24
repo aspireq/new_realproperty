@@ -83,6 +83,7 @@
 </div>
 
 <script src="<?php echo base_url(); ?>includes/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>includes/js/dropzone.js"></script> 
 <script src="<?php echo base_url(); ?>includes/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>includes/js/plugins.js"></script>
 <script src="<?php echo base_url(); ?>includes/js/functions.js"></script>
@@ -213,22 +214,34 @@
     });
 </script>
 <!-- photo upload -->
-<script src="<?php echo base_url(); ?>includes/js/dropzone.js"></script> 
 <script type="text/javascript">
-    Dropzone.options.demoupload = {
-        paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2, // MB
-        parallelUploads: 3,
-        addRemoveLinks: true,
-    };
+//    Dropzone.options.demoupload = {
+//        paramName: "file", // The name that will be used to transfer the file
+//        maxFilesize: 2, // MB
+//        parallelUploads: 3,
+//        addRemoveLinks: true,
+//    };
 </script>
 <script>
     $(document).ready(function () {
+        $('.old_property_image').click(function () {
+            $(this).parents('.oldimage .col-md-3').remove();
+            $(this).closest('input').remove();
+        });
+        $('.old_nearby_image').click(function () {
+            $(this).parents('.oldimage .col-md-3').remove();
+            $(this).closest('input').remove();
+        });
+        $('.old_property_video').click(function () {
+            $(this).parents('.oldimage .col-md-3').remove();
+            $(this).closest('input').remove();
+        });
         set_usertype('<?php echo (!empty($propertyinfo) && $propertyinfo->added_as != "") ? $propertyinfo->added_as : 'owner'; ?>');
-       // var property_units_opt = '<?php echo (!empty($propertyinfo) && $propertyinfo->multiple_property_units != "") ? $propertyinfo->multiple_property_units : ''; ?>';
-      //  if (property_units_opt == 1) {
-      //      set_propery_counts();
-      //  }
+        // var property_units_opt = '<?php echo (!empty($propertyinfo) && $propertyinfo->multiple_property_units != "") ? $propertyinfo->multiple_property_units : ''; ?>';
+        //  if (property_units_opt == 1) {
+        //      set_propery_counts();
+        //  }
+        commercial_property();
         $('#property_error').hide();
         //$('#avail_date_error').hide();
         $('#property_unit_error').hide();
@@ -370,7 +383,6 @@
     }
     function set_propery_counts() {
         var selected_pro = $("input[name=property_unit_value]:checked").val();
-        
         if (selected_pro == 1) {
             $('#property_count').show();
         } else {
@@ -379,11 +391,14 @@
     }
     function commercial_property() {
         var listed_propery = $('#property_type').val();
+        var multiple_property_units = '<?php echo (!empty($propertyinfo) && $propertyinfo->multiple_property_units != "") ? $propertyinfo->multiple_property_units : ''; ?>';
+        var no_of_units = '<?php echo (!empty($propertyinfo) && $propertyinfo->no_of_units != "") ? $propertyinfo->no_of_units : ''; ?>';
+
         if (listed_propery == "Sell") {
             $.ajax({
                 url: "<?php echo base_url(); ?>auth/sell_options/",
                 type: "POST",
-                data: {},
+                data: {multiple_property_units: multiple_property_units, no_of_units: no_of_units},
                 dataType: "JSON",
                 success: function (response)
                 {
@@ -405,9 +420,18 @@
             thisDropzone = this;
             this.on("addedfile", function (file) {
             });
+            //$.get('<?php echo base_url(); ?>auth/property_images/', function (data) {                          
+            // $.each(data, function (key, value) {
+            //     alert(value);
+//                    var mockFile = {name: value.name, size: value.size};
+//                    thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+//                    thisDropzone.options.thumbnail.call(thisDropzone, mockFile, "uploads/" + value.name);
+            // });
+            //});
         },
         success: function (file, response) {
             $('#btn_step6').prop('disabled', false);
+            $('#btn_step5').prop('disabled', false);
             files = JSON.parse(response);
             fileobj = [files['filename'], file.name];
             uploadedfiles.push(fileobj);
@@ -417,13 +441,16 @@
         },
         error: function (response) {
             $('#btn_step6').prop('disabled', false);
+            $('#btn_step5').prop('disabled', false);
             alert(response.xhr.responseText);
         },
         removedfile: function (file) {
             $('#btn_step6').prop('disabled', false);
+            $('#btn_step5').prop('disabled', false);
         },
         uploadprogress: function (file) {
             $('#btn_step6').prop('disabled', true);
+            $('#btn_step5').prop('disabled', true);
         },
     };
 //    Dropzone.on("error", function (file, errormessage, xhr) {
