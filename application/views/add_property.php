@@ -57,7 +57,7 @@ $this->session->set_userdata('property_data', $newdata);
                                                 <div id="radioBtn" class="btn-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "owner") ? 'active' : 'notActive' ?>  user_type" onclick="set_usertype('owner');" data-toggle="fun" data-title="Y"><h4><img src="<?php echo base_url(); ?>includes/img/owner.png" width="30" />&nbsp;Owner</h4></a>
                                                     <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "dealer") ? 'active' : 'notActive' ?> user_type" onclick="set_usertype('dealer');" data-toggle="fun" data-title="X"><h4><img src="<?php echo base_url(); ?>includes/img/dealer.png" width="30" />&nbsp;Dealer</h4></a>
-                                                    <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "worker") ? 'active' : 'notActive' ?> user_type" onclick="set_usertype('worker');" data-toggle="fun" data-title="N"><h4><img src="<?php echo base_url(); ?>includes/img/worker.png" width="30" />&nbsp;Builder</h4></a>
+                                                    <a class="btn btn-primary btn-sm <?php echo (!empty($propertyinfo) && $propertyinfo->added_as == "builder") ? 'active' : 'notActive' ?> user_type" onclick="set_usertype('builder');" data-toggle="fun" data-title="N"><h4><img src="<?php echo base_url(); ?>includes/img/worker.png" width="30" />&nbsp;Builder</h4></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -475,7 +475,7 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="form-group" id="available_from">
                                         <label for="available_from_value" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 control-label">Available From<sup>*</sup></label>
                                         <div class="col-md-4">
-                                            <input type="text" name="available_from_value" id="available_from_value" class="form-control date"  placeholder="yyyy-mm-dd">
+                                            <input type="text" name="available_from_value" id="available_from_value" class="form-control date"  placeholder="yyyy-mm-dd" value="<?php echo (!empty($propertyinfo) && $propertyinfo->available_from != "") ? $propertyinfo->available_from : ''; ?>" >
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -508,12 +508,12 @@ $this->session->set_userdata('property_data', $newdata);
                                             <label class="col-md-4 control-label">Maintenance: </label>
                                             <div class="col-md-4">
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text" name="maintenance_amount" id="maintenance_amount">
+                                                    <input class="form-control" type="text" name="maintenance_amount" id="maintenance_amount" value="<?php echo (!empty($propertyinfo) && $propertyinfo->maintenance_amount != "") ? $propertyinfo->maintenance_amount : ''; ?>">
                                                     <span class="input-group-btn">
                                                         <select class="btn btn-default" name="maintenance_type" id="maintenance_type">
-                                                            <option value="Monthly">Monthly</option>
-                                                            <option value="Annually">Annually</option>
-                                                            <option value="One Time">One Time</option>
+                                                            <option value="Monthly" <?php echo (!empty($propertyinfo) && $propertyinfo->maintenance_type == 'Monthly' ) ? 'selected' : ''; ?>>Monthly</option>
+                                                            <option value="Annually" <?php echo (!empty($propertyinfo) && $propertyinfo->maintenance_type == 'Annually' ) ? 'selected' : ''; ?>>Annually</option>
+                                                            <option value="One Time" <?php echo (!empty($propertyinfo) && $propertyinfo->maintenance_type == 'One Time' ) ? 'selected' : ''; ?>>One Time</option>
                                                         </select>
                                                     </span>
                                                 </div>
@@ -524,12 +524,12 @@ $this->session->set_userdata('property_data', $newdata);
                                             <div class="col-md-4">
                                                 <div class="input-group">                                                
                                                     <span class="input-group-btn">
-                                                        <select class="btn btn-default" name="security_deposit_type" id="security_deposit_type" style="width: 98px;">                                                        
-                                                            <option value="Fixed">Fixed</option>
-                                                            <option value="Multiple of Rent">Multiple of Rent</option>
+                                                        <select class="btn btn-default" name="security_deposit_type" id="security_deposit_type" style="width: 98px;"> 
+                                                            <option value="Fixed" <?php echo (!empty($propertyinfo) && $propertyinfo->security_deposit_type == 'Fixed' ) ? 'selected' : ''; ?>>Fixed</option>
+                                                            <option value="Multiple of Rent" <?php echo (!empty($propertyinfo) && $propertyinfo->security_deposit_type == 'Multiple of Rent' ) ? 'selected' : ''; ?>>Multiple of Rent</option>
                                                         </select>
                                                     </span>
-                                                    <input type="text" class="form-control" id="security_depisit_value" name="security_depisit_value" placeholder="">
+                                                    <input type="text" class="form-control" id="security_deposit_amount" name="security_deposit_amount" value="<?php echo (!empty($propertyinfo) && $propertyinfo->security_deposit_amount != "") ? $propertyinfo->security_deposit_amount : ''; ?>">
                                                 </div>                                            
                                             </div>
                                         </div>
@@ -537,31 +537,31 @@ $this->session->set_userdata('property_data', $newdata);
                                             <label class="col-md-4 control-label">Availability:<sup>*</sup></label>
                                             <div class="col-md-4">
                                                 <select class="form-control" name="availability" id="availability">
-                                                    <option value="Under Construction">Under Construction</option>
-                                                    <option value="Ready to Move">Ready to Move</option>
+                                                    <option value="Under Construction" <?php echo (!empty($propertyinfo) && $propertyinfo->availability == 'Under Construction' ) ? 'selected' : ''; ?>>Under Construction</option>
+                                                    <option value="Ready to Move" <?php echo (!empty($propertyinfo) && $propertyinfo->availability == 'Ready to Move' ) ? 'selected' : ''; ?>>Ready to Move</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Booking Amount:</label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" id="booking_amount" name="booking_amount" placeholder="">
+                                                <input type="text" class="form-control" id="booking_amount" name="booking_amount" value="<?php echo (!empty($propertyinfo) && $propertyinfo->booking_amount != "") ? $propertyinfo->booking_amount : ''; ?>">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Age of Property:<sup>*</sup></label>
                                             <div class="col-md-4">
-                                                <select class="form-control">
-                                                    <option value="0-1 year old property">0-1 year old property</option>
-                                                    <option value="1-5 year old property">1-5 year old property</option>
-                                                    <option value="5-10 year old property">5-10 year old property</option>
-                                                    <option value="By 2016">By 2016</option>
-                                                    <option value="By 2017">By 2017</option>
-                                                    <option value="By 2018">By 2018</option>
-                                                    <option value="By 2019">By 2019</option>
-                                                    <option value="By 2020">By 2020</option>
-                                                    <option value="By 2021">By 2021</option>
-                                                    <option value="By 2022">By 2022</option>
+                                                <select class="form-control" name="property_age" id="property_age">
+                                                    <option value="0-1 year old property" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == '0-1 year old property' ) ? 'selected' : ''; ?>>0-1 year old property</option>
+                                                    <option value="1-5 year old property" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == '1-5 year old property' ) ? 'selected' : ''; ?>>1-5 year old property</option>
+                                                    <option value="5-10 year old property" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == '5-10 year old property' ) ? 'selected' : ''; ?>>5-10 year old property</option>
+                                                    <option value="By 2016" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2016' ) ? 'selected' : ''; ?>>By 2016</option>
+                                                    <option value="By 2017" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2017' ) ? 'selected' : ''; ?>>By 2017</option>
+                                                    <option value="By 2018" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2018' ) ? 'selected' : ''; ?>>By 2018</option>
+                                                    <option value="By 2019" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2019' ) ? 'selected' : ''; ?>>By 2019</option>
+                                                    <option value="By 2020" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2020' ) ? 'selected' : ''; ?>>By 2020</option>
+                                                    <option value="By 2021" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2021' ) ? 'selected' : ''; ?>>By 2021</option>
+                                                    <option value="By 2022" <?php echo (!empty($propertyinfo) && $propertyinfo->property_age == 'By 2022' ) ? 'selected' : ''; ?>>By 2022</option>
                                                 </select>
                                             </div>
                                         </div>

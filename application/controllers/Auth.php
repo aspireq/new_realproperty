@@ -184,7 +184,7 @@ class Auth extends CI_Controller {
                 $flat_amenities = implode(',', $this->input->post('flat_amenities'));
                 $properties_info = $this->session->userdata('property_data');
                 $property_data = array();
-                $property_data['added_by'] = 1;
+                $property_data['added_by'] = $this->user_id;
                 $property_data['added_as'] = $this->input->post('user_type');
                 $property_data['property_zone'] = $this->input->post('property_zone');
                 $property_data['property_type'] = $this->input->post('property_type');
@@ -203,6 +203,7 @@ class Auth extends CI_Controller {
                 $property_data['availability'] = $this->input->post('availability');
                 $property_data['property_configuration'] = $this->input->post('propery_configuration');
                 $property_data['booking_amount'] = $this->input->post('booking_amount');
+                $property_data['property_age'] = $this->input->post('property_age');
 
                 $property_data['bank_name'] = $this->input->post('bank_name');
                 $property_data['bank_interest'] = $this->input->post('bank_interest');
@@ -218,6 +219,10 @@ class Auth extends CI_Controller {
                 if ($this->input->post('builtuparea')) {
                     $property_data['build_up_area'] = $this->input->post('builtuparea');
                     $property_data['build_up_area_unit'] = $this->input->post('builtuparea_unit');
+                }
+                if ($this->input->post('security_deposit_amount')) {
+                    $property_data['security_deposit_amount'] = $this->input->post('security_deposit_amount');
+                    $property_data['security_deposit_type'] = $this->input->post('security_deposit_type');                    
                 }
                 if ($this->input->post('carpet_area')) {
                     $property_data['carpet_area'] = $this->input->post('carpet_area');
@@ -785,5 +790,7 @@ class Auth extends CI_Controller {
         $data = (array) $this->Common_model->select_where('property_images', array('property_id' => $property_id));
         die(json_encode($data));
     }
-
+    function check() {
+        
+    }
 }
