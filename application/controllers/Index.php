@@ -23,6 +23,7 @@ class Index extends CI_Controller {
 
         if ($this->flexi_auth->is_logged_in()) {
             $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();
+            $this->user_id = $this->data['userinfo']['uacc_id'];
         }
     }
 
@@ -76,10 +77,49 @@ class Index extends CI_Controller {
     }
 
     function property() {
-        $this->data['properties'] = $this->Common_model->get_properties();
-        $this->data = $this->include_files();
-        $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
-        $this->load->view('property', $this->data);
+        if ($this->flexi_auth->is_logged_in() && $this->data['userinfo']['uacc_group_fk'] == 3) {
+            $this->load->library('pagination');
+            $config = array();
+            $config["base_url"] = base_url() . "index/property";
+            $config["per_page"] = 5;
+            $config['use_page_numbers'] = FALSE;
+
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '&nbsp;<li class="active"><a>';
+            $config['cur_tag_close'] = '</a></li>';
+            $config['first_link'] = 'First';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['last_link'] = 'Last';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['next_link'] = 'Next';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['prev_link'] = 'Previous';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+
+            $total_row = $this->Common_model->property_data('', '');
+            $config["total_rows"] = $total_row['counts'];
+            $config['num_links'] = $total_row['counts'];
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $this->data["results"] = $this->Common_model->property_data($config["per_page"], $page);
+            $this->pagination->initialize($config);
+            $str_links = $this->pagination->create_links();
+            $this->data["links"] = explode('&nbsp;', $str_links);
+            $this->data = $this->include_files();
+            $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
+            $this->load->view('verify_property', $this->data);
+        } else {
+            $this->data['properties'] = $this->Common_model->get_properties_list();
+            $this->data = $this->include_files();
+            $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
+            $this->load->view('property', $this->data);
+        }
     }
 
     function activate_account($user_id, $token = FALSE) {

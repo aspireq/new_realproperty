@@ -15,7 +15,7 @@ class Auth extends CI_Controller {
         $this->auth = new stdClass;
         $this->load->library('flexi_auth');
         $this->data = null;
-        
+
         // Redirect users logged in via password (However, not 'Remember me' users, as they may wish to login properly).
         if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'index/logout') {
             // Preserve any flashdata messages so they are passed to the redirect page.
@@ -176,8 +176,6 @@ class Auth extends CI_Controller {
             // set random number for propety 
             // later used to upload images and videos for reffrence no.
             $this->data['ablums'] = $this->Common_model->get_cities();
-//            echo "<pre>";
-//            print_r($this->data['ablums']);die();
             $this->data['unitsinfo'] = $this->Common_model->select_all('units');
             $this->data['project_amenities'] = $this->Common_model->select_all('project_amenities');
             $this->data['flat_amenities'] = $this->Common_model->select_all('flat_amenities');
@@ -710,6 +708,49 @@ class Auth extends CI_Controller {
     function get_record() {
         $data = $this->Common_model->select_where_row($this->input->post('table_name'), array('id' => $this->input->post('id')));
         die(json_encode($data));
+    }
+
+    function property_operation() {
+        $type = $this->input->post('record_change_type');
+        $record_id = $this->input->post('record_id');
+        $table_name = $this->input->post('table_name');
+        $page_url = $this->input->post('page_url');
+        $image_folder = explode(',', $this->input->post('image_folder'));
+        $table_names = explode(',', $this->input->post('table_names'));
+        $propertyinfo = $this->Common_model->select_where_row($table_name, array('id' => $record_id));
+        if ($type === 'Delete') {
+            if (!empty($image_folder)) {
+                foreach ($image_folder as $key => $folder_name) {
+                    $data = $this->Common_model->select_where($table_names[$key], array('property_id' => $record_id));
+                    if (!empty($data)) {
+                        if ($folder_name == "properties_videos") {
+                            foreach ($data as $video) {
+                                if ($video->video != "" && file_exists(FCPATH . 'includes/' . $folder_name . '/' . $video->video)) {
+                                    unlink(FCPATH . 'includes/' . $folder_name . '/' . $video->video);
+                                }
+                            }
+                        } else {
+                            foreach ($data as $image) {
+                                if ($image->image != "" && file_exists(FCPATH . 'includes/' . $folder_name . '/' . $image->image)) {
+                                    unlink(FCPATH . 'includes/' . $folder_name . '/' . $image->image);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $this->Common_model->delete_where($table_name, array('id' => $record_id));
+            $this->session->set_flashdata('message', "Record deleted successfully !");
+        } else if ($type === 'Status') {
+            if ($propertyinfo->status == 1) {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+            $this->Common_model->select_update($table_name, array('status' => $status), array('id' => $record_id));
+            $this->session->set_flashdata('message', "Status updated successfully !");
+        }
+        redirect($page_url);
     }
 
     function record_change() {

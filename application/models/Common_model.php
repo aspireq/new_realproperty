@@ -46,7 +46,7 @@ class Common_model extends CI_Model {
         return $query;
     }
 
-    function get_properties($property_zone,$property_type = null, $location = null, $property_status = null) {
+    function get_properties($property_zone, $property_type = null, $location = null, $property_status = null) {
         $this->db->select();
         $this->db->from('properties');
         $this->db->where('status', 1);
@@ -73,7 +73,31 @@ class Common_model extends CI_Model {
                 $final_data[$key]->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
             }
             if ($row->property_zone != null && $row->property_zone != "") {
-                $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();                
+                $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();
+                $final_data[$key]->zone_name = $zone->zone_name;
+            }
+        }
+        return $final_data;
+    }
+
+    function get_properties_list() {
+        $this->db->select();
+        $this->db->from('properties');
+        $this->db->where('status', 1);
+        $qry = $this->db->get();
+        $final_data = array();
+        foreach ($qry->result() as $key => $row) {
+            $final_data[$key] = $row;
+            $result_arr = $this->db->query('select image as image from property_images where property_id = "' . $row->id . '"')->row();
+            if (!empty($result_arr)) {
+                $final_data[$key]->image = $result_arr->image;
+            }
+            if ($row->plot_area != null && $row->plot_area != "" && $row->plot_area != 0) {
+                $plot_area_name = $this->db->query('select short_name as plot_area_unit_name from  units where id = "' . $row->plot_area_unit . '"')->row();
+                $final_data[$key]->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
+            }
+            if ($row->property_zone != null && $row->property_zone != "") {
+                $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();
                 $final_data[$key]->zone_name = $zone->zone_name;
             }
         }
@@ -96,7 +120,7 @@ class Common_model extends CI_Model {
             $row->plot_area_unit_name = $plot_area_name->plot_area_unit_name;
         }
         if ($row->property_zone != null && $row->property_zone != "") {
-            $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();            
+            $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();
             $row->zone_name = $zone->name;
         }
         if ($row->added_by != null && $row->added_by != "") {
@@ -140,6 +164,23 @@ class Common_model extends CI_Model {
             $this->db->limit($limit, $start);
         }
         $query = $this->db->get('advertizement');
+        if ($query->num_rows() > 0) {
+            $final_data = array();
+            foreach ($query->result() as $key => $row) {
+                $data[] = $row;
+                $final_data[$key] = $row;
+            }
+            $final_data['counts'] = $query->num_rows();
+            return $final_data;
+        }
+        return false;
+    }
+
+    function property_data($limit = null, $start = null) {
+        if ($limit != null || $start != null) {
+            $this->db->limit($limit, $start);
+        }
+        $query = $this->db->get('properties');
         if ($query->num_rows() > 0) {
             $final_data = array();
             foreach ($query->result() as $key => $row) {

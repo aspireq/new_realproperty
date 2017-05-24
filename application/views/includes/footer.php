@@ -162,6 +162,18 @@
             $("#op_ad").submit();
         }
     }
+    function delete_property(id) {
+        var r = confirm("Are you sure you want to delete this property");
+        if (r == true) {
+            $('#record_id').val(id);
+            $('#record_change_type').val('Delete');
+            $('#table_name').val('properties');
+            $('#page_url').val('properties');
+            $('#image_folder').val('properties_images,properties_videos,property_nearby');
+            $('#table_names').val('property_images,property_videos,property_nearby');
+            $("#op_ad").submit();
+        }
+    }
     function change_status(id) {
         var r = confirm("Are you sure you want to update status");
         if (r == true) {
@@ -169,6 +181,16 @@
             $('#record_change_type').val('Status');
             $('#table_name').val('advertizement');
             $('#page_url').val('advertizement');
+            $("#op_ad").submit();
+        }
+    }
+    function change_property_status(id) {
+        var r = confirm("Are you sure you want to update status");
+        if (r == true) {
+            $('#record_id').val(id);
+            $('#record_change_type').val('Status');
+            $('#table_name').val('properties');
+            $('#page_url').val('properties');
             $("#op_ad").submit();
         }
     }
