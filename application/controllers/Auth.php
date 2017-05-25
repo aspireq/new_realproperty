@@ -790,7 +790,5 @@ class Auth extends CI_Controller {
         $data = (array) $this->Common_model->select_where('property_images', array('property_id' => $property_id));
         die(json_encode($data));
     }
-    function check() {
-        
-    }
+    
 }
