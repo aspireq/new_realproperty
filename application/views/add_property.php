@@ -9,7 +9,7 @@ $this->session->set_userdata('property_data', $newdata);
     <div class="container">
         <div class="row">
             <div class="barWrapper">
-                <span class="progressText">
+                <span class="progressText"> 
                 </span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="5">
@@ -45,7 +45,7 @@ $this->session->set_userdata('property_data', $newdata);
                                 <?php echo $message; ?>
                             </div>
                         <?php } ?>
-                        <form method="post" id="add_property" role="form">
+                        <form method="post" id="add_property" role="form" enctype="multipart/form-data">
                             <input type="hidden" name='edit_id' id="edit_id" value="<?php echo (!empty($propertyinfo) && $propertyinfo->id != "") ? $propertyinfo->id : ''; ?>">
                             <input type="hidden" name="user_type" id="user_type" value="owner" > 
                             <div class="tab-content">
@@ -712,6 +712,40 @@ $this->session->set_userdata('property_data', $newdata);
                                     <div class="form-group">
                                         <label for="final_description" class="control-label">Description<sup>*</sup></label>
                                         <textarea class="form-control" rows="2" name="final_description" id="final_description"><?php echo (!empty($propertyinfo) && $propertyinfo->property_description != "") ? $propertyinfo->property_description : ''; ?></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="builder_name" class="control-label">Builder Name<sup>*</sup></label>
+                                        <input type="text" class="form-control" id="builder_name" name="builder_name" value="<?php echo (!empty($propertyinfo) && $propertyinfo->builder_name != "") ? $propertyinfo->builder_name : ''; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="builder_company_name" class="control-label">Builder Company Name<sup>*</sup></label>
+                                        <input type="text" class="form-control" id="builder_company_name" name="builder_company_name" value="<?php echo (!empty($propertyinfo) && $propertyinfo->builder_company_name != "") ? $propertyinfo->builder_company_name : ''; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="total_projects" class="control-label">Total Projects</label>
+                                        <input type="text" class="form-control"  id="total_projects" name="total_projects" value="<?php echo (!empty($propertyinfo) && $propertyinfo->total_projects != "") ? $propertyinfo->total_projects : ''; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="establishment_year" class="control-label">Establishment Year</label>
+                                        <input type="text" class="form-control" id="establishment_year" name="establishment_year" value="<?php echo (!empty($propertyinfo) && $propertyinfo->establishment_year != "") ? $propertyinfo->establishment_year : ''; ?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="builder_email" class="control-label">Builder's Email</label>
+                                        <input type="text" class="form-control" id="builder_email" name="builder_email" value="<?php echo (!empty($propertyinfo) && $propertyinfo->builder_email != "") ? $propertyinfo->builder_email : ''; ?>">
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label for="builder_image" class="control-label">Builder Logo</label>
+                                        <input type="file" id="builder_image" name="builder_image">
+                                    </div>
+                                    <?php if (!empty($propertyinfo) && $propertyinfo->builder_image != "") { ?>
+                                        <div class="form-group">
+                                            <img style="width: 150px; height: 100px;" src="<?php echo base_url(); ?>includes/builder_images/<?php echo $propertyinfo->builder_image; ?>">                                        
+                                        </div>
+                                    <?php } ?>
+                                    <input type="hidden" name="old_builder_image" id="old_builder_image" value="<?php echo (!empty($propertyinfo) && $propertyinfo->builder_image != "") ? $propertyinfo->builder_image : ''; ?>">
+                                    <div class="form-group">
+                                        <label for="builder_description" class="control-label">Builder Description</label>
+                                        <textarea class="form-control" rows="2" name="builder_description" id="builder_description"><?php echo (!empty($propertyinfo) && $propertyinfo->builder_description != "") ? $propertyinfo->builder_description : ''; ?></textarea>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

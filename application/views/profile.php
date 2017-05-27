@@ -32,26 +32,14 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">                                
-                                <label for="company_name" class="control-label" title="company_name">Company Name</label>
-                                <input type="text" class="form-control" id="establishment_year" name="company_name" value="<?php echo ($userinfo['company_name'] != "") ? $userinfo['company_name'] : ''; ?>">  
+                                <label for="contact_no" class="control-label" title="contact_no">Contact No.</label>
+                                <input type="text" class="form-control" id="contact_no" name="contact_no" value="<?php echo ($userinfo['contact_no'] != "") ? $userinfo['contact_no'] : ''; ?>">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">                                
-                                <label for="establishment_year" class="control-label" title="establishment_year">Establishment Year</label>
-                                <input type="text" class="form-control" id="establishment_year" name="establishment_year" value="<?php echo ($userinfo['establishment_year'] != "") ? $userinfo['establishment_year'] : ''; ?>" maxlength="4">  
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">                                
-                                <label for="total_projects" class="control-label" title="total_projects">Total Projects</label>
-                                <input type="text" class="form-control" id="total_projects" name="total_projects" maxlength="5" value="<?php echo ($userinfo['total_projects'] != "") ? $userinfo['total_projects'] : ''; ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">                                
-                                <label for="description" class="control-label">Description</label>                                    
-                                <textarea name="description" class="form-control"><?php echo ($userinfo['description'] != "") ? $userinfo['description'] : ''; ?></textarea>
+                                <label for="website" class="control-label" title="website">Website</label>
+                                <input type="text" class="form-control" id="website" name="website" value="<?php echo ($userinfo['website'] != "") ? $userinfo['website'] : ''; ?>">  
                             </div>
                         </div>
                         <div class="col-md-12">

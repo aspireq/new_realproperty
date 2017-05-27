@@ -8,7 +8,7 @@ class Index extends CI_Controller {
         //load models
         // Load required CI libraries and helpers.
         $this->load->database();
-        $this->load->library('session');
+        $this->load->library('session'); 
         $this->load->helper('url');
         $this->load->helper('form');
         $this->auth = new stdClass;

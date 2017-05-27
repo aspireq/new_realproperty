@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Common_model extends CI_Model {
 
-    public function &__get($key) {
+    public function &__get($key) { 
         $CI = & get_instance();
         return $CI->$key;
     }
@@ -123,14 +123,14 @@ class Common_model extends CI_Model {
             $zone = $this->db->query('select name as zone_name from  city_area where id = "' . $row->property_zone . '"')->row();
             $row->zone_name = $zone->name;
         }
-        if ($row->added_by != null && $row->added_by != "") {
-            $builder_name = $this->db->query('select company_name as company_name,total_projects as total_projects,establishment_year as establishment_year,description as builder_description,uacc_username as builder_name from user_accounts where uacc_id = "' . $row->added_by . '"')->row();
-            $row->builder_name = $builder_name->builder_name;
-            $row->builder_description = $builder_name->builder_description;
-            $row->establishment_year = $builder_name->establishment_year;
-            $row->total_projects = $builder_name->total_projects;
-            $row->company_name = $builder_name->company_name;
-        }
+//        if ($row->added_by != null && $row->added_by != "") {
+//            $builder_name = $this->db->query('select company_name as company_name,total_projects as total_projects,establishment_year as establishment_year,description as builder_description,uacc_username as builder_name from user_accounts where uacc_id = "' . $row->added_by . '"')->row();
+//            $row->builder_name = $builder_name->builder_name;
+//            $row->builder_description = $builder_name->builder_description;
+//            $row->establishment_year = $builder_name->establishment_year;
+//            $row->total_projects = $builder_name->total_projects;
+//            $row->company_name = $builder_name->company_name;
+//        }
         if ($row->build_up_area != null && $row->build_up_area != "" && $row->build_up_area != 0) {
             $build_up_area_name = $this->db->query('select short_name as build_up_area_unit_name from  units where id = "' . $row->build_up_area_unit . '"')->row();
             $row->build_up_area_unit_name = $build_up_area_name->build_up_area_unit_name;

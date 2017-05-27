@@ -81,9 +81,9 @@
                                         <p><?php echo $propertyinfo->project_name; ?> project of <?php echo $propertyinfo->builder_name; ?> offers a perfect balance lifestyle, business and leisure. The lush ambience, ultra-modern design and higher recreational value makes <?php echo $propertyinfo->builder_name; ?> one of the most desirable edifices in <?php echo $propertyinfo->area_name; ?> and <?php echo $propertyinfo->city_name; ?>. Moreover, its affordability rightly fits into the budget of locals looking for contemporary spaces to fulfill their <?php echo $propertyinfo->property_type; ?> needs and investors looking for real estate profits.</p>
                                         <p><?php echo $propertyinfo->project_name; ?> is also the ideal destination for space-onlookers wanting to be a part of this amazing city.Considering to buy 2 or 3 BHK house or a workplace that symbolizes tranquility and prosperity?</p>
                                         <ul class="list list-half">
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;Avalability : <span><?php echo ($propertyinfo->availability != "") ? $propertyinfo->availability : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;Possession By : <span><?php echo ($propertyinfo->available_from != "") ? $propertyinfo->available_from : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;Property For : <span><?php echo $propertyinfo->property_type; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;Avalability : <span><?php echo ($propertyinfo->availability != "") ? '<b>' . $propertyinfo->availability . '</b>' : 'N/A'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;Possession By : <span><?php echo ($propertyinfo->available_from != "") ? '<b>' . $propertyinfo->available_from . '</b>' : 'N/A'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;Property For : <span><?php echo '<b>' . $propertyinfo->property_type . '</b>'; ?></span></li>
                                         </ul>
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="profile">
@@ -97,9 +97,9 @@
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Booking Amount:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->booking_amount != "0.00") ? $propertyinfo->booking_amount : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property Age:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_age != null && $propertyinfo->property_age != "") ? $propertyinfo->property_age : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Security Deposit:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->security_deposit_amount != null && $propertyinfo->security_deposit_amount != "0.00") ? $propertyinfo->security_deposit_amount .' ('.$propertyinfo->security_deposit_type .')' : 'N/A'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Security Deposit:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->security_deposit_amount != null && $propertyinfo->security_deposit_amount != "0.00") ? $propertyinfo->security_deposit_amount . ' (' . $propertyinfo->security_deposit_type . ')' : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Available From:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->available_from != null && $propertyinfo->available_from != "") ? $propertyinfo->available_from : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Maintenence:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->maintenance_amount != null && $propertyinfo->maintenance_amount != "0.00") ? $propertyinfo->maintenance_amount .' ('.$propertyinfo->maintenance_type .')' : 'N/A'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Maintenence:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->maintenance_amount != null && $propertyinfo->maintenance_amount != "0.00") ? $propertyinfo->maintenance_amount . ' (' . $propertyinfo->maintenance_type . ')' : 'N/A'; ?></span></li>
                                         </ul>
                                         <hr/>
                                         <p><?php echo ($propertyinfo->property_description != "") ? $propertyinfo->property_description : ''; ?></p>
@@ -157,7 +157,7 @@
                                         </div>
                                         <div class="row m-b">
                                             <div class="col-md-12">
-                                                <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/stairs.png"/>&nbsp;Floorings :</b></h4>
+                                                <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/stairs.png"/>&nbsp;Room Detail :</b></h4>
                                                 <ul class="list list-half">
                                                     <li><span class="maintext">Bedrooms:</span> <span class="subtext"><?php echo ($propertyinfo->bedrooms != "" && $propertyinfo->bedrooms != null) ? $propertyinfo->bedrooms : 'N/A'; ?></span> </li>
                                                     <li><span class="maintext">Bathrooms:</span> <span class="subtext"><?php echo ($propertyinfo->bathrooms != "" && $propertyinfo->bathrooms != null) ? $propertyinfo->bathrooms : 'N/A'; ?></span> </li>                                                    
@@ -169,31 +169,7 @@
                                                     <li><span class="maintext">Other Room:</span>&nbsp;<span class="subtext"><?php echo ($propertyinfo->other_room == 1) ? 'Available' : 'N/A'; ?></span></li>
                                                 </ul>
                                             </div>
-                                        </div>
-                                        <!--                                        <div class="row m-b">
-                                                                                    <div class="col-md-12">
-                                                                                        <h4><b><img src="<?php echo base_url(); ?>includes/properties_detail/images/bed.png" />&nbsp;Furnishing:</b></h4>
-                                                                                        <ul class="list list-half">
-                                                                                            <li><span class="maintext">Wardrobe:</span> <span class="subtext">Available</span> </li>
-                                                                                            <li><span class="maintext">Beds:</span>&nbsp;<span class="subtext">Available</span> </li>
-                                                                                            <li><span class="maintext">Fans:</span>&nbsp;<span class="subtext">Available</span></li>
-                                                                                            <li><span class="maintext">Light:</span>&nbsp;<span class="subtext">Available</span></li>
-                                                                                            <li><span class="maintext">Fridge:</span>&nbsp;<span class="subtext">Available</span></li>
-                                                                                            <li><span class="maintext">AC:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Geyser:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">TV:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Stove:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Washing MAchine:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Water Purifier:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Microwave:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Curtains:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Chimney:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Exhaust Fan:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Sofa:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                            <li><span class="maintext">Dinning Table:</span>&nbsp;<span class="subtext">Not Available</span></li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>-->
+                                        </div>                                     
                                     </div>
                                 </div>
                             </div>
@@ -233,15 +209,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                            <div class="card p-15">
-                                <h3 class="detail-title"><img src="<?php echo base_url(); ?>includes/properties_detail/images/nearby.png" width="38" /> Nearby Area</h3>
-                                <hr/>
-                                <div class="demo-gallery">
-                                    <ul id="nearby" class="list-unstyled row">
-                                        <?php
-                                        if (!empty($property_nearby)) {
+                    <?php if (!empty($property_nearby)) { ?>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12">
+                                <div class="card p-15">
+                                    <h3 class="detail-title"><img src="<?php echo base_url(); ?>includes/properties_detail/images/nearby.png" width="38" /> Nearby Area</h3>
+                                    <hr/>
+                                    <div class="demo-gallery">
+                                        <ul id="nearby" class="list-unstyled row">
+                                            <?php
                                             foreach ($property_nearby as $key => $image) {
                                                 if ($key > 0) {
                                                     if ($image->image != "" && (file_exists(FCPATH . 'includes/property_nearby/' . $image->image))) {
@@ -255,15 +231,13 @@
                                                     }
                                                 }
                                             }
-                                        } else {
-                                            echo '<li class="col-xs-6 col-sm-3 col-md-3">No Images Available</li>';
-                                        }
-                                        ?>
-                                    </ul>
+                                            ?>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
                             <div class="card p-15">
@@ -272,14 +246,15 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#">
-                                            <img class="media-object" src="<?php echo base_url(); ?>includes/properties_detail/images/demo-builder.png" alt="..." width="100">
+                                            <img class="media-object" src="<?php echo base_url(); ?>includes/builder_images/<?php echo ($propertyinfo->builder_image != "" && (file_exists(FCPATH . 'includes/builder_images/' . $propertyinfo->builder_image))) ? $propertyinfo->builder_image : 'default_image.jpg' ?>" alt="..." width="100">
                                         </a>
                                     </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading"><?php echo ($propertyinfo->company_name != null) ? $propertyinfo->company_name : 'N/A'; ?></h4>
+                                        <h4 class="media-heading"><?php echo ($propertyinfo->builder_company_name != null) ? $propertyinfo->builder_company_name : 'N/A'; ?></h4>
                                         <ul class="list list-inline list-half clearfix">
                                             <li><span class="maintext">Established in</span><br><span class="subtext"><?php echo ($propertyinfo->establishment_year != null) ? $propertyinfo->establishment_year : 'N/A'; ?></span></li>
                                             <li><span class="maintext">Total Projects</span><br><span class="subtext"><?php echo ($propertyinfo->total_projects != null) ? $propertyinfo->total_projects : 'N/A'; ?></span></li>
+                                            <li><span class="maintext">Email</span><br><span class="subtext"><?php echo ($propertyinfo->builder_email != null) ? $propertyinfo->builder_email : 'N/A'; ?></span></li>
                                         </ul>
                                         <span class="more"><?php echo ($propertyinfo->builder_description != null) ? $propertyinfo->builder_description : 'N/A'; ?></span>
                                     </div>
@@ -292,45 +267,42 @@
                             <div class="card p-15">
                                 <h3 class="detail-title"><img src="<?php echo base_url(); ?>includes/properties_detail/images/bank.png" width="40" /> Bank Offers</h3>
                                 <hr/>
-                                <h4 class="media-heading">
-<?php echo $propertyinfo->bank_name . ' @ ' . $propertyinfo->bank_interest . '%'; ?>
-                                </h4>
-                                <!--                                <div class="carousel carousel-showmanymoveone slide" id="itemslider">
-                                                                    <div class="carousel-inner">
-                                                                        <div class="item active">
-                                                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/axisbank.png" class="img-responsive center-block"></a>
-                                                                                <h4 class="text-center">8.7% Floating</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/citibank.png" class="img-responsive center-block"></a>
-                                                                                <h4 class="text-center">8.7% Floating</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/hdfc.png" class="img-responsive center-block"></a>
-                                                                                <h4 class="text-center">8.7% Floating</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/iifl.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/punjab.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div id="slider-control">
-                                                                        <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>
-                                                                        <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_right.png" alt="Right" class="img-responsive"></a>
-                                                                    </div>
-                                                                </div>-->
+                                <div class="carousel carousel-showmanymoveone slide" id="itemslider">
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <div class="col-xs-12 col-sm-6 col-md-2">
+                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/axisbank.png" class="img-responsive center-block"></a>
+                                                <h4 class="text-center">8.7% Floating</h4>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="col-xs-12 col-sm-6 col-md-2">
+                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/citibank.png" class="img-responsive center-block"></a>
+                                                <h4 class="text-center">8.7% Floating</h4>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="col-xs-12 col-sm-6 col-md-2">
+                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/hdfc.png" class="img-responsive center-block"></a>
+                                                <h4 class="text-center">8.7% Floating</h4>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="col-xs-12 col-sm-6 col-md-2">
+                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/iifl.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="col-xs-12 col-sm-6 col-md-2">
+                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/punjab.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="slider-control">
+                                        <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>
+                                        <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_right.png" alt="Right" class="img-responsive"></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

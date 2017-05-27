@@ -299,6 +299,8 @@ $(document).ready(function () {
         $("label.has-error").remove();
         var submit_false;
         var final_description = $("#final_description").val();
+        var builder_name = $('#builder_name').val();
+        var builder_company_name = $('#builder_company_name').val();
         if (final_description == "") {
             call_error_step6("final_description", "Please write something.");
             submit_false = 1;
@@ -322,6 +324,18 @@ $(document).ready(function () {
         } else {
             call_error_step6("valid_image_error", "Please upload property images.");
             submit_false = 1;
+        }
+        if (builder_name == "") {
+            call_error_step6("builder_name", "Please enter builder name.");
+            submit_false = 1;
+        } else {
+            submit_false = (submit_false == 1) ? 1 : 0;
+        }
+        if (builder_company_name == "") {
+            call_error_step6("builder_company_name", "Please enter builder company name.");
+            submit_false = 1;
+        } else {
+            submit_false = (submit_false == 1) ? 1 : 0;
         }
         if (submit_false == 0) {
             $("#add_property").submit();

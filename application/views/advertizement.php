@@ -9,7 +9,7 @@
             <input type="hidden" name="page_url" id="page_url">
             <input type="hidden" name="image_folder" id="image_folder">
         </form>
-        <div class="row">            
+        <div class="row">             
             <div class="col-md-8 col-sm-12 col-lg-8 col-md-offset-2">
                 <table class="table">
                     <thead>

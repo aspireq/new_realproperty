@@ -50,7 +50,6 @@ class Auth extends CI_Controller {
      * Note: This page is only accessible to users who are not currently logged in, else they will be redirected.
      */
     function login() {
-
         if ($this->input->post()) {
             $this->load->model('demo_auth_model');
             $this->demo_auth_model->login();
@@ -69,10 +68,8 @@ class Auth extends CI_Controller {
         if ($this->flexi_auth->is_logged_in()) {
             if ($this->input->post()) {
                 $user_data = array(
-                    "establishment_year" => $this->input->post('establishment_year'),
-                    "total_projects" => $this->input->post('total_projects'),
-                    "description" => $this->input->post('description'),
-                    "company_name" => $this->input->post('company_name')
+                    "website" => $this->input->post('website'),
+                    "contact_no" => $this->input->post('contact_no')
                 );
                 $result = $this->Common_model->select_update('user_accounts', $user_data, array('uacc_id' => $this->user_id));
                 redirect('auth/profile');
@@ -205,9 +202,24 @@ class Auth extends CI_Controller {
                 $property_data['booking_amount'] = $this->input->post('booking_amount');
                 $property_data['property_age'] = $this->input->post('property_age');
 
-                $property_data['bank_name'] = $this->input->post('bank_name');
+                $property_data['builder_name'] = $this->input->post('builder_name');
+                $property_data['builder_company_name'] = $this->input->post('builder_company_name');
+
+                $property_data['bank_interest'] = $this->input->post('bank_interest');
                 $property_data['bank_interest'] = $this->input->post('bank_interest');
 
+                if ($this->input->post('builder_email')) {
+                    $property_data['builder_email'] = $this->input->post('builder_email');
+                }
+                if ($this->input->post('total_projects')) {
+                    $property_data['total_projects'] = $this->input->post('total_projects');
+                }
+                if ($this->input->post('establishment_year')) {
+                    $property_data['establishment_year'] = $this->input->post('establishment_year');
+                }
+                if ($this->input->post('builder_description')) {
+                    $property_data['builder_description'] = $this->input->post('builder_description');
+                }
                 if ($this->input->post('property_unit_value') == '1') {
                     $property_data['multiple_property_units'] = $this->input->post('property_unit_value');
                     $property_data['no_of_units'] = $this->input->post('property_count_value');
@@ -222,7 +234,7 @@ class Auth extends CI_Controller {
                 }
                 if ($this->input->post('security_deposit_amount')) {
                     $property_data['security_deposit_amount'] = $this->input->post('security_deposit_amount');
-                    $property_data['security_deposit_type'] = $this->input->post('security_deposit_type');                    
+                    $property_data['security_deposit_type'] = $this->input->post('security_deposit_type');
                 }
                 if ($this->input->post('carpet_area')) {
                     $property_data['carpet_area'] = $this->input->post('carpet_area');
@@ -281,39 +293,68 @@ class Auth extends CI_Controller {
                 if (!empty($flat_amenities)) {
                     $property_data['flat_amenities'] = $flat_amenities;
                 }
+                if (!empty($_FILES['builder_image']['name'])) {
+                    $this->load->library('upload');
+                    $config['upload_path'] = 'includes/builder_images';
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $config['max_filename'] = 25;
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('builder_image')) {
+                        $error = $this->upload->display_errors();
+                        $this->session->set_flashdata('message', $error);
+                    } else {
+                        $file_info = $this->upload->data();
+                        $property_data['builder_image'] = $file_info['file_name'];
+                        if ($this->input->post('edit_id') != "") {
+                            if (file_exists(FCPATH . 'includes/builder_images/' . $this->input->post('old_builder_image'))) {
+                                unlink(FCPATH . 'includes/builder_images/' . $this->input->post('old_builder_image'));
+                            }
+                        }
+                    }
+                } else if ($this->input->post('old_builder_image')) {
+                    $property_data['builder_image'] = $this->input->post('old_builder_image');
+                }
                 if (!empty($property_data)) {
                     if ($this->input->post('edit_id') != "") {
                         $old_images_post = $this->input->post('old_property_images');
+                        $old_images_table = $this->db->query("select image from property_images where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
                         if (!empty($old_images_post)) {
-                            $old_images_table = $this->db->query("select image from property_images where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
                             $final_images = array_diff(array_column($old_images_table, 'image'), $old_images_post);
-                            foreach ($final_images as $row_image) {
-                                if (file_exists(FCPATH . 'includes/properties_images/' . $row_image)) {
-                                    unlink(FCPATH . 'includes/properties_images/' . $row_image);
-                                    $this->Common_model->delete_where('property_images', array('property_id' => $this->input->post('edit_id'), 'image' => $row_image));
-                                }
+                        } else {
+                            $final_images = array_column($old_images_table, 'image');
+                        }
+                        foreach ($final_images as $row_image) {
+                            if (file_exists(FCPATH . 'includes/properties_images/' . $row_image)) {
+                                unlink(FCPATH . 'includes/properties_images/' . $row_image);
+                                $this->Common_model->delete_where('property_images', array('property_id' => $this->input->post('edit_id'), 'image' => $row_image));
                             }
                         }
                         $old_nearby_images = $this->input->post('old_nearby_images');
+                        $old_images_table = $this->db->query("select image from property_nearby where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
                         if (!empty($old_nearby_images)) {
-                            $old_images_table = $this->db->query("select image from property_nearby where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
                             $final_images = array_diff(array_column($old_images_table, 'image'), $old_nearby_images);
-                            foreach ($final_images as $row_image) {
-                                if (file_exists(FCPATH . 'includes/property_nearby/' . $row_image)) {
-                                    unlink(FCPATH . 'includes/property_nearby/' . $row_image);
-                                    $this->Common_model->delete_where('property_nearby', array('property_id' => $this->input->post('edit_id'), 'image' => $row_image));
-                                }
+                        } else {
+                            $final_images = array_column($old_images_table, 'image');
+                        }
+                        foreach ($final_images as $row_image) {
+                            if (file_exists(FCPATH . 'includes/property_nearby/' . $row_image)) {
+                                unlink(FCPATH . 'includes/property_nearby/' . $row_image);
+                                $this->Common_model->delete_where('property_nearby', array('property_id' => $this->input->post('edit_id'), 'image' => $row_image));
                             }
                         }
                         $old_property_videos = $this->input->post('old_property_videos');
+                        $old_images_table = $this->db->query("select video from property_videos where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
                         if (!empty($old_property_videos)) {
-                            $old_images_table = $this->db->query("select video from property_videos where property_id = '" . $this->input->post('edit_id') . "'")->result_array();
                             $final_images = array_diff(array_column($old_images_table, 'video'), $old_property_videos);
-                            foreach ($final_images as $row_image) {
-                                if (file_exists(FCPATH . 'includes/properties_videos/' . $row_image)) {
-                                    unlink(FCPATH . 'includes/properties_videos/' . $row_image);
-                                    $this->Common_model->delete_where('property_videos', array('property_id' => $this->input->post('edit_id'), 'video' => $row_image));
-                                }
+                        } else {
+                            $final_images = array_column($old_images_table, 'video');
+                        }
+                        foreach ($final_images as $row_image) {
+                            if (file_exists(FCPATH . 'includes/properties_videos/' . $row_image)) {
+                                unlink(FCPATH . 'includes/properties_videos/' . $row_image);
+                                $this->Common_model->delete_where('property_videos', array('property_id' => $this->input->post('edit_id'), 'video' => $row_image));
                             }
                         }
                         $property_id = $this->Common_model->select_update('properties', $property_data, array('id' => $this->input->post('edit_id')));
@@ -790,5 +831,5 @@ class Auth extends CI_Controller {
         $data = (array) $this->Common_model->select_where('property_images', array('property_id' => $property_id));
         die(json_encode($data));
     }
-    
+
 }

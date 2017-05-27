@@ -10,7 +10,7 @@
                 </center>
             </div>
             <div class="col-md-12">
-                <div class="row property">
+                <div class="row property"> 
                     <?php foreach ($properties as $property) { ?>
                         <div class="col-md-3">                        
                             <div class="card">                           
