@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 class Common_model extends CI_Model {
 
-    public function &__get($key) { 
+    public function &__get($key) {
         $CI = & get_instance();
         return $CI->$key;
     }
@@ -107,7 +107,7 @@ class Common_model extends CI_Model {
     function get_property($property_id) {
         $this->db->select();
         $this->db->from('properties');
-        $this->db->where('status', 1);
+        //$this->db->where('status', 1);
         $this->db->where('id', $property_id);
         $qry = $this->db->get();
         $row = $qry->row();
@@ -180,6 +180,7 @@ class Common_model extends CI_Model {
         if ($limit != null || $start != null) {
             $this->db->limit($limit, $start);
         }
+        //$this->db->where('status', 1);
         $query = $this->db->get('properties');
         if ($query->num_rows() > 0) {
             $final_data = array();
@@ -196,6 +197,25 @@ class Common_model extends CI_Model {
     function get_cities() {
         $query = $this->db->query("SELECT cities.city_name, city_area.name,city_area.id as area_id FROM cities INNER JOIN city_area ON cities.id = city_area.city_id ORDER BY city_name, cities.id");
         return $query->result_array();
+    }
+
+    function get_bank_offers($property_id) {
+        $this->db->select();
+        $this->db->from('bank_offers');
+        $this->db->where('property_id', $property_id);        
+        $qry = $this->db->get();        
+        if ($qry->num_rows() > 0) {
+            $final_data = array();
+            foreach ($qry->result() as $key => $row) {
+                $data[] = $row;
+                $final_data[$key] = $row;
+                $bank_info = $this->select_where_row('banks',array('id' => $row->bank_id));
+                $final_data[$key]->bank_name = $bank_info->name;
+                $final_data[$key]->bank_image = $bank_info->image;
+            }            
+            return $final_data;
+        }
+        return false;
     }
 
 }

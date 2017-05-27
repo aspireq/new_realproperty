@@ -495,7 +495,16 @@ $this->session->set_userdata('property_data', $newdata);
                                         <div class="form-group">
                                             <label class="col-md-4 control-label">Expected Price:<sup>*</sup></label>
                                             <div class="col-md-4">
-                                                <input type="text" class="form-control" name="expected_price" id="expected_price" value="<?php echo (!empty($propertyinfo) && $propertyinfo->price != "") ? $propertyinfo->price : ''; ?>">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="expected_price" id="expected_price" value="<?php echo (!empty($propertyinfo) && $propertyinfo->price != "") ? $propertyinfo->price : ''; ?>">
+                                                    <span class="input-group-btn">
+                                                        <select class="btn btn-default" name="expected_price_type" id="expected_price_type">
+                                                            <option value="Thausand" <?php echo (!empty($propertyinfo) && $propertyinfo->expected_price_type == 'Thausand' ) ? 'selected' : ''; ?>>Thausand</option>
+                                                            <option value="Lacks" <?php echo (!empty($propertyinfo) && $propertyinfo->expected_price_type == 'Lacks' ) ? 'selected' : ''; ?>>Lacks</option>
+                                                            <option value="Crore" <?php echo (!empty($propertyinfo) && $propertyinfo->expected_price_type == 'Crore' ) ? 'selected' : ''; ?>>Crore</option>                                                        
+                                                        </select>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -569,39 +578,51 @@ $this->session->set_userdata('property_data', $newdata);
                                     <h4>Bank Detail:</h4>
                                     <div class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-md-4 control-label" for="bank_name">Enter Bank Name:</label>
-                                            <div class="col-md-4">
-                                                <select class="form-control" name="bank_name" id="bank_name"  onfocus='this.size = 10;' onblur='this.size = 1;' onchange='this.size = 1; this.blur();'>
-                                                    <option value="Allahabad Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Allahabad Bank') ? 'selected' : ''; ?>>Allahabad Bank</option>
-                                                    <option value="Andhra Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Andhra Bank') ? 'selected' : ''; ?>>Andhra Bank</option>
-                                                    <option value="Axis Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Axis Bank') ? 'selected' : ''; ?>>Axis Bank</option>
-                                                    <option value="Bank of Baroda - Corporate Banking" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Bank of Baroda - Corporate Banking') ? 'selected' : ''; ?>>Bank of Baroda - Corporate Banking</option>
-                                                    <option value="Bank of India" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Bank of India') ? 'selected' : ''; ?>>Bank of India</option>
-                                                    <option value="Bank of Maharashtra" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Bank of Maharashtra') ? 'selected' : ''; ?>>Bank of Maharashtra</option>
-                                                    <option value="Canara Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Canara Bank') ? 'selected' : ''; ?>>Canara Bank</option>
-                                                    <option value="Central Bank of India" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Central Bank of India') ? 'selected' : ''; ?>>Central Bank of India</option>
-                                                    <option value="City Union Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'City Union Bank') ? 'selected' : ''; ?>>City Union Bank</option>
-                                                    <option value="Dhanlaxmi Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Dhanlaxmi Bank') ? 'selected' : ''; ?>>Dhanlaxmi Bank</option>
-                                                    <option value="HDFC Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'HDFC Bank') ? 'selected' : ''; ?>>HDFC Bank</option>
-                                                    <option value="ICICI Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'ICICI Bank') ? 'selected' : ''; ?>>ICICI Bank</option>
-                                                    <option value="IDBI Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'IDBI Bank') ? 'selected' : ''; ?>>IDBI Bank</option>
-                                                    <option value="Indian Overseas Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Indian Overseas Bank') ? 'selected' : ''; ?>>Indian Overseas Bank</option>
-                                                    <option value="Kotak Bank" <?php echo (!empty($propertyinfo) && $propertyinfo->bank_name == 'Kotak Bank') ? 'selected' : ''; ?>>Kotak Bank</option>
-                                                </select>
+                                            <?php if (empty($bank_offers)) { ?>
+                                                <div id="sample_bank_offer">
+                                                    <label class="col-md-4 control-label" for="bank_name">Bank :</label>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" name="bank_name[]" id="bank_name"  onblur='this.size = 1;' onchange='this.size = 1; this.blur();'>
+                                                            <?php foreach ($banks as $bank) { ?>
+                                                                <option value="<?php echo $bank->id; ?>" ><?php echo $bank->name; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="">Interest Rate:</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" id="bank_interest" name="bank_interest[]" value="1" >
+                                                    </div>
+                                                </div>
+                                            <?php } else { ?>
+                                                <?php foreach ($bank_offers as $offer) { ?>
+                                                    <label class="col-md-4 control-label" for="bank_name">Bank :</label>
+                                                    <div class="col-md-4">
+                                                        <select class="form-control" name="bank_name[]" id="bank_name"  onblur='this.size = 1;' onchange='this.size = 1; this.blur();'>
+                                                            <?php foreach ($banks as $bank) { ?>
+                                                                <option value="<?php echo $bank->id; ?>" <?php echo ($offer->bank_id == $bank->id) ? 'selected' : ''; ?>><?php echo $bank->name; ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="">Interest Rate:</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <input type="text" class="form-control" id="bank_interest" name="bank_interest[]" value="<?php echo ($offer->interest_rate != "") ? $offer->interest_rate : ''; ?>">
+                                                    </div>
+                                                <?php } ?>                                                
+                                            <?php } ?>
+                                            <div id="new_offers">                                                    
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label">Enter Rate of Interest:</label>
-                                            <div class="col-md-4">
-                                                <input type="text" class="form-control" id="bank_interest" name="bank_interest" value="<?php echo (!empty($propertyinfo) && $propertyinfo->bank_interest != "") ? $propertyinfo->bank_interest : ''; ?>">
-                                            </div>
+                                            <a href="#" onclick="add_more_offers()">Add More</a>       
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="pull-right">
                                                 <button class="btn btn-default prev-step" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;PREVIOUS</button>
-                                                <button class="btn btn-success" name="btn_step4" id="btn_step4" type="button">NEXT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+                                                <button class="btn btn-success next-step" name="btn_step4" id="btn_step4" type="button">NEXT&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -639,6 +660,16 @@ $this->session->set_userdata('property_data', $newdata);
                                 <!-- feature -->
                                 <div role="tabpanel" class="tab-pane " id="features">
                                     <h5><b>Upload Project Photos:</b></h5>
+                                    <div class="form-group">
+                                        <label for="property_image" class="control-label">Property Image [Standard : 1024 * 800]</label>
+                                        <?php if (!empty($propertyinfo) && $propertyinfo->property_image != "") { ?>
+                                            <div class="form-group">
+                                                <img style="width: 150px; height: 100px;" src="<?php echo base_url(); ?>includes/properties_img/<?php echo $propertyinfo->property_image; ?>">                                        
+                                            </div>
+                                        <?php } ?>
+                                        <input type="file" id="property_image" name="property_image">
+                                    </div>
+                                    <input type="hidden" name="old_property_image" id="old_property_image" value="<?php echo (!empty($propertyinfo) && $propertyinfo->property_image != "") ? $propertyinfo->property_image : ''; ?>">
                                     <div class="row oldimage">
                                         <?php foreach ($property_images as $image) { ?>
                                             <div class="col-md-3">
@@ -721,6 +752,10 @@ $this->session->set_userdata('property_data', $newdata);
                                         <label for="builder_company_name" class="control-label">Builder Company Name<sup>*</sup></label>
                                         <input type="text" class="form-control" id="builder_company_name" name="builder_company_name" value="<?php echo (!empty($propertyinfo) && $propertyinfo->builder_company_name != "") ? $propertyinfo->builder_company_name : ''; ?>">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="builder_contact_no" class="control-label">Builder Contact No.</label>
+                                        <input type="text" class="form-control" id="builder_contact_no" name="builder_contact_no" value="<?php echo (!empty($propertyinfo) && $propertyinfo->builder_contact_no != "") ? $propertyinfo->builder_contact_no : ''; ?>">
+                                    </div>                                    
                                     <div class="form-group">
                                         <label for="total_projects" class="control-label">Total Projects</label>
                                         <input type="text" class="form-control"  id="total_projects" name="total_projects" value="<?php echo (!empty($propertyinfo) && $propertyinfo->total_projects != "") ? $propertyinfo->total_projects : ''; ?>">

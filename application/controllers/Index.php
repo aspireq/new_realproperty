@@ -136,6 +136,7 @@ class Index extends CI_Controller {
         $this->data['propertyinfo'] = $this->Common_model->get_property($property_id);
         $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $property_id));
         $this->data['property_nearby'] = $this->Common_model->select_where('property_nearby', array('property_id' => $property_id));
+        $this->data['bank_offers'] = $this->Common_model->get_bank_offers($property_id);
         if ($this->input->post()) {
             $property_email = $this->Common_model->select_where_row('user_accounts', array('uacc_id' => $this->data['propertyinfo']->added_by));
             $subject = 'property.realgujarat - ' . 'Property Inquiry';

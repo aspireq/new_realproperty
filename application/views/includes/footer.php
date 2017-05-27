@@ -475,14 +475,18 @@
             $('#btn_step5').prop('disabled', true);
         },
     };
-//    Dropzone.on("error", function (file, errormessage, xhr) {
-//        if (xhr) {
-//            var response = JSON.parse(xhr.responseText);
-//            alert(response.message);
-//            var element = file.previewElement;
-//            $("img[alt='" + file.name + "']").parent().parent().remove();
-//        }
-//    });
+    function add_more_offers() {
+        $.ajax({
+            url: "<?php echo base_url(); ?>auth/test/",
+            type: "POST",
+            data: {},
+            dataType: "JSON",
+            success: function (response)
+            {                
+                $('#new_offers').append(response);
+            }
+        });
+    }
     function delete_property_image(filename) {
         var filename = file.name;
         if (uploadedfiles.length > 0) {

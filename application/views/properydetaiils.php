@@ -14,7 +14,7 @@
                     <h1><img src="<?php echo base_url(); ?>includes/properties_detail/images/show.gif" alt="Propertyshow" class="hidden-xs hidden-sm propertyshow" /><?php echo $propertyinfo->project_name ?></h1>
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                    <h3>Base Price : <i class="fa fa-inr"></i>&nbsp;<?php echo $propertyinfo->price ?></h3>
+                    <h3>Base Price : <i class="fa fa-inr"></i>&nbsp;<?php echo $propertyinfo->price.' '.$propertyinfo->expected_price_type; ?></h3>
                     <?php if ($propertyinfo->price_per_sqft != "") { ?>
                         <h4 class="grey"><i class="fa fa-inr"></i>&nbsp;<?php echo $propertyinfo->price_per_sqft; ?> per sqft.</h4>  
                     <?php } ?>
@@ -30,29 +30,27 @@
                     <div class="demo-gallery">
                         <ul id="lightgallery" class="list-unstyled row">
                             <?php
-                            if ($property_images[0]->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $property_images[0]->image))) {
-                                $first_image = $property_images[0]->image;
+                            if ($propertyinfo->property_image != "" && (file_exists(FCPATH . 'includes/properties_img/' . $propertyinfo->property_image))) {
+                                $first_image = $propertyinfo->property_image;
                             } else {
                                 $first_image = "no_image.jpg";
                             }
                             ?>
-                            <li class="col-xs-6 col-sm-3 col-md-9 p-r-0" data-responsive="<?php echo base_url(); ?>includes/properties_images/<?php echo $first_image; ?> 375, <?php echo base_url(); ?>includes/properties_images/<?php echo $first_image; ?> 480, <?php echo base_url(); ?>includes/properties_images/<?php echo $first_image; ?> 800" data-src="<?php echo base_url(); ?>includes/properties_images/<?php echo $first_image; ?>" data-sub-html="">
+                            <li class="col-xs-6 col-sm-3 col-md-9 p-r-0" data-responsive="<?php echo base_url(); ?>includes/properties_img/<?php echo $first_image; ?> 375, <?php echo base_url(); ?>includes/properties_img/<?php echo $first_image; ?> 480, <?php echo base_url(); ?>includes/properties_img/<?php echo $first_image; ?> 800" data-src="<?php echo base_url(); ?>includes/properties_img/<?php echo $first_image; ?>" data-sub-html="">
                                 <a href="">
-                                    <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_images/<?php echo $first_image; ?>">
+                                    <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_img/<?php echo $first_image; ?>">
                                 </a>
                             </li>
                             <?php
                             foreach ($property_images as $key => $image) {
-                                if ($key > 0) {
-                                    if ($image->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $image->image))) {
-                                        ?>
-                                        <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 375, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 480, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 800" data-src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>" data-sub-html="">
-                                            <a href="">
-                                                <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>">
-                                            </a>
-                                        </li>
-                                        <?php
-                                    }
+                                if ($image->image != "" && (file_exists(FCPATH . 'includes/properties_images/' . $image->image))) {
+                                    ?>
+                                    <li class="col-xs-6 col-sm-3 col-md-3" data-responsive="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 375, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 480, <?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?> 800" data-src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>" data-sub-html="">
+                                        <a href="">
+                                            <img class="img-responsive" src="<?php echo base_url(); ?>includes/properties_images/<?php echo $image->image; ?>">
+                                        </a>
+                                    </li>
+                                    <?php
                                 }
                             }
                             ?>
@@ -94,7 +92,7 @@
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Carpet Area:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->carpet_area != null && $propertyinfo->carpet_area != 0) ? $propertyinfo->carpet_area . ' ' . $propertyinfo->carpet_area_unit_name : 'N/A'; ?></span> </li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Total Floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->total_floor != null && $propertyinfo->total_floor != 0) ? $propertyinfo->total_floor . ' floor' : 'N/A'; ?></span> </li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property on floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_on_floor != null && $propertyinfo->property_on_floor != "") ? $propertyinfo->property_on_floor : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price : 'N/A'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price.' '.$propertyinfo->expected_price_type : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Booking Amount:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->booking_amount != "0.00") ? $propertyinfo->booking_amount : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property Age:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_age != null && $propertyinfo->property_age != "") ? $propertyinfo->property_age : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Security Deposit:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->security_deposit_amount != null && $propertyinfo->security_deposit_amount != "0.00") ? $propertyinfo->security_deposit_amount . ' (' . $propertyinfo->security_deposit_type . ')' : 'N/A'; ?></span></li>
@@ -255,6 +253,7 @@
                                             <li><span class="maintext">Established in</span><br><span class="subtext"><?php echo ($propertyinfo->establishment_year != null) ? $propertyinfo->establishment_year : 'N/A'; ?></span></li>
                                             <li><span class="maintext">Total Projects</span><br><span class="subtext"><?php echo ($propertyinfo->total_projects != null) ? $propertyinfo->total_projects : 'N/A'; ?></span></li>
                                             <li><span class="maintext">Email</span><br><span class="subtext"><?php echo ($propertyinfo->builder_email != null) ? $propertyinfo->builder_email : 'N/A'; ?></span></li>
+                                            <li><span class="maintext">Contact No</span><br><span class="subtext"><?php echo ($propertyinfo->builder_contact_no != null) ? $propertyinfo->builder_contact_no : 'N/A'; ?></span></li>
                                         </ul>
                                         <span class="more"><?php echo ($propertyinfo->builder_description != null) ? $propertyinfo->builder_description : 'N/A'; ?></span>
                                     </div>
@@ -269,34 +268,14 @@
                                 <hr/>
                                 <div class="carousel carousel-showmanymoveone slide" id="itemslider">
                                     <div class="carousel-inner">
-                                        <div class="item active">
-                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/axisbank.png" class="img-responsive center-block"></a>
-                                                <h4 class="text-center">8.7% Floating</h4>
+                                        <?php foreach ($bank_offers as $key => $offer) { ?>
+                                            <div class="item <?php echo ($key == 0) ? 'active' : '';?>">
+                                                <div class="col-xs-12 col-sm-6 col-md-2">
+                                                    <a href="#"><img src="<?php echo base_url(); ?>includes/bank_images/<?php echo $offer->bank_image; ?>" class="img-responsive center-block"></a>
+                                                    <h4 class="text-center"><?php echo $offer->interest_rate .' %' ;?></h4>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/citibank.png" class="img-responsive center-block"></a>
-                                                <h4 class="text-center">8.7% Floating</h4>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/hdfc.png" class="img-responsive center-block"></a>
-                                                <h4 class="text-center">8.7% Floating</h4>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/iifl.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="col-xs-12 col-sm-6 col-md-2">
-                                                <a href="#"><img src="<?php echo base_url(); ?>includes/properties_detail/images/punjab.png" class="img-responsive center-block"></a><h4 class="text-center">8.7% Floating</h4>
-                                            </div>
-                                        </div>
+                                        <?php } ?>
                                     </div>
                                     <div id="slider-control">
                                         <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>

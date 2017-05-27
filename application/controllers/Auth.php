@@ -176,12 +176,15 @@ class Auth extends CI_Controller {
             $this->data['unitsinfo'] = $this->Common_model->select_all('units');
             $this->data['project_amenities'] = $this->Common_model->select_all('project_amenities');
             $this->data['flat_amenities'] = $this->Common_model->select_all('flat_amenities');
+            $this->data['banks'] = $this->Common_model->select_where('banks', array('status' => 1));
+            $this->data['bank_offers'] = "";
             if ($this->input->post()) {
                 $project_amenities = implode(',', $this->input->post('project_amenities'));
                 $flat_amenities = implode(',', $this->input->post('flat_amenities'));
                 $properties_info = $this->session->userdata('property_data');
                 $property_data = array();
                 $property_data['added_by'] = $this->user_id;
+                $property_data['status'] = 0;
                 $property_data['added_as'] = $this->input->post('user_type');
                 $property_data['property_zone'] = $this->input->post('property_zone');
                 $property_data['property_type'] = $this->input->post('property_type');
@@ -201,15 +204,16 @@ class Auth extends CI_Controller {
                 $property_data['property_configuration'] = $this->input->post('propery_configuration');
                 $property_data['booking_amount'] = $this->input->post('booking_amount');
                 $property_data['property_age'] = $this->input->post('property_age');
+                $property_data['expected_price_type'] = $this->input->post('expected_price_type');
 
                 $property_data['builder_name'] = $this->input->post('builder_name');
                 $property_data['builder_company_name'] = $this->input->post('builder_company_name');
 
-                $property_data['bank_interest'] = $this->input->post('bank_interest');
-                $property_data['bank_interest'] = $this->input->post('bank_interest');
-
                 if ($this->input->post('builder_email')) {
                     $property_data['builder_email'] = $this->input->post('builder_email');
+                }
+                if ($this->input->post('builder_contact_no')) {
+                    $property_data['builder_contact_no'] = $this->input->post('builder_contact_no');
                 }
                 if ($this->input->post('total_projects')) {
                     $property_data['total_projects'] = $this->input->post('total_projects');
@@ -316,6 +320,29 @@ class Auth extends CI_Controller {
                 } else if ($this->input->post('old_builder_image')) {
                     $property_data['builder_image'] = $this->input->post('old_builder_image');
                 }
+                if (!empty($_FILES['property_image']['name'])) {
+                    $this->load->library('upload');
+                    $config['upload_path'] = 'includes/properties_img';
+                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $config['max_filename'] = 25;
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('property_image')) {
+                        $error = $this->upload->display_errors();
+                        $this->session->set_flashdata('message', $error);
+                    } else {
+                        $file_info = $this->upload->data();
+                        $property_data['property_image'] = $file_info['file_name'];
+                        if ($this->input->post('edit_id') != "") {
+                            if (file_exists(FCPATH . 'includes/properties_img/' . $this->input->post('old_builder_image'))) {
+                                unlink(FCPATH . 'includes/properties_img/' . $this->input->post('old_builder_image'));
+                            }
+                        }
+                    }
+                } else if ($this->input->post('old_property_image')) {
+                    $property_data['property_image'] = $this->input->post('old_property_image');
+                }
                 if (!empty($property_data)) {
                     if ($this->input->post('edit_id') != "") {
                         $old_images_post = $this->input->post('old_property_images');
@@ -359,8 +386,21 @@ class Auth extends CI_Controller {
                         }
                         $property_id = $this->Common_model->select_update('properties', $property_data, array('id' => $this->input->post('edit_id')));
                         $property_id = $this->input->post('edit_id');
+                        $this->Common_model->delete_where('bank_offers', array('property_id' => $this->input->post('edit_id')));
                     } else {
                         $property_id = $this->Common_model->insert_record('properties', $property_data);
+                    }
+                    $banks = $this->input->post('bank_name');
+                    $bank_interest_rates = $this->input->post('bank_interest');
+                    if (!empty($banks)) {
+                        foreach ($banks as $key => $bank) {
+                            $property_bank_data = array(
+                                'property_id' => $property_id,
+                                'bank_id' => $bank,
+                                'interest_rate' => $bank_interest_rates[$key]
+                            );
+                            $this->Common_model->insert('bank_offers', $property_bank_data);
+                        }
                     }
                     $update_images = $this->Common_model->select_update('property_images', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
                     $update_videos = $this->Common_model->select_update('property_videos', array('property_id' => $property_id), array('property_unique_no' => $properties_info['property_unique_no']));
@@ -379,6 +419,7 @@ class Auth extends CI_Controller {
                 $this->data['property_images'] = $this->Common_model->select_where('property_images', array('property_id' => $edit_property_id));
                 $this->data['property_nearby'] = $this->Common_model->select_where('property_nearby', array('property_id' => $edit_property_id));
                 $this->data['property_videos'] = $this->Common_model->select_where('property_videos', array('property_id' => $edit_property_id));
+                $this->data['bank_offers'] = $this->Common_model->get_bank_offers($edit_property_id);
             }
             $this->data = $this->include_files();
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
@@ -829,6 +870,25 @@ class Auth extends CI_Controller {
     function property_images() {
         $property_id = 1;
         $data = (array) $this->Common_model->select_where('property_images', array('property_id' => $property_id));
+        die(json_encode($data));
+    }
+
+    function test() {
+        $data .= '<label class="col-md-4 control-label" for="bank_name">Bank :</label>';
+        $data .= '<div class="col-md-4">';
+        $data .= '<select class="form-control" name="bank_name[]" id="bank_name">';
+        $banks = $this->Common_model->select_where('banks',array('status' => 1));
+        foreach ($banks as $bank) {
+            $data .= '<option value="' . $bank->id . '">' . $bank->name . '</option>';
+        }
+        $data .= '</select>';
+        $data .= '</div>';
+        $data .= '<div class="col-md-2">';
+        $data .= '<label class="">Interest Rate:</label>';
+        $data .= '</div>';
+        $data .= '<div class="col-md-2">';
+        $data .= '<input type="text" class="form-control" id="bank_interest" name="bank_interest[]" >';
+        $data .= '</div>';
         die(json_encode($data));
     }
 
