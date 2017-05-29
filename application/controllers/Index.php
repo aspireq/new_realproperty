@@ -20,6 +20,8 @@ class Index extends CI_Controller {
         $this->load->vars('current_url', $this->uri->uri_to_assoc(1));
         // Define a global variable to store data that is then used by the end view page.
         $this->data = null;
+        
+        $this->data['property_ad'] = $this->Common_model->get_properties_list();       
 
         if ($this->flexi_auth->is_logged_in()) {
             $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();

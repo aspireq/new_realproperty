@@ -14,9 +14,9 @@
                     <h1><img src="<?php echo base_url(); ?>includes/properties_detail/images/show.gif" alt="Propertyshow" class="hidden-xs hidden-sm propertyshow" /><?php echo $propertyinfo->project_name ?></h1>
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                    <h3>Base Price : <i class="fa fa-inr"></i>&nbsp;<?php echo $propertyinfo->price.' '.$propertyinfo->expected_price_type; ?></h3>
+                    <h3>Base Price : <i class="fa fa-inr"></i>&nbsp;<?php echo ($propertyinfo->price != null) ? $propertyinfo->price.' '.$propertyinfo->expected_price_type : 'On Request'; ?></h3>
                     <?php if ($propertyinfo->price_per_sqft != "") { ?>
-                        <h4 class="grey"><i class="fa fa-inr"></i>&nbsp;<?php echo $propertyinfo->price_per_sqft; ?> per sqft.</h4>  
+                        <h4 class="grey"><i class="fa fa-inr"></i>&nbsp;<?php echo ($propertyinfo->price_per_sqft != null) ? $propertyinfo->price_per_sqft.'per sqft.' : '' ; ?> </h4>
                     <?php } ?>
                     <h4 class="grey"><i class="fa fa-map-marker"></i>&nbsp;<?php echo $propertyinfo->city_name; ?>  </h4>
                 </div>
@@ -92,7 +92,7 @@
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Carpet Area:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->carpet_area != null && $propertyinfo->carpet_area != 0) ? $propertyinfo->carpet_area . ' ' . $propertyinfo->carpet_area_unit_name : 'N/A'; ?></span> </li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Total Floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->total_floor != null && $propertyinfo->total_floor != 0) ? $propertyinfo->total_floor . ' floor' : 'N/A'; ?></span> </li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property on floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_on_floor != null && $propertyinfo->property_on_floor != "") ? $propertyinfo->property_on_floor : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price.' '.$propertyinfo->expected_price_type : 'N/A'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price.' '.$propertyinfo->expected_price_type : 'On Request'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Booking Amount:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->booking_amount != "0.00") ? $propertyinfo->booking_amount : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property Age:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_age != null && $propertyinfo->property_age != "") ? $propertyinfo->property_age : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Security Deposit:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->security_deposit_amount != null && $propertyinfo->security_deposit_amount != "0.00") ? $propertyinfo->security_deposit_amount . ' (' . $propertyinfo->security_deposit_type . ')' : 'N/A'; ?></span></li>

@@ -174,6 +174,9 @@ $this->session->set_userdata('property_data', $newdata);
                                                 <option value="2 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "2 BHK") ? 'selected' : ''; ?>>2 BHK</option>
                                                 <option value="3 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "3 BHK") ? 'selected' : ''; ?>>3 BHK</option>
                                                 <option value="4 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "4 BHK") ? 'selected' : ''; ?>>4 BHK</option>
+                                                <option value="5 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "5 BHK") ? 'selected' : ''; ?>>5 BHK</option>
+                                                <option value="6 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "6 BHK") ? 'selected' : ''; ?>>6 BHK</option>
+                                                <option value="7 BHK" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "7 BHK") ? 'selected' : ''; ?>>7 BHK</option>
                                                 <option value="Other" <?php echo (!empty($propertyinfo) && $propertyinfo->property_configuration == "Other") ? 'selected' : ''; ?>>Other</option>
                                             </select>
                                         </div>

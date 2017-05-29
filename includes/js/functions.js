@@ -164,7 +164,7 @@ $(document).ready(function () {
         var project_name = $("#project_name").val();
         var property_location = $('#us3-address').val();
         var property_address = $("#property_address").val();
-        var property_neardesc = $("#property_neardesc").val();
+        //var property_neardesc = $("#property_neardesc").val();
         var area_name = $("#area_name").val();
         var city_name = $("#city_name").val();
         if (project_name == "") {
@@ -185,12 +185,12 @@ $(document).ready(function () {
         } else {
             submit_false = (submit_false == 1) ? 1 : 0;
         }
-        if (property_neardesc == "") {
-            call_error("property_neardesc", "Please enter property address.");
-            submit_false = 1;
-        } else {
-            submit_false = (submit_false == 1) ? 1 : 0;
-        }
+//        if (property_neardesc == "") {
+//            call_error("property_neardesc", "Please enter property address.");
+//            submit_false = 1;
+//        } else {
+//            submit_false = (submit_false == 1) ? 1 : 0;
+//        }
         if (area_name == "") {
             call_error("area_name", "Please enter area_name.");
             submit_false = 1;
@@ -236,27 +236,28 @@ $(document).ready(function () {
         e.preventDefault();
         $("label.has-error").remove();
         var submit_false;
-        var expected_price = $("#expected_price").val();
-        var bank_interest = $("#bank_interest").val();
-        var squrefeet_price = $("#squrefeet_price").val();
-        if (expected_price == "" || !$.isNumeric(expected_price)) {
-            call_error_step4("expected_price", "Please enter valid price.");
-            submit_false = 1;
-        } else {
-            submit_false = (submit_false == 1) ? 1 : 0;
-        }
-        if (bank_interest == "" || !$.isNumeric(bank_interest)) {
-            call_error_step4("bank_interest", "Please enter bank interest.");
-            submit_false = 1;
-        } else {
-            submit_false = (submit_false == 1) ? 1 : 0;
-        }
-        if (squrefeet_price == "" || !$.isNumeric(squrefeet_price)) {
-            call_error_step4("squrefeet_price", "Please enter price per squre feet.");
-            submit_false = 1;
-        } else {
-            submit_false = (submit_false == 1) ? 1 : 0;
-        }
+        //var expected_price = $("#expected_price").val();
+        //var bank_interest = $("#bank_interest").val();
+        //var squrefeet_price = $("#squrefeet_price").val();
+//        if (expected_price == "" || !$.isNumeric(expected_price)) {
+//            call_error_step4("expected_price", "Please enter valid price.");
+//            submit_false = 1;
+//        } else {
+//            submit_false = (submit_false == 1) ? 1 : 0;
+//        }
+//        if (bank_interest == "" || !$.isNumeric(bank_interest)) {
+//            call_error_step4("bank_interest", "Please enter bank interest.");
+//            submit_false = 1;
+//        } else {
+//            submit_false = (submit_false == 1) ? 1 : 0;
+//        }
+//        if (squrefeet_price == "" || !$.isNumeric(squrefeet_price)) {
+//            call_error_step4("squrefeet_price", "Please enter price per squre feet.");
+//            submit_false = 1;
+//        } else {
+//            submit_false = (submit_false == 1) ? 1 : 0;
+//        }
+        submit_false = (submit_false == 1) ? 1 : 0;
         if (submit_false == 0) {
             //show_progress();
             var $active = $('.list-group li.active');
@@ -299,8 +300,8 @@ $(document).ready(function () {
         $("label.has-error").remove();
         var submit_false;
         var final_description = $("#final_description").val();
-        var builder_name = $('#builder_name').val();
-        var builder_company_name = $('#builder_company_name').val();
+        //var builder_name = $('#builder_name').val();
+        //var builder_company_name = $('#builder_company_name').val();
         if (final_description == "") {
             call_error_step6("final_description", "Please write something.");
             submit_false = 1;
@@ -325,18 +326,18 @@ $(document).ready(function () {
             call_error_step6("valid_image_error", "Please upload property images.");
             submit_false = 1;
         }
-        if (builder_name == "") {
-            call_error_step6("builder_name", "Please enter builder name.");
-            submit_false = 1;
-        } else {
-            submit_false = (submit_false == 1) ? 1 : 0;
-        }
-        if (builder_company_name == "") {
-            call_error_step6("builder_company_name", "Please enter builder company name.");
-            submit_false = 1;
-        } else {
-            submit_false = (submit_false == 1) ? 1 : 0;
-        }
+//        if (builder_name == "") {
+//            call_error_step6("builder_name", "Please enter builder name.");
+//            submit_false = 1;
+//        } else {
+//            submit_false = (submit_false == 1) ? 1 : 0;
+//        }
+//        if (builder_company_name == "") {
+//            call_error_step6("builder_company_name", "Please enter builder company name.");
+//            submit_false = 1;
+//        } else {
+//            submit_false = (submit_false == 1) ? 1 : 0;
+//        }
         if (submit_false == 0) {
             $("#add_property").submit();
         }

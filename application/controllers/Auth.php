@@ -16,6 +16,8 @@ class Auth extends CI_Controller {
         $this->load->library('flexi_auth');
         $this->data = null;
 
+        $this->data['property_ad'] = $this->Common_model->get_properties_list();
+
         // Redirect users logged in via password (However, not 'Remember me' users, as they may wish to login properly).
         if ($this->flexi_auth->is_logged_in_via_password() && uri_string() != 'index/logout') {
             // Preserve any flashdata messages so they are passed to the redirect page.
@@ -197,14 +199,17 @@ class Auth extends CI_Controller {
                 $property_data['bedrooms'] = $this->input->post('bedrooms');
                 $property_data['bathrooms'] = $this->input->post('bathrooms');
                 $property_data['balconies'] = $this->input->post('balconies');
-                $property_data['price'] = $this->input->post('expected_price');
                 $property_data['price_per_sqft'] = $this->input->post('squrefeet_price');
                 $property_data['property_description'] = $this->input->post('final_description');
                 $property_data['availability'] = $this->input->post('availability');
                 $property_data['property_configuration'] = $this->input->post('propery_configuration');
                 $property_data['booking_amount'] = $this->input->post('booking_amount');
                 $property_data['property_age'] = $this->input->post('property_age');
-                $property_data['expected_price_type'] = $this->input->post('expected_price_type');
+
+                if ($this->input->post('expected_price')) {
+                    $property_data['price'] = $this->input->post('expected_price');
+                    $property_data['expected_price_type'] = $this->input->post('expected_price_type');
+                }
 
                 $property_data['builder_name'] = $this->input->post('builder_name');
                 $property_data['builder_company_name'] = $this->input->post('builder_company_name');
@@ -561,6 +566,11 @@ class Auth extends CI_Controller {
         $data .= '<input type="radio" name="residentialpropery" id="servicedappart" value="Serviced Apartment" onclick="residential_propery()" ' . "$checked" . ' />';
         $data .= '<label for="servicedappart">Serviced Apartment</label>';
         $data .= '</div>';
+        $checked = ($property_type_name != "" && $property_type_name == "Residential Land") ? 'checked' : '';
+        $data .= '<div class="simpleradio-danger">';
+        $data .= '<input type="radio" name="residentialpropery" id="residentialland" value="Residential Land" onclick="residential_propery()" ' . "$checked" . ' />';
+        $data .= '<label for="residentialland">Residential Land</label>';
+        $data .= '</div>';
         $checked = ($property_type_name != "" && $property_type_name == "Other") ? 'checked' : '';
         $data .= '<div class="simpleradio-danger">';
         $data .= '<input type="radio" name="residentialpropery" id="other" value="Other" onclick="residential_propery()"/>';
@@ -877,7 +887,7 @@ class Auth extends CI_Controller {
         $data .= '<label class="col-md-4 control-label" for="bank_name">Bank :</label>';
         $data .= '<div class="col-md-4">';
         $data .= '<select class="form-control" name="bank_name[]" id="bank_name">';
-        $banks = $this->Common_model->select_where('banks',array('status' => 1));
+        $banks = $this->Common_model->select_where('banks', array('status' => 1));
         foreach ($banks as $bank) {
             $data .= '<option value="' . $bank->id . '">' . $bank->name . '</option>';
         }

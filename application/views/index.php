@@ -14,7 +14,7 @@
                 <img src="<?php echo base_url(); ?>includes/img/slider1.jpg" alt="Chania" class="slider-img">
                 <div class="carousel-caption">
                     <h4>Keeping Your Success First</h4>
-                    <h3>01, April - 30 April 2017</h3>
+                    <h3>15, June - 15 July 2017</h3>
                     <a href="<?php echo base_url(); ?>register"><button class="btn btn-primary btn-main">Register Now</button></a>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <img src="<?php echo base_url(); ?>includes/img/slider2.jpg" alt="Chania" class="slider-img">
                 <div class="carousel-caption">
                     <h4>Keeping Your Success First</h4>
-                    <h3>01, April - 30 April 2017</h3>
+                    <h3>15, June - 15 July 2017</h3>
                     <a href="<?php echo base_url(); ?>register"><button class="btn btn-primary btn-main">Register Now</button></a>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <img src="<?php echo base_url(); ?>includes/img/slider3.jpg" alt="Flower" class="slider-img">
                 <div class="carousel-caption">
                     <h4>Keeping Your Success First</h4>
-                    <h3>01, April - 30 April 2017</h3>
+                    <h3>15, June - 15 July 2017</h3>
                     <a href="<?php echo base_url(); ?>register"><button class="btn btn-primary btn-main">Register Now</button></a>
                 </div>
             </div>

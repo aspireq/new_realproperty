@@ -88,23 +88,25 @@
                             <!-- Wrapper for slides -->
 
                             <div class="carousel-inner">
-                                <div class="item active">
+                                <?php foreach($property_ad as $key => $property) { ?>
+                                <div class="item <?php echo ($key == 0) ? 'active' : ''?>">
                                     <div class="carousel-content">
                                         <div class="col-md-10 col-md-offset-1 col-xs-12">
                                             <div class="col-md-3 col-sm-3 hidden-xs">
-                                                <img src="<?php echo base_url(); ?>includes/img/logoad/1.png" alt="" class="img-responsive">
+                                                <img src="<?php echo base_url(); ?>includes/properties_img/<?php echo $property->property_image;?>" alt="" class="img-responsive">
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-8">
-                                                <h3>Great Offer By Tata</h3>
-                                                <p>3,4,5 BHK Appartments, Flat Discounts</p>
+                                                <h3>Great Offer By <?php echo $property->project_name; ?></h3>
+                                                <p><?php echo $property->property_type_name;?></p>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-4">
-                                                <a href="<?php echo base_url(); ?>properties" class="btn btn-primary">Explore Now</a>
+                                                <a href="<?php echo base_url(); ?>index/propertydetails/<?php echo $property->id; ?>" class="btn btn-primary">Explore Now</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item">
+                                <?php } ?>
+<!--                                <div class="item">
                                     <div class="carousel-content">
                                         <div class="col-md-10 col-md-offset-1">
                                             <div class="col-md-3 col-sm-3 hidden-xs">
@@ -135,7 +137,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
 
                             <!-- Controls -->
