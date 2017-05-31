@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'index';
 $route['properties'] = 'index/property';
 $route['advertizement'] = 'auth/advertizement';
+$route['banks'] = 'auth/banks';
 $route['virtualview'] = 'index/virtualview';
 $route['aboutus'] = 'index/aboutus';
 $route['contactus'] = 'index/contactus';

@@ -595,7 +595,7 @@ $this->session->set_userdata('property_data', $newdata);
                                                         <label class="">Interest Rate:</label>
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input type="text" class="form-control" id="bank_interest" name="bank_interest[]" value="1" >
+                                                        <input type="text" class="form-control" id="bank_interest" name="bank_interest[]" >
                                                     </div>
                                                 </div>
                                             <?php } else { ?>

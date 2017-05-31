@@ -14,9 +14,9 @@
                     <h1><img src="<?php echo base_url(); ?>includes/properties_detail/images/show.gif" alt="Propertyshow" class="hidden-xs hidden-sm propertyshow" /><?php echo $propertyinfo->project_name ?></h1>
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                    <h3>Base Price : <i class="fa fa-inr"></i>&nbsp;<?php echo ($propertyinfo->price != null) ? $propertyinfo->price.' '.$propertyinfo->expected_price_type : 'On Request'; ?></h3>
+                    <h3>Base Price : <i class="fa fa-inr"></i>&nbsp;<?php echo ($propertyinfo->price != null) ? $propertyinfo->price . ' ' . $propertyinfo->expected_price_type : 'On Request'; ?></h3>
                     <?php if ($propertyinfo->price_per_sqft != "") { ?>
-                        <h4 class="grey"><i class="fa fa-inr"></i>&nbsp;<?php echo ($propertyinfo->price_per_sqft != null) ? $propertyinfo->price_per_sqft.'per sqft.' : '' ; ?> </h4>
+                        <h4 class="grey"><i class="fa fa-inr"></i>&nbsp;<?php echo ($propertyinfo->price_per_sqft != null) ? $propertyinfo->price_per_sqft . 'per sqft.' : ''; ?> </h4>
                     <?php } ?>
                     <h4 class="grey"><i class="fa fa-map-marker"></i>&nbsp;<?php echo $propertyinfo->city_name; ?>  </h4>
                 </div>
@@ -92,7 +92,7 @@
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Carpet Area:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->carpet_area != null && $propertyinfo->carpet_area != 0) ? $propertyinfo->carpet_area . ' ' . $propertyinfo->carpet_area_unit_name : 'N/A'; ?></span> </li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Total Floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->total_floor != null && $propertyinfo->total_floor != 0) ? $propertyinfo->total_floor . ' floor' : 'N/A'; ?></span> </li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property on floor:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_on_floor != null && $propertyinfo->property_on_floor != "") ? $propertyinfo->property_on_floor : 'N/A'; ?></span></li>
-                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price.' '.$propertyinfo->expected_price_type : 'On Request'; ?></span></li>
+                                            <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Price:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->price != "") ? $propertyinfo->price . ' ' . $propertyinfo->expected_price_type : 'On Request'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Booking Amount:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->price != null && $propertyinfo->booking_amount != "0.00") ? $propertyinfo->booking_amount : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Property Age:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->property_age != null && $propertyinfo->property_age != "") ? $propertyinfo->property_age : 'N/A'; ?></span></li>
                                             <li><i class="fa fa-angle-right"></i>&nbsp;<strong>Security Deposit:</strong><br>&nbsp;&nbsp;<span><?php echo ($propertyinfo->security_deposit_amount != null && $propertyinfo->security_deposit_amount != "0.00") ? $propertyinfo->security_deposit_amount . ' (' . $propertyinfo->security_deposit_type . ')' : 'N/A'; ?></span></li>
@@ -261,30 +261,32 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="card p-15">
-                                <h3 class="detail-title"><img src="<?php echo base_url(); ?>includes/properties_detail/images/bank.png" width="40" /> Bank Offers</h3>
-                                <hr/>
-                                <div class="carousel carousel-showmanymoveone slide" id="itemslider">
-                                    <div class="carousel-inner">
-                                        <?php foreach ($bank_offers as $key => $offer) { ?>
-                                            <div class="item <?php echo ($key == 0) ? 'active' : '';?>">
-                                                <div class="col-xs-12 col-sm-6 col-md-2">
-                                                    <a href="#"><img src="<?php echo base_url(); ?>includes/bank_images/<?php echo $offer->bank_image; ?>" class="img-responsive center-block"></a>
-                                                    <h4 class="text-center"><?php echo $offer->interest_rate .' %' ;?></h4>
+                    <?php if (!empty($bank_offers)) { ?>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="card p-15">
+                                    <h3 class="detail-title"><img src="<?php echo base_url(); ?>includes/properties_detail/images/bank.png" width="40" /> Bank Offers</h3>
+                                    <hr/>                                
+                                    <div class="carousel carousel-showmanymoveone slide" id="itemslider">
+                                        <div class="carousel-inner">
+                                            <?php foreach ($bank_offers as $key => $offer) { ?>
+                                                <div class="item <?php echo ($key == 0) ? 'active' : ''; ?>">
+                                                    <div class="col-xs-12 col-sm-6 col-md-2">
+                                                        <a href="#"><img src="<?php echo base_url(); ?>includes/bank_images/<?php echo $offer->bank_image; ?>" class="img-responsive center-block"></a>
+                                                        <h4 class="text-center"><?php echo ($offer->interest_rate != null) ? $offer->interest_rate . ' %' : ''; ?></h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div id="slider-control">
-                                        <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>
-                                        <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_right.png" alt="Right" class="img-responsive"></a>
+                                            <?php } ?>
+                                        </div>
+                                        <div id="slider-control">
+                                            <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_left.png" alt="Left" class="img-responsive"></a>
+                                            <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="<?php echo base_url(); ?>includes/properties_detail/images/arrow_right.png" alt="Right" class="img-responsive"></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                 </div>
                 <div class="col-md-3 col-sm-12 col-xs-12">
                     <div class="row">

@@ -83,7 +83,7 @@ class Index extends CI_Controller {
             $this->load->library('pagination');
             $config = array();
             $config["base_url"] = base_url() . "index/property";
-            $config["per_page"] = 5;
+            $config["per_page"] = 10;
             $config['use_page_numbers'] = FALSE;
 
             $config['last_tag_open'] = '<li>';

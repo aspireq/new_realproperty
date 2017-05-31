@@ -176,6 +176,23 @@ class Common_model extends CI_Model {
         return false;
     }
 
+    function banks_data($limit = null, $start = null) {
+        if ($limit != null || $start != null) {
+            $this->db->limit($limit, $start);
+        }
+        $query = $this->db->get('banks');
+        if ($query->num_rows() > 0) {
+            $final_data = array();
+            foreach ($query->result() as $key => $row) {
+                $data[] = $row;
+                $final_data[$key] = $row;
+            }
+            $final_data['counts'] = $query->num_rows();
+            return $final_data;
+        }
+        return false;
+    }
+
     function property_data($limit = null, $start = null) {
         if ($limit != null || $start != null) {
             $this->db->limit($limit, $start);
@@ -202,17 +219,17 @@ class Common_model extends CI_Model {
     function get_bank_offers($property_id) {
         $this->db->select();
         $this->db->from('bank_offers');
-        $this->db->where('property_id', $property_id);        
-        $qry = $this->db->get();        
+        $this->db->where('property_id', $property_id);
+        $qry = $this->db->get();
         if ($qry->num_rows() > 0) {
             $final_data = array();
             foreach ($qry->result() as $key => $row) {
                 $data[] = $row;
                 $final_data[$key] = $row;
-                $bank_info = $this->select_where_row('banks',array('id' => $row->bank_id));
+                $bank_info = $this->select_where_row('banks', array('id' => $row->bank_id));
                 $final_data[$key]->bank_name = $bank_info->name;
                 $final_data[$key]->bank_image = $bank_info->image;
-            }            
+            }
             return $final_data;
         }
         return false;

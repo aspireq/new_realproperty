@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <section class="register">
     <div class="container">
-        <button class="btn btn-primary btn-main btn-foo pull-right" name="exclusive_ad" id="exclusive_ad" onclick="add_exclusive_ad();">Post New Ad</button>
+        <button class="btn btn-primary btn-main btn-foo pull-right" name="exclusive_ad" id="exclusive_ad" onclick="add_exclusive_ad();">Add Bank</button>
         <form method="post" name="op_ad" id="op_ad" action="<?php echo base_url(); ?>auth/record_change">
             <input type="hidden" name="record_change_type" id="record_change_type">
             <input type="hidden" name="table_name" id="table_name">
@@ -15,8 +15,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Type</th>
+                            <th>Name</th>                           
                             <th>Image</th>
                             <th>Created Date</th>
                             <th>Actions</th>
@@ -36,20 +35,15 @@
                                 ?>
                                 <tr>
                                     <th scope="row"><?php echo $record_counter; ?></th>
-                                    <td><?php echo $data->name; ?></td>
-                                    <?php if ($data->ad_type == 1) { ?>
-                                        <td>Property Gallery</td>
-                                    <?php } else if ($data->ad_type == 2) { ?>
-                                        <td>Exclusive Ad</td>
-                                    <?php } ?>
-                                    <td><img height="100px" width="200px" src="<?php echo base_url(); ?>includes/exclusive_ad/<?php echo ($data->image != "" && (file_exists(FCPATH . 'includes/exclusive_ad/' . $data->image))) ? $data->image : 'noimage.jpg' ?>"</td>
+                                    <td><?php echo $data->name; ?></td>                                    
+                                    <td><img height="100px" width="200px" src="<?php echo base_url(); ?>includes/bank_images/<?php echo ($data->image != "" && (file_exists(FCPATH . 'includes/bank_images/' . $data->image))) ? $data->image : 'noimage.jpg' ?>"</td>
                                     <td><?php echo $data->created_date; ?></td>
                                     <td>                   
-                                        <a class="teal-text" onclick="edit_ad('<?php echo $data->id; ?>','advertizement');"><i class="fa fa-pencil"></i></a>
-                                        <a class="red-text" onclick="delete_ad(<?php echo $data->id; ?>);"><i class="fa fa-times"></i></a>
+                                        <a class="teal-text" onclick="edit_ad('<?php echo $data->id; ?>','banks');"><i class="fa fa-pencil"></i></a>
+                                        <a class="red-text" onclick="delete_bank(<?php echo $data->id; ?>);"><i class="fa fa-times"></i></a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" <?php echo ($data->status == 1) ? 'checked' : ''; ?> onclick="change_status('<?php echo $data->id; ?>','advertizement');">
+                                        <input type="checkbox" <?php echo ($data->status == 1) ? 'checked' : ''; ?> onclick="change_status('<?php echo $data->id; ?>','banks');">
                                     </td>
                                 </tr>
                                 <?php
@@ -59,7 +53,6 @@
                             echo '<tr><td>No Records Found!</td></tr>';
                         }
                         ?>
-
                     </tbody>
                 </table>
             </div>
@@ -83,7 +76,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Exclusive Ad</h4>
+                    <h4 class="modal-title">Add Bank</h4>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
@@ -97,14 +90,6 @@
                         <div class="form-group">                                
                             <label for="image" class="control-label" title="email/username">Image</label>
                             <input type="file" id="image" name="image">
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">                                
-                            <label for="ad_type" class="control-label" title="email/username">Add As</label>
-                            <br><input type="radio" id="property" name="ad_type" value="1">Property
-                            <input type="radio" id="exclusive_ad_type" name="ad_type" value="2">Exclusive Ad
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>

@@ -162,6 +162,17 @@
             $("#op_ad").submit();
         }
     }
+    function delete_bank(id) {
+        var r = confirm("Are you sure you want to delete this bank");
+        if (r == true) {
+            $('#record_id').val(id);
+            $('#record_change_type').val('Delete');
+            $('#table_name').val('banks');
+            $('#page_url').val('banks');
+            $('#image_folder').val('bank_images');
+            $("#op_ad").submit();
+        }
+    }
     function delete_property(id) {
         var r = confirm("Are you sure you want to delete this property");
         if (r == true) {
@@ -174,13 +185,13 @@
             $("#op_ad").submit();
         }
     }
-    function change_status(id) {
+    function change_status(id,table_name) {
         var r = confirm("Are you sure you want to update status");
         if (r == true) {
             $('#record_id').val(id);
             $('#record_change_type').val('Status');
-            $('#table_name').val('advertizement');
-            $('#page_url').val('advertizement');
+            $('#table_name').val(table_name);
+            $('#page_url').val(table_name);
             $("#op_ad").submit();
         }
     }
@@ -194,11 +205,11 @@
             $("#op_ad").submit();
         }
     }
-    function edit_ad(id) {
+    function edit_ad(id, table_name) {
         $.ajax({
             url: "<?php echo base_url(); ?>auth/get_record/",
             type: "POST",
-            data: {table_name: 'advertizement', id: id},
+            data: {table_name: table_name, id: id},
             dataType: "JSON",
             success: function (response)
             {
@@ -482,7 +493,7 @@
             data: {},
             dataType: "JSON",
             success: function (response)
-            {                
+            {
                 $('#new_offers').append(response);
             }
         });

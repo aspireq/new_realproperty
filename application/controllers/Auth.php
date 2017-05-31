@@ -85,6 +85,90 @@ class Auth extends CI_Controller {
         }
     }
 
+    function banks() {
+        if ($this->flexi_auth->is_logged_in() && $this->data['userinfo']['uacc_group_fk'] == 3) {
+            $this->load->library('pagination');
+            $config = array();
+            $config["base_url"] = base_url() . "auth/banks";
+            $config["per_page"] = 10;
+            $config['use_page_numbers'] = FALSE;
+
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '&nbsp;<li class="active"><a>';
+            $config['cur_tag_close'] = '</a></li>';
+            $config['first_link'] = 'First';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['last_link'] = 'Last';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['next_link'] = 'Next';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['prev_link'] = 'Previous';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+
+            $total_row = $this->Common_model->banks_data('', '');
+            $config["total_rows"] = $total_row['counts'];
+            $config['num_links'] = $total_row['counts'];
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $this->data["results"] = $this->Common_model->banks_data($config["per_page"], $page);
+            $this->pagination->initialize($config);
+            $str_links = $this->pagination->create_links();
+            $this->data["links"] = explode('&nbsp;', $str_links);
+
+            if ($this->input->post()) {
+                $ad_data = $this->data['ad_data'] = array(
+                    "name" => $this->input->post('name'));
+                if (!empty($_FILES['image']['name'])) {
+                    $this->load->library('upload');
+                    $config['upload_path'] = 'includes/bank_images';
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $config['overwrite'] = FALSE;
+                    $config['encrypt_name'] = TRUE;
+                    $config['max_filename'] = 25;
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('image')) {
+                        $error = $this->upload->display_errors();
+                        $this->session->set_flashdata('message', $error);
+                    } else {
+                        $file_info = $this->upload->data();
+                        $ad_data['image'] = $file_info['file_name'];
+                    }
+                }
+                if ($this->input->post('edit_id')) {
+                    if (isset($ad_data['image'])) {
+                        if (file_exists(FCPATH . 'includes/bank_images/' . $this->input->post('old_image'))) {
+                            unlink(FCPATH . 'includes/bank_images/' . $this->input->post('old_image'));
+                        }
+                        $ad_data['image'] = $file_info['file_name'];
+                    } else {
+                        $ad_data['image'] = $this->input->post('old_image');
+                    }
+                    $result = $this->Common_model->select_update('banks', $ad_data, array('id' => $this->input->post('edit_id')));
+                } else {
+                    $result = $this->Common_model->insert('banks', $ad_data);
+                }
+                if (!empty($result)) {
+                    $this->session->set_flashdata('message', "Bank Added Successfully");
+                } else {
+                    $this->session->set_flashdata('message', "Something went wrong,Please try again later");
+                }
+                redirect('auth/banks');
+            }
+            $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
+            $this->data = $this->include_files();
+            $this->load->view('banks', $this->data);
+        } else {
+            $this->session->set_flashdata('message', "Please login as admin to access this area.");
+            redirect(base_url() . 'login');
+        }
+    }
+
     function advertizement() {
         if ($this->flexi_auth->is_logged_in() && $this->data['userinfo']['uacc_group_fk'] == 3) {
             $this->load->library('pagination');
@@ -128,7 +212,7 @@ class Auth extends CI_Controller {
                 if (!empty($_FILES['image']['name'])) {
                     $this->load->library('upload');
                     $config['upload_path'] = 'includes/exclusive_ad';
-                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
                     $config['overwrite'] = FALSE;
                     $config['encrypt_name'] = TRUE;
                     $config['max_filename'] = 25;
@@ -186,7 +270,6 @@ class Auth extends CI_Controller {
                 $properties_info = $this->session->userdata('property_data');
                 $property_data = array();
                 $property_data['added_by'] = $this->user_id;
-                $property_data['status'] = 0;
                 $property_data['added_as'] = $this->input->post('user_type');
                 $property_data['property_zone'] = $this->input->post('property_zone');
                 $property_data['property_type'] = $this->input->post('property_type');
@@ -305,7 +388,7 @@ class Auth extends CI_Controller {
                 if (!empty($_FILES['builder_image']['name'])) {
                     $this->load->library('upload');
                     $config['upload_path'] = 'includes/builder_images';
-                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
                     $config['overwrite'] = FALSE;
                     $config['encrypt_name'] = TRUE;
                     $config['max_filename'] = 25;
@@ -328,7 +411,7 @@ class Auth extends CI_Controller {
                 if (!empty($_FILES['property_image']['name'])) {
                     $this->load->library('upload');
                     $config['upload_path'] = 'includes/properties_img';
-                    $config['allowed_types'] = 'gif|jpg|png';
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
                     $config['overwrite'] = FALSE;
                     $config['encrypt_name'] = TRUE;
                     $config['max_filename'] = 25;
@@ -393,6 +476,7 @@ class Auth extends CI_Controller {
                         $property_id = $this->input->post('edit_id');
                         $this->Common_model->delete_where('bank_offers', array('property_id' => $this->input->post('edit_id')));
                     } else {
+                        $property_data['status'] = 0;
                         $property_id = $this->Common_model->insert_record('properties', $property_data);
                     }
                     $banks = $this->input->post('bank_name');
@@ -440,7 +524,7 @@ class Auth extends CI_Controller {
         if (!empty($_FILES['file']['name'])) {
             $this->load->library('upload');
             $config['upload_path'] = 'includes/properties_images';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['overwrite'] = FALSE;
             $config['encrypt_name'] = TRUE;
             $config['max_filename'] = 25;
@@ -466,7 +550,7 @@ class Auth extends CI_Controller {
         if (!empty($_FILES['file']['name'])) {
             $this->load->library('upload');
             $config['upload_path'] = 'includes/property_nearby';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['overwrite'] = FALSE;
             $config['encrypt_name'] = TRUE;
             $config['max_filename'] = 25;
