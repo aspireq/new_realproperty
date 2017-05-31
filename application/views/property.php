@@ -20,7 +20,7 @@
 <!--                                        <a href="<?php echo base_url(); ?>index/propertydetails/<?php echo $property->id; ?>" rel="tooltip" title="Add to Favorites"><span class="fa fa-heart-o fa-2x"></span></a>-->
                                         <a href="<?php echo base_url(); ?>index/propertydetails/<?php echo $property->id; ?>" rel="tooltip" title="View"><span class="fa fa-search fa-2x"></span></a>
                                     </div>
-                                    <img src="<?php echo base_url(); ?>includes/properties_img/<?php echo (isset($property->property_image) && $property->property_image != "" && (file_exists(FCPATH . 'includes/properties_img/' . $property->property_image))) ? $property->image : 'no_image.jpg'; ?>" class="img-responsive">
+                                    <img src="<?php echo base_url(); ?>includes/properties_img/<?php echo (isset($property->property_image) && $property->property_image != "" && (file_exists(FCPATH . 'includes/properties_img/' . $property->property_image))) ? $property->property_image : 'no_image.jpg'; ?>" class="img-responsive">                                    
                                     <div class="propertyType house"><?php echo $property->property_type_name; ?></div>
                                 </div>
                                 <a href="<?php echo base_url(); ?>index/propertydetails/<?php echo $property->id; ?>">
