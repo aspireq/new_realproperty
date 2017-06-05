@@ -319,6 +319,12 @@ $this->session->set_userdata('property_data', $newdata);
                                                 <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "2") ? 'selected' : ''; ?>>2</option>
                                                 <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "3") ? 'selected' : ''; ?>>3</option>
                                                 <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "4") ? 'selected' : ''; ?>>4</option>
+                                                <option value="5" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "5") ? 'selected' : ''; ?>>5</option>
+                                                <option value="6" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "6") ? 'selected' : ''; ?>>6</option>
+                                                <option value="7" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "7") ? 'selected' : ''; ?>>7</option>
+                                                <option value="8" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "8") ? 'selected' : ''; ?>>8</option>
+                                                <option value="9" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "9") ? 'selected' : ''; ?>>9</option>
+                                                <option value="10" <?php echo (!empty($propertyinfo) && $propertyinfo->bedrooms == "10") ? 'selected' : ''; ?>>10</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
@@ -327,7 +333,13 @@ $this->session->set_userdata('property_data', $newdata);
                                                 <option value="1" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>1</option>
                                                 <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>2</option>
                                                 <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>3</option>
-                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "1") ? 'selected' : ''; ?>>4</option>
+                                                <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "4") ? 'selected' : ''; ?>>4</option>
+                                                <option value="5" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "5") ? 'selected' : ''; ?>>5</option>
+                                                <option value="6" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "6") ? 'selected' : ''; ?>>6</option>
+                                                <option value="7" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "7") ? 'selected' : ''; ?>>7</option>
+                                                <option value="8" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "8") ? 'selected' : ''; ?>>8</option>
+                                                <option value="9" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "9") ? 'selected' : ''; ?>>9</option>
+                                                <option value="10" <?php echo (!empty($propertyinfo) && $propertyinfo->bathrooms == "10") ? 'selected' : ''; ?>>10</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
@@ -337,6 +349,13 @@ $this->session->set_userdata('property_data', $newdata);
                                                 <option value="2" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "2") ? 'selected' : ''; ?>>2</option>
                                                 <option value="3" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "3") ? 'selected' : ''; ?>>3</option>
                                                 <option value="4" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "4") ? 'selected' : ''; ?>>4</option>
+                                                <option value="5" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "5") ? 'selected' : ''; ?>>5</option>
+                                                <option value="6" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "6") ? 'selected' : ''; ?>>6</option>
+                                                <option value="7" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "7") ? 'selected' : ''; ?>>7</option>
+                                                <option value="8" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "8") ? 'selected' : ''; ?>>8</option>
+                                                <option value="9" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "9") ? 'selected' : ''; ?>>9</option>
+                                                <option value="10" <?php echo (!empty($propertyinfo) && $propertyinfo->balconies == "10") ? 'selected' : ''; ?>>10</option>
+
                                             </select>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
