@@ -6,6 +6,7 @@ class Index extends CI_Controller {
         parent::__construct();
 
         //load models
+ 
         // Load required CI libraries and helpers.
         $this->load->database();
         $this->load->library('session'); 
@@ -117,6 +118,7 @@ class Index extends CI_Controller {
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->load->view('verify_property', $this->data);
         } else {
+            
             $this->data['properties'] = $this->Common_model->get_properties_list();
             $this->data = $this->include_files();
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
