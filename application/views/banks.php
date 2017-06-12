@@ -83,7 +83,7 @@
                         <div class="form-group">
                             <label for="name" class="control-label">Name</label>
                             <input type="text" placeholder="" class="form-control" id="name" name="name">
-                            <div class="help-block with-errors"></div>
+                            <div class="help-block with-errors" id="err_messages" style="color:red"></div>
                         </div>
                     </div>
                     <div class="col-md-12">

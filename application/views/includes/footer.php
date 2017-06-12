@@ -82,6 +82,8 @@
     </span>
 </div>
 
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script src="<?php echo base_url(); ?>includes/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>includes/js/dropzone.js"></script> 
 <script src="<?php echo base_url(); ?>includes/js/bootstrap-datepicker.js"></script>
@@ -147,10 +149,33 @@
 <script type="text/javascript" src='https://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
 <script src="<?php echo base_url(); ?>includes/js/locationpicker.jquery.js"></script>
 <script>
+
+
+    // j query validation
+    function common_validate() {
+        $(function () {
+            $("#post_ad").validate({
+                errorPlacement: function (error, element) {
+                    $('#err_messages').html('required field');
+                    return false;
+                },
+                success: function (todate, element) {
+                    $('#err_messages').html('');
+                },
+                rules: {
+                    name: "required"
+                }
+            });
+        });
+    }
+
     function add_exclusive_ad() {
         $('#post_ad')[0].reset();
+        $('#err_messages').html('');
         $('#add_exclusive_ads').modal('show');
+        common_validate();
     }
+
     function delete_ad(id) {
         var r = confirm("Are you sure you want to delete this ad");
         if (r == true) {
@@ -185,7 +210,7 @@
             $("#op_ad").submit();
         }
     }
-    function change_status(id,table_name) {
+    function change_status(id, table_name) {
         var r = confirm("Are you sure you want to update status");
         if (r == true) {
             $('#record_id').val(id);
@@ -205,7 +230,10 @@
             $("#op_ad").submit();
         }
     }
+
     function edit_ad(id, table_name) {
+        $('#post_ad')[0].reset();
+        $('#err_messages').html('');
         $.ajax({
             url: "<?php echo base_url(); ?>auth/get_record/",
             type: "POST",
@@ -226,7 +254,10 @@
                 $('#add_exclusive_ads').modal('show');
             }
         });
+
+        common_validate();
     }
+
     $('#us3').locationpicker({
         location: {
             latitude: 22.9962,
@@ -384,6 +415,150 @@
             $('#furnishing_info').hide();
         }
     }
+
+    // payment mode modal 
+
+    function pay_mode_modal(id) {
+        $("#form")[0].reset();
+        pay_mode_validate();
+        $("#fdate").html("");
+        $("#tdate").html("");
+        $(".common").addClass("hidden");
+        $.ajax({
+            type: 'post',
+            url: "<?php echo base_url(); ?>index/get_pay_mode/",
+            data: {'id': id},
+            dataType: "json",
+            success: function (resp) {
+                if (resp.paid == 1)
+                {
+                    if ((resp.todate == '0000-00-00') && (resp.fromdate == '0000-00-00')) {
+                        $('#todate').val("");
+                        $('#fromdate').val("");
+                    } else {
+                        $('#fromdate').val(resp.fromdate);
+                        $('#todate').val(resp.todate);
+                    }
+                    $('#paid').prop('checked', true);
+                    $(".common").removeClass("hidden");
+                } else {
+                    $('#free').prop('checked', true);
+                }
+            },
+            error: function () {
+                alert('error');
+                $("#myModal").modal("hidden");
+
+            }
+        });
+        var id = $("#id").val(id);
+        $("#myModal").modal("show");
+        $("#fromdate").datepicker({
+            startDate: new Date(),
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        }).on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+
+            var d = new Date(minDate),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            var min = [year, month, day].join('-');
+            $('#todate').datepicker('setStartDate', min);
+        });
+        $('#todate').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+        }).on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+            var d = new Date(minDate),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            var min = [year, month, day].join('-');
+            $('#fromdate').datepicker('setEndDate', minDate);
+        });
+    }
+
+    function pay_mode_validate() {
+        var todate = $("#todate").val();
+        $(function () {
+            $("#form").validate({
+                errorPlacement: function (error, element) {
+                    var todate = $("#todate").val();
+                    var fromdate = $("#fromdate").val();
+                    if (todate == "") {
+                        $("#tdate").html("please select date");
+                    }
+                    if (fromdate == "") {
+                        $("#fdate").html("please select date");
+                    }
+                    return false;
+                },
+                success: function (todate, element) {
+                    var todate = $("#todate").val();
+                    var fromdate = $("#fromdate").val();
+                    if (todate != "") {
+                        $("#tdate").html("");
+                    }
+                    if (fromdate != "") {
+                        $("#fdate").html("");
+                        $("#fromdate").removeClass("datepicker");
+                    }
+                },
+                rules: {
+                    todate: "required",
+                    fromdate: "required",
+                }
+            });
+        });
+    }
+    function free() {
+        $(".common").addClass("hidden");
+        $("#fdate").html("");
+        $("#tdate").html("");
+        var id = $("#id").val();
+        $("#form")[0].reset();
+        $("#id").val(id);
+        $('#free').prop('checked', true);
+    }
+
+
+    function paid() {
+        var id = $('#id').val();
+        $.ajax({
+            type: 'post',
+            url: "<?php echo base_url(); ?>index/get_pay_mode/",
+            data: {'id': id},
+            dataType: "json",
+            success: function (resp) {
+                if (resp.paid == 1) {
+                    $(".common").removeClass("hidden");
+                    var id = $('#id').val();
+                    pay_mode_modal(id);
+                } else {
+                    var id = $('#id').val();
+                    $(".common").removeClass("hidden");
+                }
+            },
+            error: function () {
+                alert('error');
+            }
+        });
+    }
+
+// end
+
+
     function residential_propery() {
         var listed_propery = $('#property_type').val();
         if (listed_propery == "Rent/Lease") {

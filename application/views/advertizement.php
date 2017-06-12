@@ -45,11 +45,11 @@
                                     <td><img height="100px" width="200px" src="<?php echo base_url(); ?>includes/exclusive_ad/<?php echo ($data->image != "" && (file_exists(FCPATH . 'includes/exclusive_ad/' . $data->image))) ? $data->image : 'noimage.jpg' ?>"</td>
                                     <td><?php echo $data->created_date; ?></td>
                                     <td>                   
-                                        <a class="teal-text" onclick="edit_ad('<?php echo $data->id; ?>','advertizement');"><i class="fa fa-pencil"></i></a>
+                                        <a class="teal-text" onclick="edit_ad('<?php echo $data->id; ?>', 'advertizement');"><i class="fa fa-pencil"></i></a>
                                         <a class="red-text" onclick="delete_ad(<?php echo $data->id; ?>);"><i class="fa fa-times"></i></a>
                                     </td>
                                     <td>
-                                        <input type="checkbox" <?php echo ($data->status == 1) ? 'checked' : ''; ?> onclick="change_status('<?php echo $data->id; ?>','advertizement');">
+                                        <input type="checkbox" <?php echo ($data->status == 1) ? 'checked' : ''; ?> onclick="change_status('<?php echo $data->id; ?>', 'advertizement');">
                                     </td>
                                 </tr>
                                 <?php
@@ -90,8 +90,7 @@
                         <div class="form-group">
                             <label for="name" class="control-label">Name</label>
                             <input type="text" placeholder="" class="form-control" id="name" name="name">
-                            <div class="help-block with-errors"></div>
-                        </div>
+                            <div class="help-block with-errors" id="err_messages" style="color:red"></div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">                                
