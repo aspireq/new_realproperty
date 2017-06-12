@@ -6,10 +6,9 @@ class Index extends CI_Controller {
         parent::__construct();
 
         //load models
- 
         // Load required CI libraries and helpers.
         $this->load->database();
-        $this->load->library('session'); 
+        $this->load->library('session');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->auth = new stdClass;
@@ -21,8 +20,8 @@ class Index extends CI_Controller {
         $this->load->vars('current_url', $this->uri->uri_to_assoc(1));
         // Define a global variable to store data that is then used by the end view page.
         $this->data = null;
-        
-        $this->data['property_ad'] = $this->Common_model->get_properties_list();       
+
+        $this->data['property_ad'] = $this->Common_model->get_properties_list();
 
         if ($this->flexi_auth->is_logged_in()) {
             $this->data['userinfo'] = $this->flexi_auth->get_user_by_identity_row_array();
@@ -118,12 +117,48 @@ class Index extends CI_Controller {
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->load->view('verify_property', $this->data);
         } else {
-            
+
             $this->data['properties'] = $this->Common_model->get_properties_list();
             $this->data = $this->include_files();
             $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
+            $if = array();
+            $else = array();
+            foreach ($properties as $property) {
+                if (($property->fromdate <= date('Y-m-d')) && ($property->todate >= date('Y-m-d'))) {
+                    $a = $array['a'] = $property;
+                    array_push($if, $a);
+                } else {
+                    $b = $array['b'] = $property;
+                    array_push($else, $b);
+                }
+            }
+            $result = $this->data['result'] = array_merge($if, $else);
+            $this->data['message'] = (!isset($this->data['message'])) ? $this->session->flashdata('message') : $this->data['message'];
             $this->load->view('property', $this->data);
         }
+    }
+
+    public function get_pay_mode() {
+        $id = $this->input->post('id');
+//          echo $id;
+        $paymode = $this->data['paymode'] = $this->Common_model->select_where_row('properties', array('id' => $id));
+        die(json_encode($paymode));
+    }
+
+    // payments mode
+    public function pay_mode() {
+
+        $this->load->library('form_validation');
+        if ($this->input->post()) {
+            $id = $this->input->post('id');
+            $formdata = $this->data['formdata'] = array(
+                'paid' => $this->input->post('paid'),
+                'todate' => $this->input->post('todate'),
+                'fromdate' => $this->input->post('fromdate')
+            );
+            $result = $this->data['result'] = $this->Common_model->select_update('properties', $formdata, array('id' => $this->input->post('id')));
+        }
+        redirect(base_url() . "properties/");
     }
 
     function activate_account($user_id, $token = FALSE) {
