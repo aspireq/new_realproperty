@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-12">
                 <div class="row property"> 
-                    <?php foreach ($properties as $property) { ?>
+                    <?php foreach ($result as $property) { ?>
                         <div class="col-md-3">                        
                             <div class="card">                           
                                 <div class="view">
