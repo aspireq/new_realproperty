@@ -84,6 +84,7 @@ class Common_model extends CI_Model {
         $this->db->select();
         $this->db->from('properties');
         $this->db->where('status', 1);
+        $this->db->order_by('fromdate', 'desc');
         $qry = $this->db->get();
         $final_data = array();
         foreach ($qry->result() as $key => $row) {
